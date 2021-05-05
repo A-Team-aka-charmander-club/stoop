@@ -2,11 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import logo from './assets/logo.png'
-import * as ImagaPicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function App() {
-  let openImagePickerAsync = async () => {
-    let permissionResult = await ImagaPicker.requestMediaLibraryPermissionsAsync();
+  const [selectedImage, setSelectedImage] = React.useState(null);
+
+    let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if(!permissionResult.granted){
       alert("Permission to acccess camera roll is required!");
@@ -14,8 +16,24 @@ export default function App() {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult, 'picker result')
+
+    if(pickerResult.cancelled){
+      return;
+    }
+
+    setSelectedImage({localUri: pickerResult.uri})
   }
+
+    if (selectedImage !== null) {
+      return (
+        <View style={styles.container}>
+          <Image
+            source={{ uri: selectedImage.localUri }}
+            style={styles.thumbnail}
+          />
+        </View>
+      );
+    }
 
 
   return (
@@ -61,5 +79,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     color: '#fff'
+  },
+  thumbnail: {
+    height: 300,
+    width: 300,
+    resizeMode: "contain"
   }
 });
