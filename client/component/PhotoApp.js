@@ -27,6 +27,7 @@ export default function App(props) {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    console.log('pickerResult', pickerResult);
 
     if (pickerResult.cancelled) {
       return;
@@ -34,7 +35,20 @@ export default function App(props) {
     const uploadImage = async (uri) => {
       const response = await fetch(uri);
       const blob = await response.blob();
-      var ref = firebase.storage().ref().child('my-image');
+      const photoName = String(Math.random(1000));
+      var ref = firebase.storage().ref().child(photoName);
+      console.log('ref', ref);
+      console.log('props', props);
+      const userID = props.route.params.user.id;
+      console.log('ref', ref);
+      // const data = {
+      //   //this is photo id
+      //   id: uid,
+      //   //this is userID
+      //   userId: userID,
+      //   uri: ref.
+      // };
+
       return ref.put(blob);
     };
 
