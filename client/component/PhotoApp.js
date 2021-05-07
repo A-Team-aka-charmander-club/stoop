@@ -12,9 +12,10 @@ import uploadToAnonymousFilesAsync from 'anonymous-files';
 import logo from '../../assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
+import { firebase } from '../../src/firebase/config';
 
 export default function App(props) {
-  console.log(props)
+  console.log(props);
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
@@ -30,13 +31,23 @@ export default function App(props) {
     if (pickerResult.cancelled) {
       return;
     }
+    const uploadImage = async (uri) => {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      var ref = firebase.storage().ref().child('my-image');
+      return ref.put(blob);
+    };
 
-    if (Platform.OS === 'web') {
-      let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri);
-      setSelectedImage({ localUri: pickerResult.uri, remoteUri });
-    } else {
-      setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
+    if (!pickerResult.cancelled) {
+      uploadImage(pickerResult.uri);
     }
+
+    // if (Platform.OS === 'web') {
+    //   let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri);
+    //   setSelectedImage({ localUri: pickerResult.uri, remoteUri });
+    // } else {
+    //   setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
+    // }
   };
 
   let openShareDialogAsync = async () => {
