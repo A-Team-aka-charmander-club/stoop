@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
-import logo from './assets/logo.png';
+import logo from '../../assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 

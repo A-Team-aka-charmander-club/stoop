@@ -29,17 +29,17 @@ export default function RegistrationScreen({ navigation }) {
           email,
           fullName,
         };
-        const usersRef = firebase.firestore().collection('users');
-        console.log('usersRef in register', usersRef);
-        usersRef
-          .doc(uid)
-          .set(data)
-          .then(() => {
-            navigation.navigate('Home', { user: data });
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        // const usersRef = firebase.firestore().collection('users');
+        // console.log('usersRef in register', usersRef);
+        // usersRef
+        //   .doc(uid)
+        //   .set(data)
+        //   .then(() => {
+        navigation.navigate('Photo', { user: data });
+        //   })
+        //   .catch((error) => {
+        //     alert(error);
+        //   });
       })
       .catch((error) => {
         alert(error);

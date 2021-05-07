@@ -17,26 +17,27 @@ export default function LoginScreen({ navigation }) {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
-        const uid = response.user.uid;
-        console.log('uid', uid);
-        const usersRef = firebase.firestore().collection('users');
-        console.log('usersRef', usersRef);
-        usersRef
-          .doc(uid)
-          .get()
-          .then((firestoreDocument) => {
-            console.log('firestoreDocument', firestoreDocument);
-            if (!firestoreDocument.exists) {
-              alert('User does not exist anymore.');
-              return;
-            }
-            const user = firestoreDocument.data();
-            console.log('user', user);
-            navigation.navigate('Home', { user });
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        console.log(response);
+        // const uid = response.user.uid;
+        // console.log('uid', uid);
+        // const usersRef = firebase.firestore().collection('users');
+        // console.log('usersRef', usersRef);
+        // usersRef
+        //   .doc(uid)
+        //   .get()
+        //   .then((firestoreDocument) => {
+        //     console.log('firestoreDocument', firestoreDocument);
+        //     if (!firestoreDocument.exists) {
+        //       alert('User does not exist anymore.');
+        //       return;
+        //     }
+        //     const user = firestoreDocument.data();
+        //     console.log('user', user);
+        navigation.navigate('Photo');
+        //   })
+        //   .catch((error) => {
+        //     alert(error);
+        //   });
       })
       .catch((error) => {
         alert(error);
