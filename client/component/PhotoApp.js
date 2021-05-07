@@ -41,14 +41,19 @@ export default function App(props) {
       console.log('props', props);
       const userID = props.route.params.user.id;
       console.log('ref', ref);
-      // const data = {
-      //   //this is photo id
-      //   id: uid,
-      //   //this is userID
-      //   userId: userID,
-      //   uri: ref.
-      // };
-
+      const data = {
+        //this is userID
+        userId: userID,
+        uri: pickerResult.uri,
+      };
+      const photoId = firebase.firestore().collection('photos').doc().id;
+      const photosRef = firebase.firestore().collection('photos');
+      photosRef
+        .doc(photoId)
+        .set(data)
+        .catch((error) => {
+          alert(error);
+        });
       return ref.put(blob);
     };
 
