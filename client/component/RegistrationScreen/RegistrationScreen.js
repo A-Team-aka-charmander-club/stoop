@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 import { firebase } from '../../../src/firebase/config';
 
+
 export default function RegistrationScreen({ navigation }) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -19,27 +20,29 @@ export default function RegistrationScreen({ navigation }) {
       alert("Passwords don't match.");
       return;
     }
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid;
+      .then((userCredential) => {
+        const uid = userCredential.user.uid;
         const data = {
           id: uid,
-          email,
-          fullName,
+          email: email,
+          fullName: fullName,
         };
-        // const usersRef = firebase.firestore().collection('users');
-        // console.log('usersRef in register', usersRef);
-        // usersRef
-        //   .doc(uid)
-        //   .set(data)
-        //   .then(() => {
-        navigation.navigate('Photo', { user: data });
-        //   })
-        //   .catch((error) => {
-        //     alert(error);
-        //   });
+    
+        const usersRef = firebase.firestore().collection('users')
+        usersRef
+          .doc(uid)
+          .set(data)
+          .then(() => {
+            navigation.navigate('Photo', { user: data })
+          })
+          .catch((error) => {
+            alert(error)
+          });
+
       })
       .catch((error) => {
         alert(error);

@@ -13,7 +13,8 @@ import logo from '../../assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 
-export default function App() {
+export default function App(props) {
+  console.log(props)
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
