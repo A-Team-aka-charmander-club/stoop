@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "537953520115",
+    "project_id": "stoop-64867",
+    "storage_bucket": "stoop-64867.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537953520115:android:92f48b0b140fa809f9aa86",
+        "android_client_info": {
+          "package_name": "com.reactnativefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537953520115-677bvav1u60sgr117s4k6fpqbi24dvr6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsSJBLa0ih6IVNVS1d5h0244OB7UzdJZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537953520115-677bvav1u60sgr117s4k6fpqbi24dvr6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "537953520115-dh2pul59ael0hhjf3ps8tk8931er540o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reactnativefirebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
