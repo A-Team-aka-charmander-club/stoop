@@ -37,6 +37,7 @@ export default function App(props) {
       const blob = await response.blob();
       const photoName = String(Math.random(1000));
       var ref = firebase.storage().ref().child(photoName);
+
       console.log('ref', ref);
       console.log('props', props);
       const userID = props.route.params.user.id;
@@ -48,13 +49,15 @@ export default function App(props) {
       };
       const photoId = firebase.firestore().collection('photos').doc().id;
       const photosRef = firebase.firestore().collection('photos');
+
       photosRef
         .doc(photoId)
         .set(data)
         .catch((error) => {
           alert(error);
         });
-      return ref.put(blob);
+      await ref.put(blob);
+      await ref.getDownloadURL();
     };
 
     if (!pickerResult.cancelled) {

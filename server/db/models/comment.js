@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const User = db.define('user', {
-  firebaseId: {
-    type: Sequelize.STRING,
+const Comment = db.define('comment', {
+  content: {
+    type: Sequelize.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -11,4 +11,4 @@ const User = db.define('user', {
   },
 });
 
-module.exports = User;
+module.exports = Comment;

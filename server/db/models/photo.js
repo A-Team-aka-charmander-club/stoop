@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const User = db.define('user', {
+const Photo = db.define('photo', {
   firebaseId: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -9,6 +9,13 @@ const User = db.define('user', {
       notEmpty: true,
     },
   },
+  firebaseUrl: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
 });
 
-module.exports = User;
+module.exports = Photo;
