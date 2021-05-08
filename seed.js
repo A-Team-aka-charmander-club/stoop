@@ -1,6 +1,7 @@
 'use strict';
 
-const { db, User, Comment, Tag, Post, Photo } = require('./server/db/');
+const { db, models } = require('./server/db/');
+const posts = require('./seedData/Post');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -8,6 +9,7 @@ const { db, User, Comment, Tag, Post, Photo } = require('./server/db/');
  */
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
+  await models.Post.bulkCreate(posts);
   console.log('db synced!');
 
   // Creating Users
