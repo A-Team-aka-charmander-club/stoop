@@ -36,15 +36,12 @@ export default function App(props) {
       const photoName = String(Math.random(1000));
       var ref = firebase.storage().ref().child(photoName);
 
-      console.log('ref', ref);
-      console.log('props', props);
       const userID = props.route.params.user.id;
-      console.log('ref', ref);
       const data = {
-        //this is userID
         userId: userID,
         uri: pickerResult.uri,
       };
+      
       const photoId = firebase.firestore().collection('photos').doc().id;
       const photosRef = firebase.firestore().collection('photos');
 
