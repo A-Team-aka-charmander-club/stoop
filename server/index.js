@@ -1,6 +1,6 @@
 const { db } = require('./db')
 // const PORT = process.env.PORT || 1900
-const PORT =  19006
+const PORT =  8080
 
 const app = require('./app')
 

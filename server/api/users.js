@@ -3,10 +3,9 @@ const { models: { User }} = require('../db')
 module.exports = router
 
 router.post('/user', async (req, res, next) => {
-  console.log('body')
   try {
-    const user = await User.create(req.body)
-    res.json()
+    const user = await User.create({firebaseId: req.body.firebaseUserId})
+    res.json(user)
   } catch (err) {
     next(err)
   }

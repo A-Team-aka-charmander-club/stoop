@@ -16,6 +16,7 @@
     "anonymous-files": "^1.0.1",
     "axios": "^0.21.1",
     "base-64": "^1.0.0",
+    "cors": "^2.8.5",
     "expo": "~41.0.1",
     "expo-cli": "^4.4.3",
     "expo-image-picker": "~10.1.4",
