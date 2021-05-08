@@ -15,7 +15,6 @@ import * as Sharing from 'expo-sharing';
 import { firebase } from '../../src/firebase/config';
 
 export default function App(props) {
-  console.log(props);
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
@@ -27,7 +26,6 @@ export default function App(props) {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log('pickerResult', pickerResult);
 
     if (pickerResult.cancelled) {
       return;

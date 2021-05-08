@@ -1,40 +1,3 @@
-// import 'react-native-gesture-handler';
-// import React, { useEffect, useState } from 'react';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import { LoginScreen, HomeScreen, RegistrationScreen } from './client/index.js';
-// import { decode, encode } from 'base-64';
-// if (!global.btoa) {
-//   global.btoa = encode;
-// }
-// if (!global.atob) {
-//   global.atob = decode;
-// }
-
-// const Stack = createStackNavigator();
-
-// export default function App() {
-//   const [loading, setLoading] = useState(true);
-//   const [user, setUser] = useState(null);
-
-//   return (
-//     <NavigationContainer>
-//       <Stack.Navigator>
-//         {user ? (
-//           <Stack.Screen name="Home">
-//             {(props) => <HomeScreen {...props} extraData={user} />}
-//           </Stack.Screen>
-//         ) : (
-//           <>
-//             <Stack.Screen name="Login" component={LoginScreen} />
-//             <Stack.Screen name="Registration" component={RegistrationScreen} />
-//           </>
-//         )}
-//       </Stack.Navigator>
-//     </NavigationContainer>
-//   );
-// }
-
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { firebase } from './src/firebase/config';
@@ -47,6 +10,9 @@ import {
   PhotoApp,
 } from './client/index';
 import { decode, encode } from 'base-64';
+import { Provider } from 'react-redux';
+import store from './client/store/index';
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -59,12 +25,6 @@ const Stack = createStackNavigator();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-
-  // if (loading) {
-  //   return (
-  //     <></>
-  //   )
-  // }
 
   useEffect(() => {
     const usersRef = firebase.firestore().collection('users');
@@ -88,31 +48,18 @@ export default function App() {
   }, []);
 
   return (
-    // original tutorial code
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     { user ? (
-    //         <Stack.Screen name="Home">
-    //           {props => <HomeScreen {...props} extraData={user} />}
-    //         </Stack.Screen>
-    //     ) : (
-    //       <>
-    //         <Stack.Screen name="Login" component={LoginScreen} />
-    //         <Stack.Screen name="Registration" component={RegistrationScreen} />
-    //       </>
-    //     )}
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'}>
-        <Stack.Screen name="Home">
-          {(props) => <HomeScreen {...props} extraData={user} />}
-        </Stack.Screen>
-        <Stack.Screen name="Photo" component={PhotoApp} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Registration" component={RegistrationScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'}>
+          <Stack.Screen name="Home">
+            {(props) => <HomeScreen {...props} extraData={user} />}
+          </Stack.Screen>
+          <Stack.Screen name="Photo" component={PhotoApp} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
+
