@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import uploadToAnonymousFilesAsync from 'anonymous-files';
 import logo from '../../assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 import { firebase } from '../../src/firebase/config';
+import { addPhotoThunk } from '../store/photo';
+import { connect } from 'react-redux';
 
-export default function App(props) {
+export function PhotoApp(props) {
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
@@ -41,7 +42,7 @@ export default function App(props) {
         userId: userID,
         uri: pickerResult.uri,
       };
-      
+
       const photoId = firebase.firestore().collection('photos').doc().id;
       const photosRef = firebase.firestore().collection('photos');
 
@@ -52,7 +53,11 @@ export default function App(props) {
           alert(error);
         });
       await ref.put(blob);
-      await ref.getDownloadURL();
+
+      let photoUrl = await ref.getDownloadURL();
+      console.log(photoUrl, 'photoUrl');
+
+      props.addPhoto(photoId, photoUrl);
     };
 
     if (!pickerResult.cancelled) {
@@ -139,3 +144,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
+
+const mapDispatch = (dispatch) => {
+  return {
+    addPhoto: (firebasePhotoId, photoUrl) =>
+      dispatch(addPhotoThunk(firebasePhotoId, photoUrl)),
+  };
+};
+
+export default connect(null, mapDispatch)(PhotoApp);
