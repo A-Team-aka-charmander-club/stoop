@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   LoginScreen,
-  HomeScreen,
+  GoogleMapView,
   RegistrationScreen,
   PhotoApp,
 } from './client/index';
@@ -55,6 +55,7 @@ export default function App() {
             {(props) => <HomeScreen {...props} extraData={user} />}
           </Stack.Screen>
           <Stack.Screen name="Photo" component={PhotoApp} />
+          <Stack.Screen name="Map" component={GoogleMapView} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
         </Stack.Navigator>
@@ -62,4 +63,3 @@ export default function App() {
     </Provider>
   );
 }
-
