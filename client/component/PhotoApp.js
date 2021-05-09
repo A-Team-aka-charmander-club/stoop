@@ -8,14 +8,14 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import uploadToAnonymousFilesAsync from 'anonymous-files';
 import logo from '../../assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 import { firebase } from '../../src/firebase/config';
+import { addPhotoThunk } from '../store/photo';
+import { connect } from 'react-redux';
 
-export default function App(props) {
-  console.log(props);
+export function PhotoApp(props) {
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
@@ -27,7 +27,6 @@ export default function App(props) {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log('pickerResult', pickerResult);
 
     if (pickerResult.cancelled) {
       return;
@@ -38,15 +37,12 @@ export default function App(props) {
       const photoName = String(Math.random(1000));
       var ref = firebase.storage().ref().child(photoName);
 
-      console.log('ref', ref);
-      console.log('props', props);
       const userID = props.route.params.user.id;
-      console.log('ref', ref);
       const data = {
-        //this is userID
         userId: userID,
         uri: pickerResult.uri,
       };
+
       const photoId = firebase.firestore().collection('photos').doc().id;
       const photosRef = firebase.firestore().collection('photos');
 
@@ -57,7 +53,11 @@ export default function App(props) {
           alert(error);
         });
       await ref.put(blob);
-      await ref.getDownloadURL();
+
+      let photoUrl = await ref.getDownloadURL();
+      console.log(photoUrl, 'photoUrl');
+
+      props.addPhoto(photoId, photoUrl);
     };
 
     if (!pickerResult.cancelled) {
@@ -144,3 +144,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
+
+const mapDispatch = (dispatch) => {
+  return {
+    addPhoto: (firebasePhotoId, photoUrl) =>
+      dispatch(addPhotoThunk(firebasePhotoId, photoUrl)),
+  };
+};
+
+export default connect(null, mapDispatch)(PhotoApp);

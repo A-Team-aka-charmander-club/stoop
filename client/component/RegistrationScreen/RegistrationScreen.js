@@ -3,9 +3,13 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { firebase } from '../../../src/firebase/config';
+import { connect } from 'react-redux'
+import { createUserThunk } from '../../store/user'
+import App from '../PhotoApp';
 
 
-export default function RegistrationScreen({ navigation }) {
+
+export function RegistrationScreen({ navigation, createUser }) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +35,8 @@ export default function RegistrationScreen({ navigation }) {
           email: email,
           fullName: fullName,
         };
+
+        createUser(uid);
     
         const usersRef = firebase.firestore().collection('users')
         usersRef
@@ -42,7 +48,6 @@ export default function RegistrationScreen({ navigation }) {
           .catch((error) => {
             alert(error)
           });
-
       })
       .catch((error) => {
         alert(error);
@@ -113,3 +118,11 @@ export default function RegistrationScreen({ navigation }) {
     </View>
   );
 }
+
+const mapDispatch = dispatch => {
+  return {
+    createUser: (firebaseUserId) => dispatch(createUserThunk(firebaseUserId))
+  }
+}
+
+export default connect(null, mapDispatch)(RegistrationScreen)

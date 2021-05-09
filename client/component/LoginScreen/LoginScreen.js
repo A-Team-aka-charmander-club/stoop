@@ -29,8 +29,8 @@ export default function LoginScreen({ navigation }) {
             }
             const user = firestoreDocument.data();
             console.log('user', user);
-            navigation.navigate('Photo', {user: user});
-          })
+            navigation.navigate('Map', { user: user });
+          });
       })
       .catch((error) => {
         alert(error);
