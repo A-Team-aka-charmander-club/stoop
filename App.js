@@ -1,109 +1,65 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform } from 'react-native';
-import uploadToAnonymousFilesAsync from 'anonymous-files';
-import logo from './assets/logo.png'
-import * as ImagePicker from 'expo-image-picker';
-import * as Sharing from 'expo-sharing';
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { firebase } from './src/firebase/config';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {
+  LoginScreen,
+  GoogleMapView,
+  RegistrationScreen,
+  PhotoApp,
+} from './client/index';
+import { decode, encode } from 'base-64';
+import { Provider } from 'react-redux';
+import store from './client/store/index';
 
-
-export default function App() {
-  const [selectedImage, setSelectedImage] = React.useState(null);
-
-    let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if(!permissionResult.granted){
-      alert("Permission to acccess camera roll is required!");
-      return;
-    }
-
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-
-    if(pickerResult.cancelled){
-      return;
-    }
-
-    if (Platform.OS === 'web') {
-      let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri);
-      setSelectedImage({ localUri: pickerResult.uri, remoteUri });
-    } else {
-      setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
-    } 
-  }
-
-  let openShareDialogAsync = async () => {
-    if (!(await Sharing.isAvailableAsync())) {
-      alert(`The image is available for sharing at: ${selectedImage.remoteUri}`);
-      return;
-    }
-
-    await Sharing.shareAsync(selectedImage.localUri);
-  };
-
-
-    if (selectedImage !== null) {
-      return (
-        <View style={styles.container}>
-          <Image
-            source={{ uri: selectedImage.localUri }}
-            style={styles.thumbnail}
-          />
-          <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
-          <Text style={styles.buttonText}>Share this photo</Text>
-        </TouchableOpacity>
-        </View>
-      );
-    }
-
-
-  return (
-    <View style={styles.container}>
-    <Image source={logo} style={styles.image}/>
-      <Text style={styles.text}>To share photo with a friend, just press the button</Text>
-      {/* <StatusBar style="auto" />
-       */}
-       <TouchableOpacity
-        onPress={openImagePickerAsync}
-        style={styles.button}
-       >
-         <Text style={styles.buttonText}>
-           Take a photo
-         </Text>
-       </TouchableOpacity>
-    </View>
-  );
+if (!global.btoa) {
+  global.btoa = encode;
+}
+if (!global.atob) {
+  global.atob = decode;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#888',
-    fontSize: 18,
-    marginHorizontal: 15
-  },
-  image: {
-    width: 305,
-    height: 159,
-    marginBottom: 10
-  },
-  button: {
-    backgroundColor:'blue',
-    padding: 20,
-    borderRadius: 5
-  }, 
-  buttonText: {
-    fontSize: 20,
-    color: '#fff'
-  },
-  thumbnail: {
-    height: 300,
-    width: 300,
-    resizeMode: "contain"
-  }
-});
+const Stack = createStackNavigator();
+
+export default function App() {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const usersRef = firebase.firestore().collection('users');
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            const userData = document.data();
+            setUser(userData);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
+      } else {
+        setLoading(false);
+      }
+    });
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'}>
+          <Stack.Screen name="Home">
+            {(props) => <HomeScreen {...props} extraData={user} />}
+          </Stack.Screen>
+          <Stack.Screen name="Photo" component={PhotoApp} />
+          <Stack.Screen name="Map" component={GoogleMapView} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
+}
