@@ -1,19 +1,29 @@
 // import * as firebase from 'firebase';
 // import { firebase } from '@firebase/app';
+
 import firebase from 'firebase/app';
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  DATABASE_URL,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID,
+} from '@env';
 
 import '@firebase/auth';
 import '@firebase/firestore';
 import '@firebase/storage';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAhEDxr9yJuACh4bkvzV2N5Ev-IbvVhKqw',
-  authDomain: 'stoop-64867.firebaseapp.com',
-  databaseURL: 'https://stoop-64867-default-rtdb.firebaseio.com/',
-  projectId: 'stoop-64867',
-  storageBucket: 'stoop-64867.appspot.com',
-  messagingSenderId: '537953520115',
-  appId: '1:537953520115:ios:443787631b35c726f9aa86',
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  databaseURL: DATABASE_URL,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
 };
 
 if (!firebase.apps.length) {

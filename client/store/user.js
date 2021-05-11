@@ -12,7 +12,7 @@ function createUser(user) {
 export function createUserThunk(firebaseUserId) {
     return async (dispatch) => {
         try {
-            const { data } = await axios.post(`http://localhost:8080/api/users/user`, {firebaseUserId})
+            const { data } = await axios.post(`http://35.224.83.202/api/users/user`, {firebaseUserId})
             dispatch(createUser(data))
         } catch (err) {
             console.log(err)

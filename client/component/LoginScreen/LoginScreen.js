@@ -28,7 +28,6 @@ export default function LoginScreen({ navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            console.log('user', user);
             navigation.navigate('Map', { user: user });
           });
       })
