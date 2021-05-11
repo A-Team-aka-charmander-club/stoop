@@ -22,7 +22,13 @@ if(process.env.DATABASE_URL){
 
 console.log(process.env.DB_NAME, 'db')
 
-
+const db = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+  host: `/cloudsql/${process.env.DB_INSTANCE}`,
+  dialect: 'postgres',
+  dialectOptions: {
+    socketPath: `/cloudsql/${process.env.DB_INSTANCE}`,
+  }
+}, config)
  console.log(db, 'DB')
 // const db = new Sequelize(
 //   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
