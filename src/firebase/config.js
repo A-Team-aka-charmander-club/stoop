@@ -2,16 +2,15 @@
 // import { firebase } from '@firebase/app';
 
 import firebase from 'firebase/app';
+import { API_KEY } from "@env"
 
 import '@firebase/auth';
 import '@firebase/firestore';
 import '@firebase/storage';
 
 console.log(
-  process.env.REACT_APP_API_KEY,
+  API_KEY,
   'PROCESS ENV API KEY SO EXCITING',
-  process.env.REACT_APP_PROJECT_ID,
-  'COME ON PROJECT ID!~!!!!!'
 );
 
 const firebaseConfig = {
