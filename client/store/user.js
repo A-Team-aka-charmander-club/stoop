@@ -22,9 +22,12 @@ export function logoutUser() {
 export function createOrFindUserThunk(firebaseUserId) {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`http://35.224.83.202/api/users/user`, {
-        firebaseUserId,
-      });
+      const { data } = await axios.post(
+        `https://trashpandapirates.herokuapp.com/api/users/user`,
+        {
+          firebaseUserId,
+        }
+      );
       dispatch(createUser(data));
     } catch (err) {
       console.log(err);
