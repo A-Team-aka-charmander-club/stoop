@@ -6,7 +6,7 @@ import { firebase } from '../../../src/firebase/config';
 import { createOrFindUserThunk } from '../../store/user';
 import { connect } from 'react-redux';
 
-export function LoginScreen(props, { navigation }) {
+export function LoginScreen({ navigation, fetchUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,7 +30,7 @@ export function LoginScreen(props, { navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            props.fetchUser(uid);
+            fetchUser(uid);
             navigation.navigate('Photo', { user: user });
           });
       })
