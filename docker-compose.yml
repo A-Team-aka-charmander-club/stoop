@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  stoopingdb:
+    image: stoopingdb
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
