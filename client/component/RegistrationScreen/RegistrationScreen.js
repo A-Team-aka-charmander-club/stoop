@@ -3,11 +3,9 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import { firebase } from '../../../src/firebase/config';
-import { connect } from 'react-redux'
-import { createUserThunk } from '../../store/user'
+import { connect } from 'react-redux';
+import { createOrFindUserThunk } from '../../store/user';
 import App from '../PhotoApp';
-
-
 
 export function RegistrationScreen({ navigation, createUser }) {
   const [fullName, setFullName] = useState('');
@@ -37,16 +35,16 @@ export function RegistrationScreen({ navigation, createUser }) {
         };
 
         createUser(uid);
-    
-        const usersRef = firebase.firestore().collection('users')
+
+        const usersRef = firebase.firestore().collection('users');
         usersRef
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate('Photo', { user: data })
+            navigation.navigate('Photo', { user: data });
           })
           .catch((error) => {
-            alert(error)
+            alert(error);
           });
       })
       .catch((error) => {
@@ -58,52 +56,54 @@ export function RegistrationScreen({ navigation, createUser }) {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Image
           style={styles.logo}
           source={require('../../../assets/icon.png')}
         />
         <TextInput
           style={styles.input}
-          placeholder="Full Name"
-          placeholderTextColor="#aaaaaa"
+          placeholder='Full Name'
+          placeholderTextColor='#aaaaaa'
           onChangeText={(text) => setFullName(text)}
           value={fullName}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
+          underlineColorAndroid='transparent'
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
-          placeholder="E-mail"
-          placeholderTextColor="#aaaaaa"
+          placeholder='E-mail'
+          placeholderTextColor='#aaaaaa'
           onChangeText={(text) => setEmail(text)}
           value={email}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
+          underlineColorAndroid='transparent'
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
-          placeholderTextColor="#aaaaaa"
+          placeholderTextColor='#aaaaaa'
           secureTextEntry
-          placeholder="Password"
+          placeholder='Password'
           onChangeText={(text) => setPassword(text)}
           value={password}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
+          underlineColorAndroid='transparent'
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
-          placeholderTextColor="#aaaaaa"
+          placeholderTextColor='#aaaaaa'
           secureTextEntry
-          placeholder="Confirm Password"
+          placeholder='Confirm Password'
           onChangeText={(text) => setConfirmPassword(text)}
           value={confirmPassword}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
+          underlineColorAndroid='transparent'
+          autoCapitalize='none'
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => onRegisterPress()}>
+          onPress={() => onRegisterPress()}
+        >
           <Text style={styles.buttonTitle}>Create account</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
@@ -119,10 +119,11 @@ export function RegistrationScreen({ navigation, createUser }) {
   );
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
-    createUser: (firebaseUserId) => dispatch(createUserThunk(firebaseUserId))
-  }
-}
+    createUser: (firebaseUserId) =>
+      dispatch(createOrFindUserThunk(firebaseUserId)),
+  };
+};
 
-export default connect(null, mapDispatch)(RegistrationScreen)
+export default connect(null, mapDispatch)(RegistrationScreen);

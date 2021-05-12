@@ -1,31 +1,44 @@
-import axios from 'axios'
+import axios from 'axios';
+// ACTION CONSTANTS
+const CREATE_USER = 'CREATE_USER';
 
-const CREATE_USER = 'CREATE_USER'
+const LOGOUT_USER = 'LOGOUT_USER';
 
+//ACTION CREATORS
 function createUser(user) {
-    return {
-        type: CREATE_USER,
-        user
-    }
+  return {
+    type: CREATE_USER,
+    user,
+  };
 }
 
-export function createUserThunk(firebaseUserId) {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.post(`http://35.224.83.202/api/users/user`, {firebaseUserId})
-            dispatch(createUser(data))
-        } catch (err) {
-            console.log(err)
-        }
-
+export function logoutUser() {
+  return {
+    type: LOGOUT_USER,
+    user: {},
+  };
+}
+// THUNK
+export function createOrFindUserThunk(firebaseUserId) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`http://35.224.83.202/api/users/user`, {
+        firebaseUserId,
+      });
+      dispatch(createUser(data));
+    } catch (err) {
+      console.log(err);
     }
+  };
 }
 
 export default function (state = {}, action) {
-    switch (action.type) {
-        case CREATE_USER:
-            return action.user;
-        default:
-            return state
-    }
+  switch (action.type) {
+    case CREATE_USER:
+      return action.user;
+    case LOGOUT_USER:
+      return action.user;
+    default:
+      return state;
+  }
 }
