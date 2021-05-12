@@ -14,7 +14,7 @@ import * as Sharing from 'expo-sharing';
 import { firebase } from '../../src/firebase/config';
 import { addPhotoThunk } from '../store/photo';
 import { connect } from 'react-redux';
-import Logout from '../component/LogOut/Logout';
+import Logout from '../component/LogoutScreen/Logout';
 
 export function PhotoApp(props) {
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -103,7 +103,7 @@ export function PhotoApp(props) {
 
   return (
     <View style={styles.container}>
-      <Logout navigation={props.navigation} />
+      {/* <Logout navigation={props.navigation} /> */}
       <Image source={logo} style={styles.image} />
       <Text style={styles.text}>
         To share photo with a friend, just press the button
