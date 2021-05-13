@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 import {
   API_KEY,
   AUTH_DOMAIN,
-  DATABASE_URL,
+  DATABASEURL,
   PROJECT_ID,
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
@@ -19,7 +19,7 @@ import '@firebase/storage';
 const firebaseConfig = {
   apiKey: API_KEY,
   authDomain: AUTH_DOMAIN,
-  databaseURL: DATABASE_URL,
+  databaseURL: DATABASEURL,
   projectId: PROJECT_ID,
   storageBucket: STORAGE_BUCKET,
   messagingSenderId: MESSAGING_SENDER_ID,

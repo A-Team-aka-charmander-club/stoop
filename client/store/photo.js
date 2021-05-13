@@ -13,7 +13,8 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        `https://trashpandapirates.herokuapp.com/api/photos/photo`,
+        //`https://trashpandapirates.herokuapp.com/api/photos/photo`,
+        `https://localhost:8080/api/users/user`,
         {
           firebasePhotoId,
           photoUrl,
