@@ -4,18 +4,8 @@ const {
 } = require('../db');
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
-  try {
-    console.log('HIIIIIIIIII');
-    res.send('yayyyyyyyyyy');
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.post('/user', async (req, res, next) => {
   try {
-    console.log('????????????', req.body);
     const user = await User.findOrCreate({
       where: { firebaseId: req.body.firebaseUserId },
     });
