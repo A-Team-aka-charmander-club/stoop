@@ -19,16 +19,17 @@ export function logoutUser() {
   };
 }
 // THUNK
-export function createOrFindUserThunk(firebaseUserId) {
+export function createOrFindUserThunk(firebaseUserId, email, fullName) {
   return async (dispatch) => {
     try {
-      console.log('in the thunk', firebaseUserId);
-      const { data } = await axios.post(
-        // `https://trashpandapirates.herokuapp.com/api/users/user`,
-        `http://localhost:8080/api/users/user`,
-        {
-          firebaseUserId,
-        }
+      console.log('in the thunk', firebaseUserId, email, fullName);
+      // `https://trashpandapirates.herokuapp.com/api/users/user`,
+      //`https://localhost:8080/api/users/user`
+      const {
+        data,
+      } = await axios.post(
+        `https://trashpandapirates.herokuapp.com/api/users/user`,
+        { firebaseUserId, email, fullName }
       );
       dispatch(createUser(data));
     } catch (err) {

@@ -5,13 +5,15 @@ const {
 module.exports = router;
 
 router.post('/user', async (req, res, next) => {
+  console.log('user')
   try {
     const user = await User.findOrCreate({
-      where: { firebaseId: req.body.firebaseUserId },
+      where: { firebaseUserId: req.body.firebaseUserId, email: req.body.email, fullName: req.body.fullName },
     });
     console.log('user', user);
     res.json(user);
   } catch (err) {
+    console.log('from the user')
     next(err);
   }
 });
