@@ -6,4 +6,6 @@ export { default as RegistrationScreen } from './component/RegistrationScreen/Re
 
 export { default as PhotoApp } from './component/PhotoApp';
 
+export { default as PostScreen } from './component/PostScreen/PostScreen';
+
 export { default as GoogleMapView } from './component/MapView/GoogleMapView';

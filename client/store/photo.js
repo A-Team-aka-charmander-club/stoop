@@ -2,6 +2,9 @@ import axios from 'axios';
 import { firebase } from '../../src/firebase/config';
 const ADD_PHOTO = 'ADD_PHOTO';
 
+const TAKE_PHOTO = 'TAKE_PHOTO';
+
+// action creators
 const addPhoto = (photo) => {
   return {
     type: ADD_PHOTO,
@@ -9,6 +12,14 @@ const addPhoto = (photo) => {
   };
 };
 
+export const takePhoto = (photo) => {
+  return {
+    type: TAKE_PHOTO,
+    photo,
+  };
+};
+
+// thunks
 export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
   return async (dispatch) => {
     try {
@@ -36,6 +47,8 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
 export default function (state = {}, action) {
   switch (action.type) {
     case ADD_PHOTO:
+      return action.photo;
+    case TAKE_PHOTO:
       return action.photo;
     default:
       return state;
