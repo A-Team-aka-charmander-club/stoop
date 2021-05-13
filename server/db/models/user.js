@@ -2,13 +2,27 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('user', {
-  firebaseId: {
+  firebaseUserId: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: true
+    }
+  }, 
+  fullName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }, 
+  isAdmin:{
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
 });
 
 module.exports = User;

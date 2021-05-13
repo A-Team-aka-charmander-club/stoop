@@ -1,9 +1,7 @@
 'use strict';
 
-const { generateEntryFromModel, generateEntryFromSchema } = require('faquel');
 const { db, models } = require('./server/db/');
 const Sequelize = require('sequelize');
-const faker = require('faker');
 const posts = require('./seedData/Post');
 const comments = require('./seedData/Comment');
 const tags = require('./seedData/Tag');
