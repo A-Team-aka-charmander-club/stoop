@@ -29,12 +29,12 @@ export function RegistrationScreen({ navigation, createUser }) {
       .then((userCredential) => {
         const uid = userCredential.user.uid;
         const data = {
-          id: uid,
-          email: email,
-          fullName: fullName,
+          id: uid
+          // email: email,
+          // fullName: fullName,
         };
 
-        createUser(uid);
+        createUser(uid, email, fullName);
 
         const usersRef = firebase.firestore().collection('users');
         usersRef
@@ -121,8 +121,8 @@ export function RegistrationScreen({ navigation, createUser }) {
 
 const mapDispatch = (dispatch) => {
   return {
-    createUser: (firebaseUserId) =>
-      dispatch(createOrFindUserThunk(firebaseUserId)),
+    createUser: (firebaseUserId, email, fullName) =>
+      dispatch(createOrFindUserThunk(firebaseUserId, email, fullName)),
   };
 };
 
