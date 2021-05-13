@@ -31,7 +31,7 @@ export function LoginScreen({ navigation, fetchUser }) {
             }
             const user = firestoreDocument.data();
             fetchUser(uid);
-            navigation.navigate('Photo', { user: user });
+            navigation.navigate('Home', { user: user });
           });
       })
       .catch((error) => {

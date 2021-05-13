@@ -4,10 +4,12 @@ import { firebase } from './src/firebase/config';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
+  HomeScreen,
   LoginScreen,
   GoogleMapView,
   RegistrationScreen,
   PhotoApp,
+  PostScreen,
 } from './client/index';
 import { decode, encode } from 'base-64';
 import { Provider } from 'react-redux';
@@ -50,14 +52,14 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'}>
-          <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
-          </Stack.Screen>
-          <Stack.Screen name="Photo" component={PhotoApp} />
-          <Stack.Screen name="Map" component={GoogleMapView} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} />
+        <Stack.Navigator initialRouteName='Home'>
+          <Stack.Screen name='Home' component={HomeScreen} />
+          {/* {(props) => <HomeScreen {...props} extraData={user} />} */}
+          <Stack.Screen name='Photo' component={PhotoApp} />
+          <Stack.Screen name='Post' component={PostScreen} />
+          <Stack.Screen name='Map' component={GoogleMapView} />
+          <Stack.Screen name='Login' component={LoginScreen} />
+          <Stack.Screen name='Registration' component={RegistrationScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
