@@ -1,6 +1,3 @@
-// import * as firebase from 'firebase';
-// import { firebase } from '@firebase/app';
-
 import firebase from 'firebase/app';
 import {
   API_KEY,
@@ -11,11 +8,13 @@ import {
   MESSAGING_SENDER_ID,
   APP_ID,
 } from '@env';
-
 import '@firebase/auth';
 import '@firebase/firestore';
 import '@firebase/storage';
-
+console.log('hi');
+console.log(API_KEY);
+console.log(AUTH_DOMAIN);
+console.log(APP_ID);
 const firebaseConfig = {
   apiKey: API_KEY,
   authDomain: AUTH_DOMAIN,
@@ -25,7 +24,6 @@ const firebaseConfig = {
   messagingSenderId: MESSAGING_SENDER_ID,
   appId: APP_ID,
 };
-
 // if (!firebase.apps.length) {
 firebase.initializeApp(firebaseConfig);
 // firebase
@@ -44,5 +42,4 @@ firebase.initializeApp(firebaseConfig);
 //     }
 //   });
 // }
-
 export { firebase };

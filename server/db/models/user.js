@@ -11,18 +11,14 @@ const User = db.define('user', {
   },
   email: {
     type: Sequelize.STRING,
-    validate: {
-      isEmail: true
-    }
-  }, 
+  },
   fullName: {
     type: Sequelize.STRING,
-    allowNull: false
-  }, 
-  isAdmin:{
+  },
+  isAdmin: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
 });
 
 module.exports = User;
