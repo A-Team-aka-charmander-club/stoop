@@ -2,7 +2,7 @@
 
 const db = require('./db');
 
-const User = require('./models/User');
+const User = require('./models/user');
 const Comment = require('./models/comment');
 const Photo = require('./models/photo');
 const Post = require('./models/post');

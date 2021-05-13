@@ -14,10 +14,12 @@ import * as Sharing from 'expo-sharing';
 import { firebase } from '../../src/firebase/config';
 import { addPhotoThunk } from '../store/photo';
 import { connect } from 'react-redux';
+import Logout from '../component/LogoutScreen/Logout';
 
 export function PhotoApp(props) {
   const [selectedImage, setSelectedImage] = React.useState(null);
 
+  // allows you to open camera roll + select image (necessary for app use)
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -31,6 +33,7 @@ export function PhotoApp(props) {
     if (pickerResult.cancelled) {
       return;
     }
+    // uploading to firestore
     const uploadImage = async (uri) => {
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -54,6 +57,7 @@ export function PhotoApp(props) {
         });
       await ref.put(blob);
 
+      // this is URL to download photo (not data)
       let photoUrl = await ref.getDownloadURL();
       console.log(photoUrl, 'photoUrl');
 
@@ -99,6 +103,7 @@ export function PhotoApp(props) {
 
   return (
     <View style={styles.container}>
+      {/* <Logout navigation={props.navigation} /> */}
       <Image source={logo} style={styles.image} />
       <Text style={styles.text}>
         To share photo with a friend, just press the button
