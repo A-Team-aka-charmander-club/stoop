@@ -1,0 +1,59 @@
+const {
+  models: { User },
+} = require('../db');
+
+const isLoggedIn = async (req, res, next) => {
+  try {
+    console.log('reqheadersauth', req.headers.authorization);
+    // const user = firebase.auth().currentUser;
+    const user = await User.findOne({
+      where: {
+        firebaseId: req.headers.authorization,
+      },
+    });
+    if (user) {
+      req.user = user;
+      next();
+    } else {
+      return res.status(403).send('Please log in!');
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const verifyUser = async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        firebaseId: req.headers.authorization,
+      },
+    });
+    if (user.firebaseId !== Number(req.params.userId)) {
+      return res.status(403).send('This is not for you!');
+    } else {
+      req.user = user;
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const isAdmin = async (req, res, next) => {
+  try {
+    if (!req.user.isAdmin) {
+      return res.status(403).send('You are not an admin!');
+    } else {
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  isLoggedIn,
+  verifyUser,
+  isAdmin,
+};
