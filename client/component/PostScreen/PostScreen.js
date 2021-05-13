@@ -20,23 +20,23 @@ import {
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
-import { text } from 'express';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   return (
     <View style={styles.container}>
-      <Text>Create Post</Text>
-      {/* photo display */}
-      <Image source={{ uri: props.photo }} style={styles.thumbnail} />
-
-      {/* post form */}
-      {/* <KeyboardAwareScrollView
+      <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps='always'
-      > */}
-      {/* <TextInput
+      >
+        <Text>Create Post</Text>
+        {/* photo display */}
+        <Image source={{ uri: props.photo }} style={styles.thumbnail} />
+
+        {/* post form */}
+
+        <TextInput
           style={styles.input}
           placeholder='Title'
           value={title}
@@ -48,12 +48,13 @@ export const PostScreen = (props) => {
           placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
-        /> */}
-      {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
+        />
+        {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
 
-      {/* submit */}
-      {/* </KeyboardAwareScrollView> */}
-      {/* mapview */}
+        {/* submit */}
+
+        {/* mapview */}
+      </KeyboardAwareScrollView>
     </View>
   );
 };
