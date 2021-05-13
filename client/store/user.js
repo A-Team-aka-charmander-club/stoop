@@ -21,7 +21,6 @@ export function logoutUser() {
 // THUNK
 export function createOrFindUserThunk(user) {
   return async (dispatch) => {
-    console.log('In the user thunk', user);
     try {
       // `https://trashpandapirates.herokuapp.com/api/users/user`,
 
@@ -30,8 +29,6 @@ export function createOrFindUserThunk(user) {
         // `https://localhost:8080/api/users/user`
         { user }
       );
-      console.log('user from thunk', user);
-      console.log('data from thunk', data);
       dispatch(createUser(data));
     } catch (err) {
       console.log(err);
