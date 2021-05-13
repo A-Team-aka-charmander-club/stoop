@@ -4,11 +4,9 @@ const {
 
 const isLoggedIn = async (req, res, next) => {
   try {
-    console.log('reqheadersauth', req.headers.authorization);
-    // const user = firebase.auth().currentUser;
     const user = await User.findOne({
       where: {
-        firebaseId: req.headers.authorization,
+        firebaseUserId: req.headers.authorization,
       },
     });
     if (user) {
