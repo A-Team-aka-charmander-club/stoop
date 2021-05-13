@@ -15,7 +15,6 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
         // 'http://localhost:8080/api/photos/photo',
-        `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
         {
