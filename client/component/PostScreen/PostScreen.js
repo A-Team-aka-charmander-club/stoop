@@ -25,7 +25,40 @@ import thunk from 'redux-thunk';
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  return (
+  
+  
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    //what is this line doing? 
+    var ref = firebase.storage().ref().child();
+
+    const userID = firebase.auth().currentUser;
+    const data = {
+      userId: userID,
+      uri: uri
+    };
+
+    const photoId = firebase.firestore().collection('photos').doc().id;
+    const photosRef = firebase.firestore().collection('photos');
+
+    photosRef
+      .doc(photoId)
+      .set(data)
+      .catch((error) => {
+        alert(error);
+      });
+    await ref.put(blob);
+
+    // this is URL to download photo (not data)
+    let photoUrl = await ref.getDownloadURL();
+  
+  
+  
+  
+  
+    return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
@@ -62,7 +95,7 @@ export const PostScreen = (props) => {
         redirect to a different screen  / confirmation/ post page 
          */}
 
-        <TouchableOpacity style={styles.button} onPress>
+        <TouchableOpacity style={styles.button} onPress = {()=> {uploadImage()}}>
           <Text style={styles.button}>Post!</Text>
         </TouchableOpacity>
 
