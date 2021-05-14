@@ -26,7 +26,7 @@ export function createOrFindUserThunk(firebaseUserId, email, fullName) {
       // `https://trashpandapirates.herokuapp.com/api/users/user`,
       //`http://localhost:8080/api/users/user`
       const { data } = await axios.post(
-        `http://localhost:8080/api/users/user`,
+        `https://192.168.1.6:8080/api/users/user`,
         {
           firebaseUserId,
           email,
