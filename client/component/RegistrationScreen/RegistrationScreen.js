@@ -41,7 +41,7 @@ export function RegistrationScreen({ navigation, createUser }) {
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate('Photo', { user: data });
+            navigation.navigate('Home', { user: data });
           })
           .catch((error) => {
             alert(error);
