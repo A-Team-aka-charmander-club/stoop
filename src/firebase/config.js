@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+
 import {
   API_KEY,
   AUTH_DOMAIN,

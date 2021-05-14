@@ -1,4 +1,0 @@
-DB_NAME=stoop-64867:us-central1:stoopingdb
-DB_USER=postgres
-DB_PASS=stoopingdb
-DB_INSTANCE=postgresdb
