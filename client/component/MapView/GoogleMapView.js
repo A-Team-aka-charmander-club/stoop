@@ -13,6 +13,7 @@ export default function GoogleMapView() {
   })
 
   const [location, setLocation] = useState(null);
+  const [marker, setLocation] = useState(null);
   installWebGeolocationPolyfill()
 
   useEffect(() => {
@@ -41,12 +42,12 @@ export default function GoogleMapView() {
         showsUserLocation={true}
         zoomEnabled={true}
       >
-        {/* <Marker
+        <Marker
           coordinate={{
             latitude: latitude,
             longitude: longitude,
           }}
-        ></Marker> */}
+        ></Marker>
       </MapView>
     </View>
   );
