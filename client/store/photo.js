@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-// action constants
+import { firebase } from '../../src/firebase/config';
+
 const ADD_PHOTO = 'ADD_PHOTO';
 
 const TAKE_PHOTO = 'TAKE_PHOTO';
@@ -24,11 +25,15 @@ export const takePhoto = (photo) => {
 export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
   return async (dispatch) => {
     try {
+      const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-        `http://://192.168.1.6:8080/api/photos/photo`,
+        `http://192.168.1.6:8080/api/photos/photo`,
         {
           firebasePhotoId,
           photoUrl,
+        },
+        {
+          headers: { authorization: user.uid },
         }
       );
       dispatch(addPhoto(data));

@@ -29,7 +29,7 @@ export function Logout(props) {
   return (
     <View>
       <TouchableOpacity onPress={() => onLogoutPress()}>
-        <Text>LogOut</Text>
+        <Text style={styles.footerLink}>LogOut</Text>
       </TouchableOpacity>
     </View>
   );

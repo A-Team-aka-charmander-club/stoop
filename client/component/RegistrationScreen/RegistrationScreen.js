@@ -29,12 +29,12 @@ export function RegistrationScreen({ navigation, createUser }) {
       .then((userCredential) => {
         const uid = userCredential.user.uid;
         const data = {
-          id: uid
+          id: uid,
           // email: email,
           // fullName: fullName,
         };
 
-        createUser(uid, email, fullName);
+        createUser({ uid, email, fullName });
 
         const usersRef = firebase.firestore().collection('users');
         usersRef
