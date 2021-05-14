@@ -14,15 +14,17 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
       firebasePhotoId: req.body.photo.firebasePhotoId,
     });
     const user = req.user;
-    user.addPhoto(photo);
+    await user.addPhoto(photo);
 
     const post = await Post.create({
       title: req.body.post.title,
       description: req.body.post.description,
     });
 
-    user.addPost(post);
-    post.addPhoto(photo);
+    await user.addPost(post);
+    await post.addPhoto(photo);
+
+    console.log(Object.keys(Post.prototype));
 
     let combinedPost = await Post.findOne({
       where: {
@@ -31,9 +33,6 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
       include: [
         {
           model: Photo,
-          where: {
-            postId: post.id,
-          },
         },
       ],
     });
