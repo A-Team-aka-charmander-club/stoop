@@ -20,6 +20,7 @@ export function LoginScreen({ navigation, fetchUser }) {
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
         const uid = response.user.uid;
+        console.log('uid', uid);
         const usersRef = firebase.firestore().collection('users');
         usersRef
           .doc(uid)

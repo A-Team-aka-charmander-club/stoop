@@ -4,8 +4,9 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
 import photo from './photo';
+import post from './post';
 
-const reducer = combineReducers({ user, photo });
+const reducer = combineReducers({ user, photo, post });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

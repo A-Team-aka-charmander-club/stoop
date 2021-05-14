@@ -25,6 +25,9 @@ Tag.belongsToMany(Post, { through: 'postTag' });
 Photo.belongsTo(Post);
 Post.hasMany(Photo);
 
+Photo.belongsTo(User);
+User.hasMany(Photo);
+
 module.exports = {
   db,
   models: {
