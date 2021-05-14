@@ -1,10 +1,5 @@
 import axios from 'axios';
-<<<<<<< HEAD
-
-// action constants
-=======
 import { firebase } from '../../src/firebase/config';
->>>>>>> main
 const ADD_PHOTO = 'ADD_PHOTO';
 
 const TAKE_PHOTO = 'TAKE_PHOTO';
@@ -30,12 +25,7 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-<<<<<<< HEAD
         `http://localhost:8080/api/photos/photo`,
-=======
-        //`https://trashpandapirates.herokuapp.com/api/photos/photo`,
-        `https://localhost:8080/api/photos/photo`,
->>>>>>> main
         {
           firebasePhotoId,
           photoUrl,

@@ -22,7 +22,6 @@ export function logoutUser() {
 export function createOrFindUserThunk(user) {
   return async (dispatch) => {
     try {
-<<<<<<< HEAD
       console.log('in the thunk', firebaseUserId, email, fullName);
       // `https://trashpandapirates.herokuapp.com/api/users/user`,
       //`http://localhost:8080/api/users/user`
@@ -33,14 +32,6 @@ export function createOrFindUserThunk(user) {
           email,
           fullName,
         }
-=======
-      // `https://trashpandapirates.herokuapp.com/api/users/user`,
-
-      const { data } = await axios.post(
-        `http://10.0.0.153:8080/api/users/user`,
-        // `https://localhost:8080/api/users/user`
-        { user }
->>>>>>> main
       );
       dispatch(createUser(data));
     } catch (err) {

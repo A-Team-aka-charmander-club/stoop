@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
+import thunk from 'redux-thunk';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -52,6 +53,15 @@ export const PostScreen = (props) => {
         {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
 
         {/* submit */}
+
+        {/* first -> firebase for userId and picture
+        also: clear picture from state 
+        at some point: call database to create: 
+        -post 
+        -picture
+        redirect to a different screen  / confirmation/ post page 
+         */}
+
         <TouchableOpacity style={styles.button} onPress>
           <Text style={styles.button}>Post!</Text>
         </TouchableOpacity>
@@ -67,5 +77,10 @@ const mapStateToProps = (state) => {
     photo: state.photo,
   };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitPost: (dispatch) => thunk(dispatch),
+  };
+};
 
-export default connect(mapStateToProps, null)(PostScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
