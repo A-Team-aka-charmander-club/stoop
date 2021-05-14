@@ -23,7 +23,7 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
     user.hasPost(post);
     post.addPhoto(photo);
 
-    res.send(post);
+    res.send({ post, photo });
   } catch (error) {
     next(error);
   }
