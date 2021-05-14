@@ -37,6 +37,14 @@ export default function GoogleMapView() {
     console.log(marker, 'marker in effect');
   }, []);
 
+
+  onDragEnd=(e) => {
+    console.log('hi')
+    setMarker(e.nativeEvent.coordinate)
+    console.log(marker)
+  }
+
+
   console.log(marker, 'marker');
   return (
     <View style={styles.container}>
@@ -54,11 +62,8 @@ export default function GoogleMapView() {
             latitude: region.latitude,
             longitude: region.longitude,
           }}
-          onMarkerDragStart={(e) => {
-            console.log('dragEnd', e.nativeEvent.coordinate);
-
+          onDragEnd={onDragEnd}
             // return setMarker(e.nativeEvent.coordinate);
-          }}
         ></Marker>
       </MapView>
     </View>
