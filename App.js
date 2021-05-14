@@ -14,6 +14,7 @@ import {
 import { decode, encode } from 'base-64';
 import { Provider } from 'react-redux';
 import store from './client/store/index';
+import BottomTabNavigator from './client/component/Navigation/TabNavigator/TabNavigator';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -28,38 +29,47 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const usersRef = firebase.firestore().collection('users');
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            const userData = document.data();
-            setUser(userData);
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-          });
-      } else {
-        setLoading(false);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   const usersRef = firebase.firestore().collection('users');
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       usersRef
+  //         .doc(user.uid)
+  //         .get()
+  //         .then((document) => {
+  //           const userData = document.data();
+  //           setUser(userData);
+  //           setLoading(false);
+  //         })
+  //         .catch((error) => {
+  //           setLoading(false);
+  //         });
+  //     } else {
+  //       setLoading(false);
+  //     }
+  //   });
+  // }, []);
 
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Login'>
-          <Stack.Screen name='Home' component={HomeScreen} />
+          <Stack.Screen
+            name='Home'
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
           {/* {(props) => <HomeScreen {...props} extraData={user} />} */}
-          <Stack.Screen name='Photo' component={PhotoApp} />
-          <Stack.Screen name='Post' component={PostScreen} />
-          <Stack.Screen name='Map' component={GoogleMapView} />
-          <Stack.Screen name='Login' component={LoginScreen} />
-          <Stack.Screen name='Registration' component={RegistrationScreen} />
+          <Stack.Screen
+            name='Login'
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Registration'
+            component={RegistrationScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
