@@ -21,7 +21,8 @@ export function PhotoApp(props) {
 
   // allows you to open camera roll + select image (necessary for app use)
   let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (!permissionResult.granted) {
       alert('Permission to acccess camera roll is required!');
@@ -103,7 +104,7 @@ export function PhotoApp(props) {
 
   return (
     <View style={styles.container}>
-      {/* <Logout navigation={props.navigation} /> */}
+      <Logout navigation={props.navigation} />
       <Image source={logo} style={styles.image} />
       <Text style={styles.text}>
         To share photo with a friend, just press the button
