@@ -13,7 +13,10 @@ export default function GoogleMapView() {
   });
 
   const [location, setLocation] = useState(null);
-  const [marker, setMarker] = useState(null);
+  const [marker, setMarker] = useState({
+    latitude: region.latitude,
+    longitude: region.longitude,
+  });
   installWebGeolocationPolyfill();
 
   useEffect(() => {
@@ -29,26 +32,33 @@ export default function GoogleMapView() {
         });
       },
       (error) => alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      { enableHighAccuracy: true, maximumAge: 1000 }
     );
+    console.log(marker, 'marker in effect');
   }, []);
 
+  console.log(marker, 'marker');
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         region={region}
+        // onRegionChangeComplete={handleRegionChange(region)}
         showsUserLocation={true}
         zoomEnabled={true}
       >
         <Marker
-          draggable
+          draggable={true}
           coordinate={{
             latitude: region.latitude,
             longitude: region.longitude,
           }}
-          onDragEnd={(e) => setMarker(e.nativeEvent.coordinate)}
+          onMarkerDragStart={(e) => {
+            console.log('dragEnd', e.nativeEvent.coordinate);
+
+            // return setMarker(e.nativeEvent.coordinate);
+          }}
         ></Marker>
       </MapView>
     </View>

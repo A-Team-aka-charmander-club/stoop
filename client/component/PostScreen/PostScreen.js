@@ -1,11 +1,3 @@
-// what is this?
-
-//click '+' to create post
-// brings up camera (to take picture)
-// once picture is taken (or uploaded) => another screen with text input fields + tags + location info (something maps)
-// submit creates post
-// confirmation that it worked somehow (navigates to post)
-
 import React, { useState } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
