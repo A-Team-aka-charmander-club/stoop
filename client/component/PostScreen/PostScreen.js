@@ -31,11 +31,11 @@ export const PostScreen = (props) => {
         keyboardShouldPersistTaps='always'
       >
         <Text>Create Post</Text>
+
         {/* photo display */}
         <Image source={{ uri: props.photo }} style={styles.thumbnail} />
 
         {/* post form */}
-
         <TextInput
           style={styles.input}
           placeholder='Title'
@@ -52,6 +52,9 @@ export const PostScreen = (props) => {
         {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
 
         {/* submit */}
+        <TouchableOpacity style={styles.button} onPress>
+          <Text style={styles.button}>Post!</Text>
+        </TouchableOpacity>
 
         {/* mapview */}
       </KeyboardAwareScrollView>
