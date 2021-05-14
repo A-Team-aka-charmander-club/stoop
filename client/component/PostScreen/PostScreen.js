@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
+import GoogleMapView from '../MapView/GoogleMapView';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -53,7 +54,7 @@ export const PostScreen = (props) => {
 
         {/* submit */}
 
-        {/* mapview */}
+        <GoogleMapView />
       </KeyboardAwareScrollView>
     </View>
   );
