@@ -30,13 +30,6 @@ const Post = db.define('post', {
       notEmpty: true,
     },
   },
-  primaryUrl: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
-  },
 });
 
 const PostSchema = {

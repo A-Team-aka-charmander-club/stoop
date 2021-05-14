@@ -3,6 +3,7 @@ module.exports = router;
 
 router.use('/users', require('./users'));
 router.use('/photos', require('./photos'));
+router.use('/posts', require('./posts'));
 
 router.use((req, res, next) => {
   console.log('index');

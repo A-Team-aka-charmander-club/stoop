@@ -20,24 +20,24 @@ import {
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
-import thunk from 'redux-thunk';
+import { createPostThunk } from '../../store/post';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  
-  
+
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
+    const photoName = String(Math.random(1000));
+    var ref = firebase.storage().ref().child(photoName);
 
-    //what is this line doing? 
-    var ref = firebase.storage().ref().child();
+    //ABI GOOD MORNING! The stuff above we do need! We are adding an image to the STORAGE (not firestore it's another thing) FIRST and then we are creating an entry BELOW (lines 43 on) in the fireSTORE that we can reference. IF you go into the firebase console and click on 'storage' it'll all become a lot clearer.
 
     const userID = firebase.auth().currentUser;
     const data = {
       userId: userID,
-      uri: uri
+      uri: uri,
     };
 
     const photoId = firebase.firestore().collection('photos').doc().id;
@@ -53,17 +53,18 @@ export const PostScreen = (props) => {
 
     // this is URL to download photo (not data)
     let photoUrl = await ref.getDownloadURL();
-  
-  
-  
-  
-  
-    return (
+
+    let post = { title, description };
+    let photo = { firebasePhotoId: photoId, userId, firebaseUrl: photoUrl };
+
+    props.submitPost({ post, photo });
+  };
+
+  return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-      >
+        keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
 
         {/* photo display */}
@@ -72,14 +73,14 @@ export const PostScreen = (props) => {
         {/* post form */}
         <TextInput
           style={styles.input}
-          placeholder='Title'
+          placeholder="Title"
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder='Description'
+          placeholder="Description"
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
@@ -88,14 +89,18 @@ export const PostScreen = (props) => {
         {/* submit */}
 
         {/* first -> firebase for userId and picture
-        also: clear picture from state 
-        at some point: call database to create: 
-        -post 
+        also: clear picture from state
+        at some point: call database to create:
+        -post
         -picture
-        redirect to a different screen  / confirmation/ post page 
+        redirect to a different screen  / confirmation/ post page
          */}
 
-        <TouchableOpacity style={styles.button} onPress = {()=> {uploadImage()}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            uploadImage(props.photo);
+          }}>
           <Text style={styles.button}>Post!</Text>
         </TouchableOpacity>
 
@@ -112,7 +117,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitPost: (dispatch) => thunk(dispatch),
+    submitPost: (post) => dispatch(createPostThunk(post)),
   };
 };
 

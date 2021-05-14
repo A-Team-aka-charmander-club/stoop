@@ -15,7 +15,7 @@ export const createPost = (post) => {
 
 //thunk
 
-const createPostThunk = (post) => {
+export const createPostThunk = (post) => {
   return async (dispatch) => {
     try {
       const user = firebase.auth().currentUser;

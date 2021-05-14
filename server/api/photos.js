@@ -11,7 +11,7 @@ router.post('/photo', isLoggedIn, async (req, res, next) => {
     console.log('a photo is sending!!!!!!!!!!!');
     const photo = await Photo.create({
       firebaseUrl: req.body.photoUrl,
-      firebaseId: req.body.firebasePhotoId,
+      firebasePhotoId: req.body.firebasePhotoId,
     });
     res.json(photo);
   } catch (err) {
