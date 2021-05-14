@@ -3,6 +3,7 @@ const {
   models: { Photo, User, Post },
 } = require('../db');
 const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
+const { Op } = require('sequelize');
 
 module.exports = router;
 
@@ -20,10 +21,24 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
       description: req.body.post.description,
     });
 
-    user.hasPost(post);
+    user.addPost(post);
     post.addPhoto(photo);
 
-    res.send({ post, photo });
+    let combinedPost = await Post.findOne({
+      where: {
+        id: post.id,
+      },
+      include: [
+        {
+          model: Photo,
+          where: {
+            postId: post.id,
+          },
+        },
+      ],
+    });
+
+    res.send(combinedPost);
   } catch (error) {
     next(error);
   }

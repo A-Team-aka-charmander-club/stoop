@@ -19,9 +19,13 @@ export const createPostThunk = (post) => {
   return async (dispatch) => {
     try {
       const user = firebase.auth().currentUser;
-      const { data } = await axios.post('/posts/post', post, {
-        headers: { authorization: user.uid },
-      });
+      const { data } = await axios.post(
+        `http://10.0.0.153:8080/api/posts/post`,
+        post,
+        {
+          headers: { authorization: user.uid },
+        }
+      );
       dispatch(createPost(data));
     } catch (err) {
       console.log(err);

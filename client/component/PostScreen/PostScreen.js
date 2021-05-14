@@ -34,9 +34,9 @@ export const PostScreen = (props) => {
 
     //ABI GOOD MORNING! The stuff above we do need! We are adding an image to the STORAGE (not firestore it's another thing) FIRST and then we are creating an entry BELOW (lines 43 on) in the fireSTORE that we can reference. IF you go into the firebase console and click on 'storage' it'll all become a lot clearer.
 
-    const userID = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
     const data = {
-      userId: userID,
+      userId: user.uid,
       uri: uri,
     };
 
@@ -55,7 +55,11 @@ export const PostScreen = (props) => {
     let photoUrl = await ref.getDownloadURL();
 
     let post = { title, description };
-    let photo = { firebasePhotoId: photoId, userId, firebaseUrl: photoUrl };
+    let photo = {
+      firebasePhotoId: photoId,
+      userId: user.uid,
+      firebaseUrl: photoUrl,
+    };
 
     props.submitPost({ post, photo });
   };
@@ -64,7 +68,8 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {/* photo display */}
@@ -73,14 +78,14 @@ export const PostScreen = (props) => {
         {/* post form */}
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
@@ -100,7 +105,8 @@ export const PostScreen = (props) => {
           style={styles.button}
           onPress={() => {
             uploadImage(props.photo);
-          }}>
+          }}
+        >
           <Text style={styles.button}>Post!</Text>
         </TouchableOpacity>
 

@@ -25,7 +25,7 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-        `http://localhost:8080/api/photos/photo`,
+        `http://10.0.0.153:8080/api/photos/photo`,
         {
           firebasePhotoId,
           photoUrl,

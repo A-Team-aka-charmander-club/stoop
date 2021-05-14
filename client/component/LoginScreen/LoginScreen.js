@@ -20,6 +20,7 @@ export function LoginScreen({ navigation, fetchUser }) {
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
         const uid = response.user.uid;
+        console.log('uid', uid);
         const usersRef = firebase.firestore().collection('users');
         usersRef
           .doc(uid)
@@ -30,13 +31,8 @@ export function LoginScreen({ navigation, fetchUser }) {
               return;
             }
             const user = firestoreDocument.data();
-<<<<<<< HEAD
-            fetchUser(uid);
-            navigation.navigate('Home', { user: user });
-=======
             fetchUser({ uid });
-            navigation.navigate('Photo', { user: user });
->>>>>>> main
+            navigation.navigate('Home', { user: user });
           });
       })
       .catch((error) => {
