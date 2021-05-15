@@ -29,19 +29,19 @@ export function RegistrationScreen({ navigation, createUser }) {
       .then((userCredential) => {
         const uid = userCredential.user.uid;
         const data = {
-          id: uid
+          id: uid,
           // email: email,
           // fullName: fullName,
         };
 
-        createUser(uid, email, fullName);
+        createUser({ uid, email, fullName });
 
         const usersRef = firebase.firestore().collection('users');
         usersRef
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate('Photo', { user: data });
+            navigation.navigate('Home', { user: data });
           })
           .catch((error) => {
             alert(error);

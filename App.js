@@ -52,7 +52,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Home'>
+        <Stack.Navigator initialRouteName='Login'>
           <Stack.Screen name='Home' component={HomeScreen} />
           {/* {(props) => <HomeScreen {...props} extraData={user} />} */}
           <Stack.Screen name='Photo' component={PhotoApp} />

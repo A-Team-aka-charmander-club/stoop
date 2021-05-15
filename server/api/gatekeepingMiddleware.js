@@ -24,10 +24,10 @@ const verifyUser = async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
-        firebaseId: req.headers.authorization,
+        firebaseUserId: req.headers.authorization,
       },
     });
-    if (user.firebaseId !== Number(req.params.userId)) {
+    if (user.firebaseUserId !== Number(req.params.userId)) {
       return res.status(403).send('This is not for you!');
     } else {
       req.user = user;
