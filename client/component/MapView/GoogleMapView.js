@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import styles from './styles';
 import Location, { installWebGeolocationPolyfill} from 'expo-location';
 
-export default function GoogleMapView() {
+export default function GoogleMapView(props) {
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
     longitude: -74.00289693630044,
@@ -12,7 +12,6 @@ export default function GoogleMapView() {
     longitudeDelta: 0.027,
   });
 
-  const [location, setLocation] = useState(null);
   const [marker, setMarker] = useState({
     latitude: region.latitude,
     longitude: region.longitude,
@@ -22,7 +21,6 @@ export default function GoogleMapView() {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // setLocation(position);
 
         setRegion({
           latitude: position.coords.latitude,
@@ -34,8 +32,9 @@ export default function GoogleMapView() {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
+    props.setLatitude(region.latitude)
+    props.setLongitude(region.longitude)
   }, []);
-
 
   onDragEnd=(e) => {
     setRegion({latitude: e.nativeEvent.coordinate.latitude,

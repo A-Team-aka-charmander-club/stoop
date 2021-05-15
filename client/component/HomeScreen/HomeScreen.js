@@ -31,7 +31,7 @@ export function HomeScreen(props) {
 
   return (
     <View>
-      <GoogleMapView />
+      {/* <GoogleMapView /> */}
       <Text>Home Screen</Text>
       <Button title='+' onPress={() => openCameraAsync()} />
     </View>

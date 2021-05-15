@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Platform,
   TextInput,
+  Button,
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
@@ -18,14 +19,15 @@ import { createPostThunk } from '../../store/post';
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
-
-    //ABI GOOD MORNING! The stuff above we do need! We are adding an image to the STORAGE (not firestore it's another thing) FIRST and then we are creating an entry BELOW (lines 43 on) in the fireSTORE that we can reference. IF you go into the firebase console and click on 'storage' it'll all become a lot clearer.
 
     const user = firebase.auth().currentUser;
     const data = {
@@ -44,18 +46,20 @@ export const PostScreen = (props) => {
       });
     await ref.put(blob);
 
-    // this is URL to download photo (not data)
     let photoUrl = await ref.getDownloadURL();
 
-    let post = { title, description };
     let photo = {
       firebasePhotoId: photoId,
       userId: user.uid,
       firebaseUrl: photoUrl,
     };
-
-    props.submitPost({ post, photo });
+    setPhoto(photo)
   };
+
+  createPost = () =>{
+    let post = { title, description, latitude, longitude };
+    props.submitPost({ post, photo });
+   }
 
   return (
     <View style={styles.container}>
@@ -65,10 +69,8 @@ export const PostScreen = (props) => {
       >
         <Text>Create Post</Text>
 
-        {/* photo display */}
         <Image source={{ uri: props.photo }} style={styles.thumbnail} />
 
-        {/* post form */}
         <TextInput
           style={styles.input}
           placeholder='Title'
@@ -84,16 +86,7 @@ export const PostScreen = (props) => {
         />
         {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
 
-        {/* submit */}
-
-        <GoogleMapView />
-        {/* first -> firebase for userId and picture
-        also: clear picture from state
-        at some point: call database to create:
-        -post
-        -picture
-        redirect to a different screen  / confirmation/ post page
-         */}
+        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
 
         <TouchableOpacity
           style={styles.button}
@@ -101,10 +94,8 @@ export const PostScreen = (props) => {
             uploadImage(props.photo);
           }}
         >
-          <Text style={styles.button}>Post!</Text>
+          <Button title="Post!" style={styles.button} onPress={createPost}/>
         </TouchableOpacity>
-
-        {/* mapview */}
       </KeyboardAwareScrollView>
     </View>
   );
