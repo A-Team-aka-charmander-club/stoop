@@ -17,13 +17,16 @@ import {
   TouchableOpacity,
   Platform,
   TextInput,
+  Button,
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-=======
 import { createPostThunk } from '../../store/post';
->>>>>>> 649c0cc771508d20126369e132ce89141a0e2c93
+import {
+  openCameraAsync,
+  openImagePickerAsync,
+} from '../CameraModal/CameraFunctions';
+import { takePhoto } from '../../store/photo';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -34,8 +37,6 @@ export const PostScreen = (props) => {
     const blob = await response.blob();
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
-
-    //ABI GOOD MORNING! The stuff above we do need! We are adding an image to the STORAGE (not firestore it's another thing) FIRST and then we are creating an entry BELOW (lines 43 on) in the fireSTORE that we can reference. IF you go into the firebase console and click on 'storage' it'll all become a lot clearer.
 
     const user = firebase.auth().currentUser;
     const data = {
@@ -71,13 +72,28 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-  >
+        keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
 
         {/* photo display */}
-        <Image source={{ uri: props.photo }} style={styles.thumbnail} />
-
+        {props.photo.length ? (
+          <Image source={{ uri: props.photo }} style={styles.thumbnail} />
+        ) : null}
+        {/* <Image source={{ uri: props.photo }} style={styles.thumbnail} /> */}
+        <View style={{ flexDirection: 'row' }}>
+          <View style={styles.buttonStyle}>
+            <Button
+              title="Open Camera"
+              onPress={() => openCameraAsync(props)}
+            />
+          </View>
+          <View style={styles.buttonStyle}>
+            <Button
+              title="Upload Photo"
+              onPress={() => openImagePickerAsync(props)}
+            />
+          </View>
+        </View>
         {/* post form */}
 
         <TextInput
@@ -96,7 +112,7 @@ export const PostScreen = (props) => {
         <TextInput style={styles.input} placeholder="Tags"></TextInput>
 
         {/* submit */}
-      {/* mapview */}
+        {/* mapview */}
         {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
 
         {/* submit */}
@@ -113,8 +129,7 @@ export const PostScreen = (props) => {
           style={styles.button}
           onPress={() => {
             uploadImage(props.photo);
-          }}
-        >
+          }}>
           <Text style={styles.button}>Post!</Text>
         </TouchableOpacity>
 
@@ -132,6 +147,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
+    takePhoto: (photo) => dispatch(takePhoto(photo)),
   };
 };
 
