@@ -13,8 +13,17 @@ import {
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
+=======
+import { createPostThunk } from '../../store/post';
+import {
+  openCameraAsync,
+  openImagePickerAsync,
+} from '../CameraModal/CameraFunctions';
+import { takePhoto } from '../../store/photo';
+>>>>>>> tabNavigation
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -68,8 +77,25 @@ export const PostScreen = (props) => {
         keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
 
-        <Image source={{ uri: props.photo }} style={styles.thumbnail} />
-
+        {/* photo display */}
+        {props.photo.length ? (
+          <Image source={{ uri: props.photo }} style={styles.thumbnail} />
+        ) : null}
+        {/* <Image source={{ uri: props.photo }} style={styles.thumbnail} /> */}
+        <View style={{ flexDirection: 'row' }}>
+          <View style={styles.buttonStyle}>
+            <Button
+              title="Open Camera"
+              onPress={() => openCameraAsync(props)}
+            />
+          </View>
+          <View style={styles.buttonStyle}>
+            <Button
+              title="Upload Photo"
+              onPress={() => openImagePickerAsync(props)}
+            />
+          </View>
+        </View>
         {/* post form */}
 
         <TextInput
@@ -113,6 +139,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
+    takePhoto: (photo) => dispatch(takePhoto(photo)),
   };
 };
 
