@@ -32,7 +32,6 @@ export const createPostThunk = (post) => {
     }
   };
 };
-//reducer
 
 let initState = {};
 

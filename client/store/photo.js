@@ -1,5 +1,7 @@
 import axios from 'axios';
+
 import { firebase } from '../../src/firebase/config';
+
 const ADD_PHOTO = 'ADD_PHOTO';
 
 const TAKE_PHOTO = 'TAKE_PHOTO';

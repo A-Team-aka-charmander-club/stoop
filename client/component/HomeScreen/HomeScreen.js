@@ -8,6 +8,7 @@ import {
   requestCameraPermissionsAsync,
 } from 'expo-image-picker';
 import { takePhoto } from '../../store/photo';
+import GoogleMapView from '../MapView/GoogleMapView';
 
 //add photurl to state (pre-database)
 // see button + click button
@@ -30,6 +31,7 @@ export function HomeScreen(props) {
 
   return (
     <View>
+      {/* <GoogleMapView /> */}
       <Text>Home Screen</Text>
       <Button title='+' onPress={() => openCameraAsync()} />
     </View>

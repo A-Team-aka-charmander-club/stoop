@@ -1,11 +1,3 @@
-// what is this?
-
-//click '+' to create post
-// brings up camera (to take picture)
-// once picture is taken (or uploaded) => another screen with text input fields + tags + location info (something maps)
-// submit creates post
-// confirmation that it worked somehow (navigates to post)
-
 import React, { useState } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -17,25 +9,25 @@ import {
   TouchableOpacity,
   Platform,
   TextInput,
+  Button,
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
-=======
+import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
->>>>>>> 649c0cc771508d20126369e132ce89141a0e2c93
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
-
-    //ABI GOOD MORNING! The stuff above we do need! We are adding an image to the STORAGE (not firestore it's another thing) FIRST and then we are creating an entry BELOW (lines 43 on) in the fireSTORE that we can reference. IF you go into the firebase console and click on 'storage' it'll all become a lot clearer.
 
     const user = firebase.auth().currentUser;
     const data = {
@@ -54,16 +46,18 @@ export const PostScreen = (props) => {
       });
     await ref.put(blob);
 
-    // this is URL to download photo (not data)
     let photoUrl = await ref.getDownloadURL();
 
-    let post = { title, description };
     let photo = {
       firebasePhotoId: photoId,
       userId: user.uid,
       firebaseUrl: photoUrl,
     };
+    setPhoto(photo);
+  };
 
+  createPost = () => {
+    let post = { title, description, latitude, longitude };
     props.submitPost({ post, photo });
   };
 
@@ -71,11 +65,9 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-  >
+        keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
 
-        {/* photo display */}
         <Image source={{ uri: props.photo }} style={styles.thumbnail} />
 
         {/* post form */}
@@ -96,29 +88,18 @@ export const PostScreen = (props) => {
         <TextInput style={styles.input} placeholder="Tags"></TextInput>
 
         {/* submit */}
-      {/* mapview */}
+        {/* mapview */}
         {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
 
-        {/* submit */}
-
-        {/* first -> firebase for userId and picture
-        also: clear picture from state
-        at some point: call database to create:
-        -post
-        -picture
-        redirect to a different screen  / confirmation/ post page
-         */}
+        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
 
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
             uploadImage(props.photo);
-          }}
-        >
-          <Text style={styles.button}>Post!</Text>
+          }}>
+          <Button title="Post!" style={styles.button} onPress={createPost} />
         </TouchableOpacity>
-
-        {/* mapview */}
       </KeyboardAwareScrollView>
     </View>
   );
