@@ -6,8 +6,6 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
-  Platform,
   TextInput,
   Button,
 } from 'react-native';
@@ -26,9 +24,11 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [photo, setPhoto] = useState(null);
+  const [photograph, setPhoto] = useState(null);
 
   const uploadImage = async (uri) => {
+    console.log(uri)
+    console.log("Im here")
     const response = await fetch(uri);
     const blob = await response.blob();
     const photoName = String(Math.random(1000));
@@ -53,18 +53,18 @@ export const PostScreen = (props) => {
 
     let photoUrl = await ref.getDownloadURL();
 
-    let photo = {
+    let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
       firebaseUrl: photoUrl,
     };
-
-    setPhoto(photo);
+    setPhoto(newPhoto);
   };
 
-  createPost = () =>{
+  const createPost = async () =>{
+    await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
-    props.submitPost({ post, photo });
+    props.submitPost({ post, photograph });
    }
 
   return (
@@ -73,7 +73,6 @@ export const PostScreen = (props) => {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
-
 
         {/* photo display */}
         {props.photo.length ? (
@@ -84,17 +83,17 @@ export const PostScreen = (props) => {
           <View style={styles.buttonStyle}>
             <Button
               title="Open Camera"
-              onPress={() => openCameraAsync(props)}
+              onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
+          
             <Button
               title="Upload Photo"
-              onPress={() => openImagePickerAsync(props)}
+              onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
         </View>
-
 
         <TextInput
           style={styles.input}
@@ -110,9 +109,8 @@ export const PostScreen = (props) => {
           onChangeText={(text) => setDescription(text)}
         />
         <TextInput style={styles.input} placeholder="Tags"></TextInput>
-
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />        
-          <Button title="Post!" style={styles.button} onPress={createPost}/>
+        <Button title="Post!" onPress={createPost}/>
       </KeyboardAwareScrollView>
     </View>
   );

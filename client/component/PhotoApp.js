@@ -60,7 +60,7 @@ export function PhotoApp(props) {
 
       // this is URL to download photo (not data)
       let photoUrl = await ref.getDownloadURL();
-      console.log(photoUrl, 'photoUrl');
+      console.log(photoUrl, 'photo');
 
       props.addPhoto(photoId, photoUrl);
     };
@@ -69,12 +69,6 @@ export function PhotoApp(props) {
       uploadImage(pickerResult.uri);
     }
 
-    // if (Platform.OS === 'web') {
-    //   let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri);
-    //   setSelectedImage({ localUri: pickerResult.uri, remoteUri });
-    // } else {
-    //   setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
-    // }
   };
 
   let openShareDialogAsync = async () => {
