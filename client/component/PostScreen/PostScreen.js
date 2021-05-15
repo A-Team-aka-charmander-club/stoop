@@ -13,17 +13,13 @@ import {
 } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
 import GoogleMapView from '../MapView/GoogleMapView';
-import { createPostThunk } from '../../store/post';
-=======
 import { createPostThunk } from '../../store/post';
 import {
   openCameraAsync,
   openImagePickerAsync,
 } from '../CameraModal/CameraFunctions';
 import { takePhoto } from '../../store/photo';
->>>>>>> tabNavigation
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -62,13 +58,14 @@ export const PostScreen = (props) => {
       userId: user.uid,
       firebaseUrl: photoUrl,
     };
+
     setPhoto(photo);
   };
 
-  createPost = () => {
+  createPost = () =>{
     let post = { title, description, latitude, longitude };
     props.submitPost({ post, photo });
-  };
+   }
 
   return (
     <View style={styles.container}>
@@ -76,6 +73,7 @@ export const PostScreen = (props) => {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
+
 
         {/* photo display */}
         {props.photo.length ? (
@@ -96,7 +94,7 @@ export const PostScreen = (props) => {
             />
           </View>
         </View>
-        {/* post form */}
+
 
         <TextInput
           style={styles.input}
@@ -113,18 +111,14 @@ export const PostScreen = (props) => {
         />
         <TextInput style={styles.input} placeholder="Tags"></TextInput>
 
-        {/* submit */}
-        {/* mapview */}
-        {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
-
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
 
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
             uploadImage(props.photo);
-          }}>
-          <Button title="Post!" style={styles.button} onPress={createPost} />
+          <Button title="Post!" style={styles.button} onPress={createPost}/>
+        >
         </TouchableOpacity>
       </KeyboardAwareScrollView>
     </View>
