@@ -19,6 +19,8 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
     const post = await Post.create({
       title: req.body.post.title,
       description: req.body.post.description,
+      latitude: req.body.post.latitude,
+      longitude: req.body.post.longitude
     });
 
     await user.addPost(post);
