@@ -111,15 +111,8 @@ export const PostScreen = (props) => {
         />
         <TextInput style={styles.input} placeholder="Tags"></TextInput>
 
-        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            uploadImage(props.photo);
+        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />        
           <Button title="Post!" style={styles.button} onPress={createPost}/>
-        >
-        </TouchableOpacity>
       </KeyboardAwareScrollView>
     </View>
   );
