@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker  } from 'react-native-maps';
 import { Text, View } from 'react-native';
 import styles from './styles';
-import Location, { installWebGeolocationPolyfill } from 'expo-location';
+import Location, { installWebGeolocationPolyfill} from 'expo-location';
 
 export default function GoogleMapView() {
   const [region, setRegion] = useState({
@@ -22,37 +22,40 @@ export default function GoogleMapView() {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLocation(position);
+        // setLocation(position);
 
         setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.026,
-          longitudeDelta: 0.027,
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025,
         });
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    console.log(marker, 'marker in effect');
   }, []);
 
 
   onDragEnd=(e) => {
-    console.log('hi')
+    setRegion({latitude: e.nativeEvent.coordinate.latitude,
+      longitude: e.nativeEvent.coordinate.longitude,
+      latitudeDelta: 0.0025,
+      longitudeDelta: 0.0025})
     setMarker(e.nativeEvent.coordinate)
-    console.log(marker)
   }
 
+  onRegionChange = (region) =>{
+    
+   setRegion(region);
+  }
 
-  console.log(marker, 'marker');
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         region={region}
-        // onRegionChangeComplete={handleRegionChange(region)}
         showsUserLocation={true}
         zoomEnabled={true}
       >
@@ -63,7 +66,6 @@ export default function GoogleMapView() {
             longitude: region.longitude,
           }}
           onDragEnd={onDragEnd}
-            // return setMarker(e.nativeEvent.coordinate);
         ></Marker>
       </MapView>
     </View>
