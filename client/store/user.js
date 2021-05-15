@@ -23,11 +23,14 @@ export function createOrFindUserThunk(user) {
   return async (dispatch) => {
     try {
       // `https://trashpandapirates.herokuapp.com/api/users/user`,
-
+      //`https://localhost:8080/api/users/user`
+      //`http://192.168.1.152:8080/api/users/user`
       const { data } = await axios.post(
-        `http://192.168.1.6:8080/api/users/user`,
-        // `https://localhost:8080/api/users/user`
-        { user }
+        // `https://trashpandapirates.herokuapp.com/api/users/user`,
+        `http://192.168.1.152:8080/api/users/user`,
+        {
+          user,
+        }
       );
       dispatch(createUser(data));
     } catch (err) {

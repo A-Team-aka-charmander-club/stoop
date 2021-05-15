@@ -15,6 +15,11 @@ import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
+import {
+  openCameraAsync,
+  openImagePickerAsync,
+} from '../CameraModal/CameraFunctions';
+import { takePhoto } from '../../store/photo';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -53,7 +58,8 @@ export const PostScreen = (props) => {
       userId: user.uid,
       firebaseUrl: photoUrl,
     };
-    setPhoto(photo)
+
+    setPhoto(photo);
   };
 
   createPost = () =>{
@@ -65,26 +71,45 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-      >
+        keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
 
-        <Image source={{ uri: props.photo }} style={styles.thumbnail} />
+
+        {/* photo display */}
+        {props.photo.length ? (
+          <Image source={{ uri: props.photo }} style={styles.thumbnail} />
+        ) : null}
+        {/* <Image source={{ uri: props.photo }} style={styles.thumbnail} /> */}
+        <View style={{ flexDirection: 'row' }}>
+          <View style={styles.buttonStyle}>
+            <Button
+              title="Open Camera"
+              onPress={() => openCameraAsync(props)}
+            />
+          </View>
+          <View style={styles.buttonStyle}>
+            <Button
+              title="Upload Photo"
+              onPress={() => openImagePickerAsync(props)}
+            />
+          </View>
+        </View>
+
 
         <TextInput
           style={styles.input}
-          placeholder='Title'
+          placeholder="Title"
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder='Description'
+          placeholder="Description"
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        {/* <TextInput style={styles.input} placeholder='Tags'></TextInput> */}
+        <TextInput style={styles.input} placeholder="Tags"></TextInput>
 
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
 
@@ -92,9 +117,8 @@ export const PostScreen = (props) => {
           style={styles.button}
           onPress={() => {
             uploadImage(props.photo);
-          }}
-        >
           <Button title="Post!" style={styles.button} onPress={createPost}/>
+        >
         </TouchableOpacity>
       </KeyboardAwareScrollView>
     </View>
@@ -109,6 +133,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
+    takePhoto: (photo) => dispatch(takePhoto(photo)),
   };
 };
 

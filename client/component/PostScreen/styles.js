@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
+    marginTop: 50,
     flex: 1,
     alignItems: 'center',
   },
@@ -29,6 +30,15 @@ export default StyleSheet.create({
     height: 48,
     borderRadius: 5,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonStyle: {
+    backgroundColor: '#788eec',
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 10,
+    height: 24,
+    borderRadius: 5,
     justifyContent: 'center',
   },
 });
