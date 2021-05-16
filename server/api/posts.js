@@ -26,8 +26,6 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
     await user.addPost(post);
     await post.addPhoto(photo);
 
-    console.log(Object.keys(Post.prototype));
-
     let combinedPost = await Post.findOne({
       where: {
         id: post.id,
