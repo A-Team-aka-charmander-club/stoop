@@ -10,16 +10,59 @@ import HomeScreen from '../../HomeScreen/HomeScreen';
 import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
 import CameraModal from '../../CameraModal/CameraModal';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
-    <Tab.Navigator initialRouteName='Home'>
-      <Tab.Screen name='Home' component={HomeScreen} />
-      <Tab.Screen name='CameraModal' component={CameraModal} />
-      <Tab.Screen name='PostNav' component={PostStackNavigator} />
-      <Tab.Screen name='Map' component={GoogleMapView} />
+    <Tab.Navigator
+      initialRouteName='Home'
+      tabBarOptions={{
+        activeTintColor: '#e91e63',
+        showLabel: false,
+      }}
+    >
+      <Tab.Screen
+        name='Home'
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name='home' color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='CameraModal'
+        component={CameraModal}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name='camera' color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='PostNav'
+        component={PostStackNavigator}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name='plus-box-outline'
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='Map'
+        component={GoogleMapView}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name='map' color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
