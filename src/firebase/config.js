@@ -14,6 +14,7 @@ import '@firebase/auth';
 import '@firebase/firestore';
 import '@firebase/storage';
 
+console.log('react app api', REACT_APP_API_KEY);
 const firebaseConfig = {
   apiKey: REACT_APP_API_KEY,
   authDomain: REACT_APP_AUTH_DOMAIN,
@@ -23,6 +24,7 @@ const firebaseConfig = {
   messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
   appId: REACT_APP_ID,
 };
+
 // if (!firebase.apps.length) {
 firebase.initializeApp(firebaseConfig);
 // firebase

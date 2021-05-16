@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker  } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { View } from 'react-native';
 import styles from './styles';
-import { installWebGeolocationPolyfill} from 'expo-location';
+import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
@@ -14,30 +14,34 @@ export function HomeGoogleMapView(props) {
     longitudeDelta: 0.027,
   });
 
+  //allows older browsers to load map
   installWebGeolocationPolyfill();
 
   useEffect(() => {
+    //get current location
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.0025,
-          longitudeDelta: 0.0025,
+          latitudeDelta: 0.0026,
+          longitudeDelta: 0.0027,
         });
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
+    props.getCoordinates();
   }, []);
-
-  const onRegionChange = (newRegion)=>{
-    console.log(region, 'onchange1')
-    setRegion(newRegion)
-    props.getCoordinates(newRegion)
-    console.log(props.coordinates, 'onchange3')
-  }
-  
+  //as current location changes, map view changes w/us
+  // const onRegionChange = (newRegion) => {
+  //   console.log(region, 'onchange1');
+  //   setRegion(newRegion);
+  //   props.getCoordinates(newRegion);
+  //   console.log(props.coordinates, 'onchange3');
+  // };
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  console.log(props.coordinates, 'PROPS.COORDINATES');
   return (
     <View style={styles.container}>
       <MapView
@@ -46,14 +50,27 @@ export function HomeGoogleMapView(props) {
         region={region}
         showsUserLocation={true}
         zoomEnabled={true}
-        onRegionChange={region => onRegionChange(region)}
-      >
-      </MapView>
+      ></MapView>
+      {props.coordinates.map((post, index) => {
+        let postCoordinates = {
+          latitude: 40.676759,
+          longitude: -73.99806,
+        };
+
+        return (
+          <Marker
+            key={index}
+            coordinate={postCoordinates}
+            title={post.title}
+            description={post.description}
+          />
+        );
+      })}
       {/* <Marker
-      coordinate={marker.latlng}
-      title={marker.title}
-      description={marker.description}
-    /> */}
+        coordinate={marker.latlng}
+        title={marker.title}
+        description={marker.description}
+      /> */}
     </View>
   );
 }
@@ -70,4 +87,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
-
