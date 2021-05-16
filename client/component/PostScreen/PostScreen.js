@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-} from 'react-native';
+import { Text, View, Image, TextInput, Button } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
@@ -58,18 +52,22 @@ export const PostScreen = (props) => {
     return newPhoto;
   };
 
-  const createPost = async () =>{
-    console.log('here')
+  const createPost = async () => {
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
-    props.submitPost({ post, photo });
-   }
+    await props.submitPost({ post, photo });
+    // props.navigation.navigate('PostNav', {
+    //   screen: 'SinglePost',
+    // });
+    props.navigation.navigate('SinglePost');
+  };
 
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {/* photo display */}
@@ -80,14 +78,13 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title="Open Camera"
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
-          
             <Button
-              title="Upload Photo"
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -95,20 +92,20 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        <TextInput style={styles.input} placeholder="Tags"></TextInput>
-        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />        
-        <Button title="Post!" onPress={createPost}/>
+        <TextInput style={styles.input} placeholder='Tags'></TextInput>
+        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
+        <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
   );
