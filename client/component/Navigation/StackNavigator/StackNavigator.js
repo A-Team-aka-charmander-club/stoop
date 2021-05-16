@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../../HomeScreen/HomeScreen';
 import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
+import SinglePost from '../../SinglePost/SinglePost';
 
 const Stack = createStackNavigator();
 const HomeStackNavigator = () => {
@@ -18,6 +19,7 @@ const PostStackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Post'>
       <Stack.Screen name='Post' component={PostScreen} />
+      <Stack.Screen name='SinglePost' component={SinglePost} />
     </Stack.Navigator>
   );
 };
