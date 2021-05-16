@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -24,17 +23,15 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [photograph, setPhoto] = useState(null);
 
   const uploadImage = async (uri) => {
-    console.log(uri)
-    console.log("Im here")
     const response = await fetch(uri);
     const blob = await response.blob();
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
 
     const user = firebase.auth().currentUser;
+
     const data = {
       userId: user.uid,
       uri: uri,
@@ -58,13 +55,13 @@ export const PostScreen = (props) => {
       userId: user.uid,
       firebaseUrl: photoUrl,
     };
-    setPhoto(newPhoto);
+    return newPhoto;
   };
 
   const createPost = async () =>{
-    await uploadImage(props.photo);
+    const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
-    props.submitPost({ post, photograph });
+    props.submitPost({ post, photo });
    }
 
   return (

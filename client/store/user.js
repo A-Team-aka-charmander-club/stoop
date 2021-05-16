@@ -22,7 +22,6 @@ export function logoutUser() {
 export function createOrFindUserThunk(user) {
   return async (dispatch) => {
     try {
-      console.log(user, 'user')
       // `https://trashpandapirates.herokuapp.com/api/users/user`,
       //`https://localhost:8080/api/users/user`
       //`http://192.168.1.152:8080/api/users/user`

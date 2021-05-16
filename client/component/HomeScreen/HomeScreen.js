@@ -17,7 +17,6 @@ export function HomeScreen(props) {
   let openCameraAsync = async () => {
     //returns permission object
     let permission = await requestCameraPermissionsAsync();
-    console.log('permission', permission);
     if (!permission) {
       alert('Permission to acccess camera roll is required!');
     }

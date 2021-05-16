@@ -15,7 +15,6 @@ import { connect } from 'react-redux';
 
 export function Logout(props) {
   // look at props/state for userLoggedIn
-  console.log('props', props);
   const onLogoutPress = () => {
     firebase
       .auth()

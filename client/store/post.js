@@ -18,7 +18,6 @@ export const createPost = (post) => {
 export const createPostThunk = (post) => {
   return async (dispatch) => {
     try {
-      console.log(post, 'in post')
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
         `http://192.168.1.6:8080/api/posts/post`,

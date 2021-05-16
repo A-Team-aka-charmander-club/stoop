@@ -60,7 +60,6 @@ export function PhotoApp(props) {
 
       // this is URL to download photo (not data)
       let photoUrl = await ref.getDownloadURL();
-      console.log(photoUrl, 'photo');
 
       props.addPhoto(photoId, photoUrl);
     };
