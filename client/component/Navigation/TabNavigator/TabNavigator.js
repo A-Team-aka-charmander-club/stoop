@@ -18,7 +18,7 @@ const BottomTabNavigator = () => {
     <Tab.Navigator initialRouteName='Home'>
       <Tab.Screen name='Home' component={HomeScreen} />
       <Tab.Screen name='CameraModal' component={CameraModal} />
-      <Tab.Screen name='Post' component={PostStackNavigator} />
+      <Tab.Screen name='PostNav' component={PostStackNavigator} />
       <Tab.Screen name='Map' component={GoogleMapView} />
     </Tab.Navigator>
   );

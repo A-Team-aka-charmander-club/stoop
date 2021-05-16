@@ -13,7 +13,7 @@ export const SinglePost = (props) => {
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        initialCamera={{
+        initialRegion={{
           latitude: props.post.latitude,
           longitude: props.post.longitude,
           latitudeDelta: 0.1,

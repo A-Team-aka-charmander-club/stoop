@@ -53,12 +53,13 @@ export const PostScreen = (props) => {
   };
 
   const createPost = async () => {
-    console.log('here');
-    console.log('props:', props);
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
     await props.submitPost({ post, photo });
-    //props.navigation.navigate('SinglePost');
+    // props.navigation.navigate('PostNav', {
+    //   screen: 'SinglePost',
+    // });
+    props.navigation.navigate('SinglePost');
   };
 
   return (
