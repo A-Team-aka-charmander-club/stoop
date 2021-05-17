@@ -5,6 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
 import photo from './photo';
 import post from './post';
+import tags from './tag';
+
 
 import coordinates from './coordinates';
 
