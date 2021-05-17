@@ -25,13 +25,19 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
 
     await user.addPost(post);
     await post.addPhoto(photo);
-    await Promise.all(req.body.tags.map((tag)=> {
-      await Tag.findOrCreate({where: {
-        name: tag
-      }})
-      return post.addTag(tag)
-    }))
 
+    console.log(req.body.tags, 'reqbodytags!!!!!');
+    await Promise.all(
+      req.body.tags.map(async (tag) => {
+        console.log(tag, 'tag in promise');
+        let [newTag, isCreated] = await Tag.findOrCreate({
+          where: {
+            name: tag,
+          },
+        });
+        return post.addTag(newTag);
+      })
+    );
 
     let combinedPost = await Post.findOne({
       where: {
@@ -40,7 +46,9 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
       include: [
         {
           model: Photo,
-          Tag,
+        },
+        {
+          model: Tag,
         },
       ],
     });
