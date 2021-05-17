@@ -11,6 +11,7 @@ import {
   openImagePickerAsync,
 } from '../CameraModal/CameraFunctions';
 import { takePhoto, clearPhoto } from '../../store/photo';
+import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 
 export const PostScreen = (props) => {
@@ -18,17 +19,12 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-
+  const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const uploadImage = async (uri) => {
-    console.log('fetch')
     const response = await fetch(uri);
-    console.log('response.blob')
     const blob = await response.blob();
-    console.log('after blob response')
-
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
-    console.log('refffffff')
 
     const user = firebase.auth().currentUser;
 
@@ -69,6 +65,8 @@ console.log(photoUrl, 'photoUrl')
     props.clearPhoto();
     setTitle('');
     setDescription('');
+    props.removeTags();
+    setTags({ tag: '', tagsArray: [] });
     props.navigation.navigate('SinglePost');
   };
 
@@ -111,7 +109,7 @@ console.log(photoUrl, 'photoUrl')
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
-        <Tags />
+        <Tags setTags={setTags} tags={tags} />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title="Post!" onPress={createPost} />
       </KeyboardAwareScrollView>
@@ -130,6 +128,7 @@ const mapDispatchToProps = (dispatch) => {
     submitPost: (post) => dispatch(createPostThunk(post)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
+    removeTags: () => dispatch(removeTags()),
   };
 };
 

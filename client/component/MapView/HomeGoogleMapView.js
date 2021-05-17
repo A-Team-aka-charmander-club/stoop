@@ -23,8 +23,6 @@ export function HomeGoogleMapView(props) {
           latitudeDelta: 0.05,
           longitudeDelta: 0.05,
         });
-        console.log(position, 'pos')
-        console.log(region, 'region')
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
