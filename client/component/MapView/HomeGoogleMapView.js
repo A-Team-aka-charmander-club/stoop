@@ -33,15 +33,7 @@ export function HomeGoogleMapView(props) {
     );
     props.getCoordinates();
   }, []);
-  //as current location changes, map view changes w/us
-  // const onRegionChange = (newRegion) => {
-  //   console.log(region, 'onchange1');
-  //   setRegion(newRegion);
-  //   props.getCoordinates(newRegion);
-  //   console.log(props.coordinates, 'onchange3');
-  // };
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  console.log(props.coordinates, 'PROPS.COORDINATES');
+
   return (
     <View style={styles.container}>
       <MapView
@@ -50,27 +42,24 @@ export function HomeGoogleMapView(props) {
         region={region}
         showsUserLocation={true}
         zoomEnabled={true}
-      ></MapView>
-      {props.coordinates.map((post, index) => {
-        let postCoordinates = {
-          latitude: 40.676759,
-          longitude: -73.99806,
-        };
-
+      >
+        {props.coordinates.map((post, index) => {
         return (
           <Marker
             key={index}
-            coordinate={postCoordinates}
-            title={post.title}
-            description={post.description}
+            coordinate={{
+              latitude: post.latitude,
+              longitude: post.longitude
+            }}
+          title={post.title}
+          description={post.description}
+          image={require('../../../assets/pin.png')}
+    resizeMode="contain"
+         
           />
         );
       })}
-      {/* <Marker
-        coordinate={marker.latlng}
-        title={marker.title}
-        description={marker.description}
-      /> */}
+      </MapView>
     </View>
   );
 }

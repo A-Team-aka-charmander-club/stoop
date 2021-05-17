@@ -20,7 +20,6 @@ export const PostScreen = (props) => {
 
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
-    console.log(response, 'response')
     const blob = await response.blob();
     
     const photoName = String(Math.random(1000));
@@ -32,7 +31,6 @@ export const PostScreen = (props) => {
       userId: user.uid,
       uri: uri,
     };
-    console.log(data, 'data')
 
     const photoId = firebase.firestore().collection('photos').doc().id;
     const photosRef = firebase.firestore().collection('photos');
@@ -46,7 +44,6 @@ export const PostScreen = (props) => {
     await ref.put(blob);
 
     let photoUrl = await ref.getDownloadURL();
-    console.log(photoUrl, 'photoUrl')
 
     let newPhoto = {
       firebasePhotoId: photoId,
@@ -58,12 +55,8 @@ export const PostScreen = (props) => {
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
-    console.log(photo, 'photo')
     let post = { title, description, latitude, longitude };
     await props.submitPost({ post, photo });
-    // props.navigation.navigate('PostNav', {
-    //   screen: 'SinglePost',
-    // });
     props.navigation.navigate('SinglePost');
   };
 
@@ -75,11 +68,9 @@ export const PostScreen = (props) => {
       >
         <Text>Create Post</Text>
 
-        {/* photo display */}
         {props.photo.length ? (
           <Image source={{ uri: props.photo }} style={styles.thumbnail} />
         ) : null}
-        {/* <Image source={{ uri: props.photo }} style={styles.thumbnail} /> */}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button

@@ -25,8 +25,6 @@ export selectFile = () => {
   };
 
   ImagePicker.showImagePicker(options, (res) => {
-    console.log('Response = ', res);
-
     if (res.didCancel) {
       console.log('User cancelled image picker');
     } else if (res.error) {
