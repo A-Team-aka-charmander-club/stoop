@@ -37,7 +37,7 @@ export class Tags extends React.Component {
           updateState={this.updateTagState}
           tags={this.state.tags}
           placeholder="Tags..."
-          label="Press comma and space to add a tag"
+          label="Press space to add a tag"
           labelStyle={{ color: '#fff' }}
           leftElement={
             <MaterialCommunityIcons
@@ -61,7 +61,7 @@ export class Tags extends React.Component {
           autoCorrect={false}
           tagStyle={styles.tag}
           tagTextStyle={styles.tagText}
-          keysForTag={', '}
+          keysForTag={' '}
         />
       </View>
     );
