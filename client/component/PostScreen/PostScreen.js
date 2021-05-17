@@ -64,8 +64,6 @@ export const PostScreen = (props) => {
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
-    console.log('create post')
-    console.log(latitude, 'latitude')
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
     await props.submitPost({ post, photo, tags });

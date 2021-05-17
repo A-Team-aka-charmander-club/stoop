@@ -15,7 +15,6 @@ export function HomeGoogleMapView(props) {
   installWebGeolocationPolyfill();
 
   useEffect(() => {
-    console.log(props.coordinates.length, 'ccoo')
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setRegion({
@@ -29,8 +28,6 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
     props.getCoordinates()
-        console.log("it's running againnnnn")
-    console.log("it's running again")
   }, [props.coordinates.length]);
 
 
