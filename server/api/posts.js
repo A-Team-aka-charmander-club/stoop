@@ -9,12 +9,15 @@ module.exports = router;
 
 router.post('/post', isLoggedIn, async (req, res, next) => {
   try {
+    console.log('creating photo');
     const photo = await Photo.create({
       firebaseUrl: req.body.photo.firebaseUrl,
       firebasePhotoId: req.body.photo.firebasePhotoId,
     });
     const user = req.user;
     await user.addPhoto(photo);
+
+    console.log('creating post');
 
     const post = await Post.create({
       title: req.body.post.title,

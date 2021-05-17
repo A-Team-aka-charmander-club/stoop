@@ -14,13 +14,15 @@ const getCoordinates = (coordinates) => {
 export const getCoordinatesThunk = () => {
   return async (dispatch) => {
     try {
+      console.log('IN GET COOORDINATES THUNK');
       const { data } = await axios.get(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
-        `http://192.168.1.6:8080/api/maps/coordinates`
+        `http://localhost:8080/api/maps/coordinates`
       );
+      console.log('DATA FROM COORDINATES CALL');
       dispatch(getCoordinates(data));
     } catch (error) {
       console.log(error);

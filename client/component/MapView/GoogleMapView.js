@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker  } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Text, View } from 'react-native';
 import styles from './styles';
-import Location, { installWebGeolocationPolyfill} from 'expo-location';
+import Location, { installWebGeolocationPolyfill } from 'expo-location';
 
 export default function GoogleMapView(props) {
   const [region, setRegion] = useState({
@@ -21,7 +21,6 @@ export default function GoogleMapView(props) {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-
         setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -32,19 +31,22 @@ export default function GoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    props.setLatitude(region.latitude)
-    props.setLongitude(region.longitude)
+    props.setLatitude(region.latitude);
+    props.setLongitude(region.longitude);
   }, []);
 
-  const onDragEnd=(e) => {
-    setRegion({latitude: e.nativeEvent.coordinate.latitude,
+  const onDragEnd = (e) => {
+    setRegion({
+      latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
       latitudeDelta: 0.0025,
-      longitudeDelta: 0.0025})
-    setMarker(e.nativeEvent.coordinate)
-    props.setLatitude(region.latitude)
-    props.setLongitude(region.longitude)
-  }
+      longitudeDelta: 0.0025,
+    });
+    setMarker(e.nativeEvent.coordinate);
+    props.setLatitude(region.latitude);
+    props.setLongitude(region.longitude);
+    console.log('LATITUDE', region.latitude);
+  };
 
   return (
     <View style={styles.container}>

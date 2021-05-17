@@ -4,6 +4,7 @@ const {
 
 const isLoggedIn = async (req, res, next) => {
   try {
+    console.log('IN GATEKEEPING');
     const user = await User.findOne({
       where: {
         firebaseUserId: req.headers.authorization,

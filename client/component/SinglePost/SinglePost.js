@@ -17,7 +17,8 @@ export const SinglePost = (props) => {
           longitude: props.post.longitude,
           latitudeDelta: 0.0,
           longitudeDelta: 0.0,
-        }}>
+        }}
+      >
         <Marker
           coordinate={{
             latitude: props.post.latitude,
