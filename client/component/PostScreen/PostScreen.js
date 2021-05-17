@@ -13,12 +13,14 @@ import {
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
+import { uploadImage } from '../Services/Services';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
@@ -53,6 +55,7 @@ export const PostScreen = (props) => {
     };
     return newPhoto;
   };
+
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
