@@ -3,7 +3,7 @@ import { Dimensions, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TagInput from 'react-native-tags-input';
 import styles from './styles';
-import { addTags } from '../../../store/tag';
+import { addTags, removeTags } from '../../../store/tag';
 import { connect } from 'react-redux';
 
 const mainColor = '#3ca897';
@@ -29,6 +29,16 @@ export class Tags extends React.Component {
       this.props.addTags(state.tagsArray);
     }
   };
+
+  componentWillUnmount() {
+    this.setState({
+      tags: {
+        tag: '',
+        tagsArray: [],
+      },
+    });
+    this.props.removeTags();
+  }
 
   render() {
     return (
@@ -76,6 +86,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addTags: (tags) => dispatch(addTags(tags)),
+    removeTags: () => dispatch(removeTags()),
   };
 };
 

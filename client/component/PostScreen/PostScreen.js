@@ -66,6 +66,7 @@ export const PostScreen = (props) => {
     setDescription('');
     props.navigation.navigate('SinglePost');
   };
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
