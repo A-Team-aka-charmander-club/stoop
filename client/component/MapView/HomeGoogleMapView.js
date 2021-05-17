@@ -7,11 +7,14 @@ import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
 export function HomeGoogleMapView(props) {
-  const [region, setRegion] = useState({latitude: 40.6734,
+  const [region, setRegion] = useState({
+    latitude: 40.6734,
     longitude: -74.0083,
     latitudeDelta: 0.05,
-    longitudeDelta: 0.05});
+    longitudeDelta: 0.05,
+  });
 
+  // this allows older browsers to run map component
   installWebGeolocationPolyfill();
 
   useEffect(() => {
@@ -29,7 +32,7 @@ export function HomeGoogleMapView(props) {
     );
   }, []);
 
-  console.log(props.coordinates.slice(0, 5), 'coor')
+  console.log(props.coordinates.slice(0, 5), 'coor');
   return (
     <View style={styles.container}>
       <MapView
@@ -39,24 +42,24 @@ export function HomeGoogleMapView(props) {
         showsUserLocation={true}
         zoomEnabled={true}
         loadingEnabled
-        loadingBackgroundColor="white"
-        loadingIndicatorColor="black"
+        loadingBackgroundColor='white'
+        loadingIndicatorColor='black'
       >
         {props.coordinates.map((post, index) => {
-        return (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: post.latitude,
-              longitude: post.longitude
-            }}
-          title={post.title}
-          description={post.description}
-          image={require('../../../assets/pin.png')}
-    resizeMode="contain"
-          />
-        );
-      })}
+          return (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: post.latitude,
+                longitude: post.longitude,
+              }}
+              title={post.title}
+              description={post.description}
+              image={require('../../../assets/pin.png')}
+              resizeMode='contain'
+            />
+          );
+        })}
       </MapView>
     </View>
   );
