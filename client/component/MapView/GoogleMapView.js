@@ -16,6 +16,7 @@ export default function GoogleMapView(props) {
     latitude: region.latitude,
     longitude: region.longitude,
   });
+  // this allows older browsers to run map component
   installWebGeolocationPolyfill();
 
   useEffect(() => {
@@ -45,7 +46,6 @@ export default function GoogleMapView(props) {
     setMarker(e.nativeEvent.coordinate);
     props.setLatitude(region.latitude);
     props.setLongitude(region.longitude);
-    console.log('LATITUDE', region.latitude);
   };
 
   return (
