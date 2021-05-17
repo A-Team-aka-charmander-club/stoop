@@ -10,7 +10,8 @@ import {
   openCameraAsync,
   openImagePickerAsync,
 } from '../CameraModal/CameraFunctions';
-import { takePhoto } from '../../store/photo';
+import { takePhoto, clearPhoto } from '../../store/photo';
+import Tags from './Tags/Tags';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -56,7 +57,14 @@ export const PostScreen = (props) => {
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
-    await props.submitPost({ post, photo });
+    let tags = props.tags;
+    await props.submitPost({ post, photo, tags });
+    // props.navigation.navigate('PostNav', {
+    //   screen: 'SinglePost',
+    // });
+    props.clearPhoto();
+    setTitle('');
+    setDescription('');
     props.navigation.navigate('SinglePost');
   };
 
@@ -64,8 +72,7 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-      >
+        keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -74,13 +81,13 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title='Open Camera'
+              title="Open Camera"
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              title='Upload Photo'
+              title="Upload Photo"
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -88,20 +95,21 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder='Title'
+          placeholder="Title"
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder='Description'
+          placeholder="Description"
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        <TextInput style={styles.input} placeholder='Tags'></TextInput>
+        {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
+        <Tags />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
-        <Button title='Post!' onPress={createPost} />
+        <Button title="Post!" onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
   );
@@ -110,12 +118,14 @@ export const PostScreen = (props) => {
 const mapStateToProps = (state) => {
   return {
     photo: state.photo,
+    tags: state.tags,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
+    clearPhoto: () => dispatch(clearPhoto()),
   };
 };
 

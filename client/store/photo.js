@@ -6,6 +6,8 @@ const ADD_PHOTO = 'ADD_PHOTO';
 
 const TAKE_PHOTO = 'TAKE_PHOTO';
 
+const CLEAR_PHOTO = 'CLEAR_PHOTO';
+
 // action creators
 const addPhoto = (photo) => {
   return {
@@ -18,6 +20,13 @@ export const takePhoto = (photo) => {
   return {
     type: TAKE_PHOTO,
     photo,
+  };
+};
+
+export const clearPhoto = () => {
+  return {
+    type: CLEAR_PHOTO,
+    photo: '',
   };
 };
 
@@ -46,11 +55,13 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
   };
 };
 
-export default function (state = {}, action) {
+export default function (state = '', action) {
   switch (action.type) {
     case ADD_PHOTO:
       return action.photo;
     case TAKE_PHOTO:
+      return action.photo;
+    case CLEAR_PHOTO:
       return action.photo;
     default:
       return state;
