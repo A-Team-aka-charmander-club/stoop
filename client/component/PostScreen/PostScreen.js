@@ -20,11 +20,15 @@ export const PostScreen = (props) => {
   const [longitude, setLongitude] = useState(null);
 
   const uploadImage = async (uri) => {
+    console.log('fetch')
     const response = await fetch(uri);
+    console.log('response.blob')
     const blob = await response.blob();
-    
+    console.log('after blob response')
+
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
+    console.log('refffffff')
 
     const user = firebase.auth().currentUser;
 
@@ -45,7 +49,7 @@ export const PostScreen = (props) => {
     await ref.put(blob);
 
     let photoUrl = await ref.getDownloadURL();
-
+console.log(photoUrl, 'photoUrl')
     let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
