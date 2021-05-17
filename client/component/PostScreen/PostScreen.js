@@ -22,6 +22,12 @@ export const PostScreen = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
+  const [region, setRegion] = useState({
+    latitude: 40.751343151025615,
+    longitude: -74.00289693630044,
+    latitudeDelta: 0.0025,
+    longitudeDelta: 0.0025,
+  })
   
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
@@ -69,6 +75,10 @@ export const PostScreen = (props) => {
     setDescription('');
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
+    setRegion({latitude: 40.751343151025615,
+      longitude: -74.00289693630044,
+      latitudeDelta: 0.0025,
+      longitudeDelta: 0.0025})
     props.navigation.navigate('SinglePost');
   };
 
@@ -112,7 +122,7 @@ export const PostScreen = (props) => {
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
         <Tags setTags={setTags} tags={tags} />
-        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
+        <GoogleMapView region={region} setRegion={setRegion} setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title="Post!" onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
