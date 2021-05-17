@@ -39,7 +39,9 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
+
         `http://192.168.1.152:8080/api/photos/photo`,
+
         {
           firebasePhotoId,
           photoUrl,

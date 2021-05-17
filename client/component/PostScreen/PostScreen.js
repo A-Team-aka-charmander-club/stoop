@@ -13,12 +13,14 @@ import {
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
+import { uploadImage } from '../Services/Services';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
@@ -54,6 +56,7 @@ console.log(photoUrl, 'photoUrl')
     return newPhoto;
   };
 
+
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
@@ -74,7 +77,8 @@ console.log(photoUrl, 'photoUrl')
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -83,13 +87,13 @@ console.log(photoUrl, 'photoUrl')
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title="Open Camera"
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              title="Upload Photo"
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -97,21 +101,21 @@ console.log(photoUrl, 'photoUrl')
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
         <Tags setTags={setTags} tags={tags} />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
-        <Button title="Post!" onPress={createPost} />
+        <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
   );

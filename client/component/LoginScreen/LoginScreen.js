@@ -5,6 +5,7 @@ import styles from './styles';
 import { firebase } from '../../../src/firebase/config';
 import { createOrFindUserThunk } from '../../store/user';
 import { connect } from 'react-redux';
+//import { onLoginPress, onFooterLinkPress } from '../Services/Services';
 
 export function LoginScreen({ navigation, fetchUser }) {
   const [email, setEmail] = useState('');
@@ -13,7 +14,6 @@ export function LoginScreen({ navigation, fetchUser }) {
   const onFooterLinkPress = () => {
     navigation.navigate('Registration');
   };
-
   const onLoginPress = () => {
     firebase
       .auth()

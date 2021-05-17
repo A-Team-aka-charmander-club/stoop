@@ -11,6 +11,7 @@ import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
 import CameraModal from '../../CameraModal/CameraModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import UserAccount from '../../UserAccount/UserAccount';
 
 const Tab = createBottomTabNavigator();
 
@@ -55,11 +56,11 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name='Map'
-        component={GoogleMapView}
+        name='Account'
+        component={UserAccount}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='map' color={color} size={size} />
+            <MaterialCommunityIcons name='account' color={color} size={size} />
           ),
         }}
       />
