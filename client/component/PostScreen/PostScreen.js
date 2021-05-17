@@ -11,6 +11,7 @@ import {
   openImagePickerAsync,
 } from '../CameraModal/CameraFunctions';
 import { takePhoto, clearPhoto } from '../../store/photo';
+import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 
 export const PostScreen = (props) => {
@@ -18,11 +19,14 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-
+  const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
+<<<<<<< HEAD
 
+=======
+>>>>>>> c499f0d68116acedb3ea2758701781e9df734826
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
 
@@ -45,7 +49,7 @@ export const PostScreen = (props) => {
     await ref.put(blob);
 
     let photoUrl = await ref.getDownloadURL();
-
+console.log(photoUrl, 'photoUrl')
     let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
@@ -66,7 +70,12 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
+<<<<<<< HEAD
     console.log('NAVIGATE TO SINGLE POST');
+=======
+    props.removeTags();
+    setTags({ tag: '', tagsArray: [] });
+>>>>>>> c499f0d68116acedb3ea2758701781e9df734826
     props.navigation.navigate('SinglePost');
   };
 
@@ -110,7 +119,7 @@ export const PostScreen = (props) => {
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
-        <Tags />
+        <Tags setTags={setTags} tags={tags} />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
@@ -129,6 +138,7 @@ const mapDispatchToProps = (dispatch) => {
     submitPost: (post) => dispatch(createPostThunk(post)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
+    removeTags: () => dispatch(removeTags()),
   };
 };
 

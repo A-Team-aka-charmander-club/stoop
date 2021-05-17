@@ -39,8 +39,12 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
+<<<<<<< HEAD
         //anna's ip address: 192.168.1.152
         `http://localhost:8080/api/photos/photo`,
+=======
+        `http://192.168.1.152:8080/api/photos/photo`,
+>>>>>>> c499f0d68116acedb3ea2758701781e9df734826
         {
           firebasePhotoId,
           photoUrl,

@@ -7,41 +7,40 @@ import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
 export function HomeGoogleMapView(props) {
-  const [region, setRegion] = useState({
-    latitude: 40.751343151025615,
-    longitude: -74.00289693630044,
-    latitudeDelta: 0.026,
-    longitudeDelta: 0.027,
-  });
+  const [region, setRegion] = useState({latitude: 40.6734,
+    longitude: -74.0083,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05});
 
-  //allows older browsers to load map
   installWebGeolocationPolyfill();
 
   useEffect(() => {
-    //get current location
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.0026,
-          longitudeDelta: 0.0027,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
         });
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    props.getCoordinates();
   }, []);
 
+  console.log(props.coordinates.slice(0, 5), 'coor')
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        region={region}
+        initialRegion={region}
         showsUserLocation={true}
         zoomEnabled={true}
+        loadingEnabled
+        loadingBackgroundColor="white"
+        loadingIndicatorColor="black"
       >
         {props.coordinates.map((post, index) => {
         return (
@@ -55,7 +54,6 @@ export function HomeGoogleMapView(props) {
           description={post.description}
           image={require('../../../assets/pin.png')}
     resizeMode="contain"
-         
           />
         );
       })}
