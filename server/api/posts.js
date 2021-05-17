@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Photo, User, Post },
+  models: { Photo, User, Post, Tag },
 } = require('../db');
 const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
 const { Op } = require('sequelize');
@@ -20,11 +20,18 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
       title: req.body.post.title,
       description: req.body.post.description,
       latitude: req.body.post.latitude,
-      longitude: req.body.post.longitude
+      longitude: req.body.post.longitude,
     });
 
     await user.addPost(post);
     await post.addPhoto(photo);
+    await Promise.all(req.body.tags.map((tag)=> {
+      await Tag.findOrCreate({where: {
+        name: tag
+      }})
+      return post.addTag(tag)
+    }))
+
 
     let combinedPost = await Post.findOne({
       where: {
@@ -33,6 +40,7 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
       include: [
         {
           model: Photo,
+          Tag,
         },
       ],
     });
