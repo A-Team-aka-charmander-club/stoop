@@ -10,7 +10,7 @@ import {
   openCameraAsync,
   openImagePickerAsync,
 } from '../CameraModal/CameraFunctions';
-import { takePhoto } from '../../store/photo';
+import { takePhoto, clearPhoto } from '../../store/photo';
 import Tags from './Tags/Tags';
 
 export const PostScreen = (props) => {
@@ -61,9 +61,11 @@ export const PostScreen = (props) => {
     // props.navigation.navigate('PostNav', {
     //   screen: 'SinglePost',
     // });
+    props.clearPhoto();
+    setTitle('');
+    setDescription('');
     props.navigation.navigate('SinglePost');
   };
-  console.log('THESE ARE TAGS ON STATE', props.tags);
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -123,6 +125,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
+    clearPhoto: () => dispatch(clearPhoto()),
   };
 };
 
