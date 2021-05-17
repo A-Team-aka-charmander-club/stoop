@@ -15,10 +15,9 @@ export const SinglePost = (props) => {
         initialRegion={{
           latitude: props.post.latitude,
           longitude: props.post.longitude,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-      >
+          latitudeDelta: 0.0,
+          longitudeDelta: 0.0,
+        }}>
         <Marker
           coordinate={{
             latitude: props.post.latitude,
@@ -34,6 +33,12 @@ export const SinglePost = (props) => {
       />
       <Text>{props.post.title}</Text>
       <Text>{props.post.description}</Text>
+      <Text>
+        Tags:{' '}
+        {props.post.tags.map((tag) => {
+          return tag.name;
+        })}{' '}
+      </Text>
     </View>
   );
 };
