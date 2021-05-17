@@ -36,17 +36,14 @@ export default function GoogleMapView(props) {
     props.setLongitude(region.longitude)
   }, []);
 
-  onDragEnd=(e) => {
+  const onDragEnd=(e) => {
     setRegion({latitude: e.nativeEvent.coordinate.latitude,
       longitude: e.nativeEvent.coordinate.longitude,
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025})
     setMarker(e.nativeEvent.coordinate)
-  }
-
-  onRegionChange = (region) =>{
-    
-   setRegion(region);
+    props.setLatitude(region.latitude)
+    props.setLongitude(region.longitude)
   }
 
   return (

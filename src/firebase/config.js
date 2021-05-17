@@ -23,6 +23,7 @@ const firebaseConfig = {
   messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
   appId: REACT_APP_ID,
 };
+
 // if (!firebase.apps.length) {
 firebase.initializeApp(firebaseConfig);
 // firebase
