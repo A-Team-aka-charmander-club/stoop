@@ -27,6 +27,7 @@ export function HomeGoogleMapView(props) {
           latitudeDelta: 0.0026,
           longitudeDelta: 0.0027,
         });
+        console.log(position, 'ANNA IS HERE!!!!');
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
@@ -41,24 +42,22 @@ export function HomeGoogleMapView(props) {
         provider={PROVIDER_GOOGLE}
         region={region}
         showsUserLocation={true}
-        zoomEnabled={true}
-      >
+        zoomEnabled={true}>
         {props.coordinates.map((post, index) => {
-        return (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: post.latitude,
-              longitude: post.longitude
-            }}
-          title={post.title}
-          description={post.description}
-          image={require('../../../assets/pin.png')}
-    resizeMode="contain"
-         
-          />
-        );
-      })}
+          return (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: post.latitude,
+                longitude: post.longitude,
+              }}
+              title={post.title}
+              description={post.description}
+              image={require('../../../assets/pin.png')}
+              resizeMode="contain"
+            />
+          );
+        })}
       </MapView>
     </View>
   );
