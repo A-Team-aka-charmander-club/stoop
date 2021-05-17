@@ -70,12 +70,9 @@ console.log(photoUrl, 'photoUrl')
     props.clearPhoto();
     setTitle('');
     setDescription('');
-<<<<<<< HEAD
     console.log('NAVIGATE TO SINGLE POST');
-=======
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
->>>>>>> c499f0d68116acedb3ea2758701781e9df734826
     props.navigation.navigate('SinglePost');
   };
 
