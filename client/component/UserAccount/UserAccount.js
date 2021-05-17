@@ -3,25 +3,15 @@ import React from 'react';
 import { Button, View, Text } from 'react-native';
 import { logoutUser } from '../../store/user';
 import { connect } from 'react-redux';
-import { firebase } from '../../../src/firebase/config';
+// import { firebase } from '../../../src/firebase/config';
+import { onLogoutPress } from '../Services/Services';
 
 export function UserAccount(props) {
-  const onLogoutPress = () => {
-    firebase
-      .auth()
-      .signOut()
-      .catch((error) => {
-        console.log(error);
-      });
-    props.logOut();
-    props.navigation.navigate('Login');
-  };
-
   return (
     <View>
       <Text>User Profile</Text>
       <Text>User</Text>
-      <Button title='Logout' onPress={() => onLogoutPress()} />
+      <Button title='Logout' onPress={() => onLogoutPress(props)} />
     </View>
   );
 }

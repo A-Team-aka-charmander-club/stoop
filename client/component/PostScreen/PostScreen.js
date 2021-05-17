@@ -12,47 +12,13 @@ import {
 } from '../CameraModal/CameraFunctions';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import Tags from './Tags/Tags';
+import { uploadImage } from '../Services/Services';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-
-  const uploadImage = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    
-    const photoName = String(Math.random(1000));
-    var ref = firebase.storage().ref().child(photoName);
-
-    const user = firebase.auth().currentUser;
-
-    const data = {
-      userId: user.uid,
-      uri: uri,
-    };
-
-    const photoId = firebase.firestore().collection('photos').doc().id;
-    const photosRef = firebase.firestore().collection('photos');
-
-    photosRef
-      .doc(photoId)
-      .set(data)
-      .catch((error) => {
-        alert(error);
-      });
-    await ref.put(blob);
-
-    let photoUrl = await ref.getDownloadURL();
-
-    let newPhoto = {
-      firebasePhotoId: photoId,
-      userId: user.uid,
-      firebaseUrl: photoUrl,
-    };
-    return newPhoto;
-  };
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
@@ -72,7 +38,8 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -81,13 +48,13 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title="Open Camera"
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              title="Upload Photo"
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -95,21 +62,21 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
         <Tags />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
-        <Button title="Post!" onPress={createPost} />
+        <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
   );
