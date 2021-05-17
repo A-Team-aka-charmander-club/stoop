@@ -13,6 +13,8 @@ import {
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
+import { getCoordinatesThunk } from '../../store/coordinates';
+
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -20,6 +22,7 @@ export const PostScreen = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
+  
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
@@ -45,7 +48,6 @@ export const PostScreen = (props) => {
     await ref.put(blob);
 
     let photoUrl = await ref.getDownloadURL();
-console.log(photoUrl, 'photoUrl')
     let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
@@ -56,12 +58,12 @@ console.log(photoUrl, 'photoUrl')
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
+    console.log('create post')
+    console.log(latitude, 'latitude')
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
     await props.submitPost({ post, photo, tags });
-    // props.navigation.navigate('PostNav', {
-    //   screen: 'SinglePost',
-    // });
+    props.getCoordinates();
     props.clearPhoto();
     setTitle('');
     setDescription('');
@@ -129,6 +131,7 @@ const mapDispatchToProps = (dispatch) => {
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
     removeTags: () => dispatch(removeTags()),
+    getCoordinates: () => dispatch(getCoordinatesThunk())
   };
 };
 

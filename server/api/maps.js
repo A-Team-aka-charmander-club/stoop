@@ -7,10 +7,9 @@ const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
 module.exports = router;
 
 router.get('/coordinates', async (req, res, next) => {
-
+  console.log(req.headers, 'headers')
   try {
     const postPins = await Post.findAll();
-    // console.log(postPins, '!!!!!!!!');
     //   let coordinates = await Post.findAll({
     //     where: {
     //       latitude: {
@@ -27,7 +26,8 @@ router.get('/coordinates', async (req, res, next) => {
     //       }
     //     }
     //   })
-    res.json(postPins);
+    console.log(res.headers, 'headers response')
+    res.send(postPins);
   } catch (err) {
     next(err);
   }

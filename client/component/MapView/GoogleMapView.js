@@ -8,8 +8,8 @@ export default function GoogleMapView(props) {
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
     longitude: -74.00289693630044,
-    latitudeDelta: 0.026,
-    longitudeDelta: 0.027,
+    latitudeDelta: 0.0025,
+    longitudeDelta: 0.0025,
   });
 
   const [marker, setMarker] = useState({
@@ -21,7 +21,6 @@ export default function GoogleMapView(props) {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-
         setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -42,8 +41,8 @@ export default function GoogleMapView(props) {
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025})
     setMarker(e.nativeEvent.coordinate)
-    props.setLatitude(region.latitude)
-    props.setLongitude(region.longitude)
+    props.setLatitude(e.nativeEvent.coordinate.latitude)
+    props.setLongitude(e.nativeEvent.coordinate.longitude)
   }
 
   return (
