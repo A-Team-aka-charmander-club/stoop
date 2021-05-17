@@ -11,6 +11,7 @@ import {
   openImagePickerAsync,
 } from '../CameraModal/CameraFunctions';
 import { takePhoto, clearPhoto } from '../../store/photo';
+import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 import { uploadImage } from '../Services/Services';
 
@@ -19,6 +20,42 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
+  const [tags, setTags] = useState({ tag: '', tagsArray: [] });
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const photoName = String(Math.random(1000));
+    var ref = firebase.storage().ref().child(photoName);
+
+    const user = firebase.auth().currentUser;
+
+    const data = {
+      userId: user.uid,
+      uri: uri,
+    };
+
+    const photoId = firebase.firestore().collection('photos').doc().id;
+    const photosRef = firebase.firestore().collection('photos');
+
+    photosRef
+      .doc(photoId)
+      .set(data)
+      .catch((error) => {
+        alert(error);
+      });
+    await ref.put(blob);
+
+    let photoUrl = await ref.getDownloadURL();
+console.log(photoUrl, 'photoUrl')
+    let newPhoto = {
+      firebasePhotoId: photoId,
+      userId: user.uid,
+      firebaseUrl: photoUrl,
+    };
+    return newPhoto;
+  };
+
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
@@ -31,6 +68,8 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
+    props.removeTags();
+    setTags({ tag: '', tagsArray: [] });
     props.navigation.navigate('SinglePost');
   };
 
@@ -74,7 +113,7 @@ export const PostScreen = (props) => {
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
-        <Tags />
+        <Tags setTags={setTags} tags={tags} />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
@@ -93,6 +132,7 @@ const mapDispatchToProps = (dispatch) => {
     submitPost: (post) => dispatch(createPostThunk(post)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
+    removeTags: () => dispatch(removeTags()),
   };
 };
 
