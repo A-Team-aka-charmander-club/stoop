@@ -26,7 +26,6 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
     await user.addPost(post);
     await post.addPhoto(photo);
 
-    console.log(req.body.tags, 'reqbodytags!!!!!');
     await Promise.all(
       req.body.tags.map(async (tag) => {
         console.log(tag, 'tag in promise');
