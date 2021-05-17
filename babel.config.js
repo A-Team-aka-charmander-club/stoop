@@ -9,6 +9,12 @@ module.exports = function (api) {
           moduleName: '@env',
         },
       ],
+      ["module-resolver", {
+        "root": ["./"],
+        "alias": {
+          "@assets": "./assets"
+         }
+      }]
     ],
   };
 };
