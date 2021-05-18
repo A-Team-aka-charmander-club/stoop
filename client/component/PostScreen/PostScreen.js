@@ -11,7 +11,9 @@ import {
   openImagePickerAsync,
 } from '../CameraModal/CameraFunctions';
 import { takePhoto, clearPhoto } from '../../store/photo';
+import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
+import { uploadImage } from '../Services/Services';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -19,10 +21,10 @@ export const PostScreen = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
+  const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
-    
     const photoName = String(Math.random(1000));
     var ref = firebase.storage().ref().child(photoName);
 
@@ -45,7 +47,7 @@ export const PostScreen = (props) => {
     await ref.put(blob);
 
     let photoUrl = await ref.getDownloadURL();
-
+console.log(photoUrl, 'photoUrl')
     let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
@@ -53,6 +55,7 @@ export const PostScreen = (props) => {
     };
     return newPhoto;
   };
+
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
@@ -65,6 +68,8 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
+    props.removeTags();
+    setTags({ tag: '', tagsArray: [] });
     props.navigation.navigate('SinglePost');
   };
 
@@ -72,7 +77,8 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -81,13 +87,13 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title="Open Camera"
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              title="Upload Photo"
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -95,21 +101,21 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
-        <Tags />
+        <Tags setTags={setTags} tags={tags} />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
-        <Button title="Post!" onPress={createPost} />
+        <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
   );
@@ -126,6 +132,7 @@ const mapDispatchToProps = (dispatch) => {
     submitPost: (post) => dispatch(createPostThunk(post)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
+    removeTags: () => dispatch(removeTags()),
   };
 };
 

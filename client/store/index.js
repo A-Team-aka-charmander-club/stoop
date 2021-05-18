@@ -12,9 +12,10 @@ import coordinates from './coordinates';
 
 const reducer = combineReducers({ user, photo, post, coordinates, tags });
 
+//createLogger({ collapsed: true }
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
-);
+  applyMiddleware(thunkMiddleware));
+
 const store = createStore(reducer, middleware);
 
 export default store;
