@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout, CalloutSubview } from 'react-native-maps';
-import { View, Image, Text } from 'react-native';
+import MapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  Callout,
+  CalloutSubview,
+} from 'react-native-maps';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
+import { getPost } from '../../store/post';
 
 export function HomeGoogleMapView(props) {
   const [region, setRegion] = useState({
@@ -32,6 +38,12 @@ export function HomeGoogleMapView(props) {
     props.getCoordinates();
   }, [props.coordinates.length]);
 
+  const onPressButton = (post) => {
+    console.log('click me was pressed');
+    console.log('navigation props:', props.navigation);
+    props.getPost(post);
+    props.navigation.navigate('SinglePost');
+  };
   return (
     <View style={styles.container}>
       <MapView
@@ -45,7 +57,7 @@ export function HomeGoogleMapView(props) {
         loadingIndicatorColor='black'
       >
         {props.coordinates.map((post, index) => {
-          console.log(post, 'post here');
+          //console.log(post, 'post here');
           return (
             <Marker
               key={index}
@@ -55,21 +67,23 @@ export function HomeGoogleMapView(props) {
               }}
               title={post.title}
               description={post.description}
-            // image={require('../../../assets/pin.png')}
-            // resizeMode="contain"
+              // image={require('../../../assets/pin.png')}
+              // resizeMode="contain"
             >
-              <Callout >
-                <View>
-                  {post.photos[0] ? <Image source={{ url: post.photos[0].firebaseUrl }} /> : <Text>''</Text>}
-                </View>
-                <CalloutSubview
-                onPress={() => {
-                  
-                }}
-                style={[styles.calloutButton]}
+              <Callout
+                onPress={() => onPressButton(post)}
+                style={styles.calloutButton}
               >
+                <Text>{post.title}</Text>
+                {post.photos[0] ? (
+                  <Image
+                    source={{ url: post.photos[0].firebaseUrl }}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Text>''</Text>
+                )}
                 <Text>Click me</Text>
-              </CalloutSubview>
               </Callout>
               {/* <Image source={{ url: post.photos[0].firebaseUrl }} /> */}
             </Marker>
@@ -88,7 +102,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getCoordinates: (region) => dispatch(getCoordinatesThunk(region)),
+    getPost: (post) => getPost(post),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
+
+// () => {
+//   //props.navigation.navigate('SinglePost', {post: post});
+//   console.log('click me was pressed');
+// }
