@@ -28,7 +28,7 @@ export function createOrFindUserThunk(user) {
       const { data } = await axios.post(
         // `https://trashpandapirates.herokuapp.com/api/users/user`,
 
-        `http://192.168.1.6:8080/api/users/user`,
+        `http://10.0.0.153:8080/api/users/user`,
 
         {
           user,
