@@ -29,7 +29,6 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
 
     await Promise.all(
       req.body.tags.map(async (tag) => {
-        console.log(tag, 'tag in promise');
         let [newTag, isCreated] = await Tag.findOrCreate({
           where: {
             name: tag,
