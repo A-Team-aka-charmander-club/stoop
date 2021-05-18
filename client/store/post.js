@@ -5,6 +5,7 @@ import { firebase } from '../../src/firebase/config';
 //action constants
 const CREATE_POST = 'CREATE_POST';
 
+const DELETE_POST = 'DELETE_POST';
 // action creators
 export const createPost = (post) => {
   return {
@@ -13,6 +14,12 @@ export const createPost = (post) => {
   };
 };
 
+export const deletePost = (post) => {
+  return {
+    type: DELETE_POST,
+    post,
+  };
+};
 //thunk
 
 export const createPostThunk = (post) => {
@@ -34,12 +41,32 @@ export const createPostThunk = (post) => {
   };
 };
 
+export const destroyPost = (postId, history) => {
+  return async (dispatch) => {
+    try {
+      const user = firebase.auth().currentUser;
+
+      const { data } = await axios.delete(
+        `http://localhost:8080/api/posts/post/${postId}`,
+        {
+          headers: { authorization: user.uid },
+        }
+      );
+      dispatch(deletePost(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 let initState = {};
 
 export default function postReducer(state = initState, action) {
   switch (action.type) {
     case CREATE_POST:
       return action.post;
+    case DELETE_POST:
+      return state.filter((post) => post.id !== action.post.id);
     default:
       return state;
   }

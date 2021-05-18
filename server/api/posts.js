@@ -4,20 +4,18 @@ const {
 } = require('../db');
 const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
 const { Op } = require('sequelize');
+const { MaterialIcons } = require('@expo/vector-icons');
 
 module.exports = router;
 
 router.post('/post', isLoggedIn, async (req, res, next) => {
   try {
-    console.log('creating photo');
     const photo = await Photo.create({
       firebaseUrl: req.body.photo.firebaseUrl,
       firebasePhotoId: req.body.photo.firebasePhotoId,
     });
     const user = req.user;
     await user.addPhoto(photo);
-
-    console.log('creating post');
 
     const post = await Post.create({
       title: req.body.post.title,
@@ -29,7 +27,6 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
     await user.addPost(post);
     await post.addPhoto(photo);
 
-    console.log('promis all');
     await Promise.all(
       req.body.tags.map(async (tag) => {
         console.log(tag, 'tag in promise');
@@ -42,7 +39,6 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
       })
     );
 
-    console.log('find one post');
     let combinedPost = await Post.findOne({
       where: {
         id: post.id,
@@ -62,3 +58,19 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
     next(error);
   }
 });
+
+router.delete('/post/:id', async (req, res, next) => {
+  try {
+    const post = await Post.findOne(req.params.id);
+    if (post) {
+      await post.destroy();
+      res.sendStatus(204);
+    } else {
+      next(err);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+// router.put();

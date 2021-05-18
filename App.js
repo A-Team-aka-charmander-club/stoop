@@ -8,7 +8,6 @@ import {
   LoginScreen,
   GoogleMapView,
   RegistrationScreen,
-  PhotoApp,
   PostScreen,
 } from './client/index';
 import { decode, encode } from 'base-64';

@@ -3,7 +3,7 @@ import styles from './styles';
 //import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
-
+import { destroyPost } from '../../store/post';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 export const SinglePost = (props) => {
@@ -40,6 +40,10 @@ export const SinglePost = (props) => {
           return tag.name;
         })}{' '}
       </Text>
+      <Button
+        title='Delete Post'
+        onPress={() => props.deletePost(props.post.id)}
+      />
     </View>
   );
 };
@@ -50,4 +54,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(SinglePost);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deletePost: (post) => dispatch(destroyPost(post)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
