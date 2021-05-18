@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { firebase } from '../../src/firebase/config';
-
 const GET_COORDINATES = 'GET_COORDINATES';
 
 const getCoordinates = (coordinates) => {
