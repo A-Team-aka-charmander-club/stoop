@@ -22,14 +22,13 @@ const isLoggedIn = async (req, res, next) => {
 };
 
 const verifyUser = async (req, res, next) => {
-  console.log('IN GATEKEEPER - VERIFY', req.params);
+  console.log('IN GATEKEEPER - VERIFY');
   try {
     const user = await User.findOne({
       where: {
         firebaseUserId: req.headers.authorization,
       },
     });
-    console.log('ID MATCH: ', user.id, req.params.userId);
     if (user.id !== Number(req.params.userId)) {
       console.log('params:', req.params.userId);
       return res.status(409).send('This is not for you!');

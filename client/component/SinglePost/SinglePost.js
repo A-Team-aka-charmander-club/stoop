@@ -13,7 +13,6 @@ export const SinglePost = (props) => {
   //   }
   // };
   function handleDelete() {
-    console.log('IS USER ON STATE?', props.user);
     props.deletePost(props.post.id, props.user.id);
   }
   if (props.post.id) {
@@ -50,7 +49,9 @@ export const SinglePost = (props) => {
             return tag.name;
           })}{' '}
         </Text>
-        <Button title='Delete Post' onPress={handleDelete} />
+        {props.post.users[0].id === props.user.id ? (
+          <Button title='Delete Post' onPress={handleDelete} />
+        ) : null}
       </View>
     );
   } else {

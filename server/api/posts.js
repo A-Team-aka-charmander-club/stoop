@@ -48,6 +48,10 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
         {
           model: Tag,
         },
+        {
+          model: User,
+          attributes: ['id'],
+        },
       ],
     });
 
