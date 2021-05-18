@@ -61,7 +61,7 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.delete('/post/:id/:userId', verifyUser, async (req, res, next) => {
+router.delete('/:id/:userId', verifyUser, async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id);
     if (post) {
@@ -75,4 +75,49 @@ router.delete('/post/:id/:userId', verifyUser, async (req, res, next) => {
   }
 });
 
-// router.put();
+router.put('/:id/:userId', verifyUser, async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+
+    if (post) {
+      //if sending an updated photo, must do this first
+      if (!req.body.photo.id) {
+        //first get rid of the association btwn the old photo and the post
+        const oldPhoto = await Photo.findByFk(req.params.id);
+        await post.removePhoto(oldPhoto);
+
+        const photo = await Photo.create({
+          firebaseUrl: req.body.photo.firebaseUrl,
+          firebasePhotoId: req.body.photo.firebasePhotoId,
+        });
+        const user = req.user;
+        await user.addPhoto(photo);
+        await post.addPhoto(photo);
+      }
+      await post.update(req.body.post);
+
+      let updatedPost = await Post.findByOne({
+        where: {
+          id: post.id,
+        },
+        include: [
+          {
+            model: Photo,
+          },
+          {
+            model: Tag,
+          },
+          {
+            model: User,
+            attributes: ['id'],
+          },
+        ],
+      });
+      res.send(updatedPost);
+    } else {
+      next(err);
+    }
+  } catch (err) {
+    next(err);
+  }
+});

@@ -6,6 +6,8 @@ import { firebase } from '../../src/firebase/config';
 const CREATE_POST = 'CREATE_POST';
 
 const DELETE_POST = 'DELETE_POST';
+
+const EDIT_POST = 'EDIT_POST';
 // action creators
 export const createPost = (post) => {
   return {
@@ -17,6 +19,13 @@ export const createPost = (post) => {
 export const deletePost = (post) => {
   return {
     type: DELETE_POST,
+    post,
+  };
+};
+
+export const editPost = (post) => {
+  return {
+    type: EDIT_POST,
     post,
   };
 };
@@ -42,13 +51,12 @@ export const createPostThunk = (post) => {
 };
 
 export const destroyPost = (postId, navigation, userId) => {
-  console.log('FIREBASE ID IN THUNK', userId);
   return async (dispatch) => {
     try {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.delete(
-        `http://localhost:8080/api/posts/post/${postId}/${userId}`,
+        `http://localhost:8080/api/posts/${postId}/${userId}`,
         {
           headers: { authorization: user.uid },
         }
@@ -58,6 +66,23 @@ export const destroyPost = (postId, navigation, userId) => {
         navigation.navigate('Home');
         dispatch(deletePost(data));
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const updatePost = (post, userId, postId) => {
+  return async (dispatch) => {
+    try {
+      const user = firebase.auth().currentUser;
+      const { data } = await axios.put(
+        `http://localhost:8080/api/posts/${postId}/${userId}`,
+        post,
+        {
+          headers: { authorization: user.uid },
+        }
+      );
     } catch (err) {
       console.log(err);
     }

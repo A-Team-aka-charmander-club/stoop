@@ -1,35 +1,37 @@
 import React, { useState } from 'react';
-import styles from './styles';
+import styles from '../styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, TextInput, Button } from 'react-native';
-import { firebase } from '../../../src/firebase/config';
+import { firebase } from '../../../../src/firebase/config';
 import { connect } from 'react-redux';
-import GoogleMapView from '../MapView/GoogleMapView';
-import { createPostThunk } from '../../store/post';
-import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
-import { takePhoto, clearPhoto } from '../../store/photo';
-import { removeTags } from '../../store/tag';
-import Tags from './Tags/Tags';
+import GoogleMapView from '../../MapView/GoogleMapView';
+import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
+import { takePhoto, clearPhoto } from '../../../store/photo';
+import { updatePost } from '../../../store/post';
 
-import { getCoordinatesThunk } from '../../store/coordinates';
+// import { removeTags } from '../../../store/tag';
+// import Tags from '../Tags/Tags';
 
-import { uploadImage } from '../Services/Services';
+import { getCoordinatesThunk } from '../../../store/coordinates';
 
-export const PostScreen = (props) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+import { uploadImage } from '../../Services/Services';
 
-  const [tags, setTags] = useState({ tag: '', tagsArray: [] });
+export const EditPostScreen = (props) => {
+  const [title, setTitle] = useState(props.post.title);
+  const [description, setDescription] = useState(props.post.description);
+  const [latitude, setLatitude] = useState(props.post.latitude);
+  const [longitude, setLongitude] = useState(props.post.longitude);
+
+  //   const [tags, setTags] = useState({ tag: '', tagsArray: props.post.tags });
   const [region, setRegion] = useState({
-    latitude: 40.751343151025615,
-    longitude: -74.00289693630044,
+    latitude: props.post.latitude,
+    longitude: props.post.longitude,
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
 
+  // for uploading
   const uploadImage = async (uri) => {
     const photoName = String(Math.random(1000));
 
@@ -64,38 +66,50 @@ export const PostScreen = (props) => {
     return newPhoto;
   };
 
-  const createPost = async () => {
-    const photo = await uploadImage(props.photo);
-    let post = { title, description, latitude, longitude };
-    let tags = props.tags;
+  const changePost = async () => {
+    if (props.photo) {
+      const photo = await uploadImage(props.photo);
+      console.log('NEW PHOTO: ', photo);
+    } else {
+      const photo = props.post.photos[0];
+      console.log('OG PHOTO: ', photo);
+    }
 
-    await props.submitPost({ post, photo, tags });
+    let post = { title, description, latitude, longitude };
+    // let tags = props.tags;
+
+    await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
+
     props.getCoordinates();
     props.clearPhoto();
     setTitle('');
     setDescription('');
-    props.removeTags();
-    setTags({ tag: '', tagsArray: [] });
+    // props.removeTags();
+    // setTags({ tag: '', tagsArray: [] });
     setRegion({
-      latitude: 40.751343151025615,
-      longitude: -74.00289693630044,
+      //   latitude: 40.751343151025615,
+      //   longitude: -74.00289693630044,
+      latitude: props.post.latitude,
+      longitude: props.post.longitude,
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025,
     });
     props.navigation.navigate('SinglePost');
   };
-
+  //   console.log('PHOTO PROPS: ', props.post.photos[0]);
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps='always'
       >
-        <Text>Create Post</Text>
+        <Text>Update Post</Text>
 
-        {props.photo.length ? (
-          <Image source={{ uri: props.photo }} style={styles.thumbnail} />
-        ) : null}
+        <Image
+          source={{ url: props.post.photos[0].firebaseUrl }}
+          style={styles.thumbnail}
+        />
+
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
@@ -125,7 +139,7 @@ export const PostScreen = (props) => {
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
-        <Tags setTags={setTags} tags={tags} />
+        {/* <Tags setTags={setTags} tags={tags} /> */}
 
         <GoogleMapView
           region={region}
@@ -133,7 +147,7 @@ export const PostScreen = (props) => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
-        <Button title='Post!' onPress={createPost} />
+        <Button title='Update!' onPress={changePost} />
       </KeyboardAwareScrollView>
     </View>
   );
@@ -143,6 +157,8 @@ const mapStateToProps = (state) => {
   return {
     photo: state.photo,
     tags: state.tags,
+    post: state.post,
+    user: state.user,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -150,9 +166,11 @@ const mapDispatchToProps = (dispatch) => {
     submitPost: (post) => dispatch(createPostThunk(post)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
-    removeTags: () => dispatch(removeTags()),
+    editPost: (post, userId, postId) =>
+      dispatch(updatePost(post, userId, postId)),
+    // removeTags: () => dispatch(removeTags()),
     getCoordinates: () => dispatch(getCoordinatesThunk()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(EditPostScreen);

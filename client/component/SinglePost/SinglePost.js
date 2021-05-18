@@ -44,13 +44,19 @@ export const SinglePost = (props) => {
         <Text>{props.post.title}</Text>
         <Text>{props.post.description}</Text>
         <Text>
-          Tags:{' '}
+          Tags:
           {props.post.tags.map((tag) => {
             return tag.name;
-          })}{' '}
+          })}
         </Text>
         {props.post.users[0].id === props.user.id ? (
-          <Button title='Delete Post' onPress={handleDelete} />
+          <View>
+            <Button title='Delete Post' onPress={handleDelete} />
+            <Button
+              title='Edit Post'
+              onPress={() => props.navigation.navigate('Edit')}
+            />
+          </View>
         ) : null}
       </View>
     );
