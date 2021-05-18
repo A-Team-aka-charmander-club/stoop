@@ -21,7 +21,6 @@ export const createPostThunk = (post) => {
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
         `http://192.168.1.6:8080/api/posts/post`,
-
         post,
         {
           headers: { authorization: user.uid },
