@@ -42,6 +42,7 @@ export const createPostThunk = (post) => {
 };
 
 export const destroyPost = (postId, navigation, userId) => {
+  console.log('FIREBASE ID IN THUNK', userId);
   return async (dispatch) => {
     try {
       const user = firebase.auth().currentUser;

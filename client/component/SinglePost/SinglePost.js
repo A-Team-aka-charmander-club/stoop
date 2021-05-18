@@ -14,7 +14,7 @@ export const SinglePost = (props) => {
   // };
   function handleDelete() {
     console.log('IS USER ON STATE?', props.user);
-    props.deletePost(props.post.id, props.user.uid);
+    props.deletePost(props.post.id, props.user.id);
   }
   if (props.post.id) {
     return (

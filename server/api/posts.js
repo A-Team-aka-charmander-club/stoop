@@ -57,23 +57,18 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.delete(
-  '/post/:id/:userId',
-  isLoggedIn,
-  verifyUser,
-  async (req, res, next) => {
-    try {
-      const post = await Post.findByPk(req.params.id);
-      if (post) {
-        await post.destroy();
-        res.send(post);
-      } else {
-        next(err);
-      }
-    } catch (err) {
+router.delete('/post/:id/:userId', verifyUser, async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    if (post) {
+      await post.destroy();
+      res.send(post);
+    } else {
       next(err);
     }
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 // router.put();
