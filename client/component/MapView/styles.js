@@ -26,8 +26,8 @@ export default StyleSheet.create({
     marginVertical: 10,
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 15,
+    height: 15,
     resizeMode: 'contain',
   },
 });

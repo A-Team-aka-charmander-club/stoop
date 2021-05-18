@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Post, Photo },
+  models: { Post, Photo, Tag },
 } = require('../db');
 const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
 
@@ -12,6 +12,9 @@ router.get('/coordinates', async (req, res, next) => {
       include: [
         {
           model: Photo,
+        },
+        {
+          model: Tag,
         },
       ],
     });

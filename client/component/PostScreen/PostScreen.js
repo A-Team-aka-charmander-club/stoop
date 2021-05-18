@@ -21,7 +21,7 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [clearMap, setClearMap] = useState(true) 
+  const [clearMap, setClearMap] = useState(true);
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
@@ -32,14 +32,9 @@ export const PostScreen = (props) => {
   });
 
   const uploadImage = async (uri) => {
-
     const photoName = String(Math.random(1000));
-     
-    var ref = firebase.storage().ref().child(photoName);
 
-    await ref.put(uri)
-    
-    let photoUrl = await ref.getDownloadURL();
+    var ref = firebase.storage().ref().child(photoName);
 
     const user = firebase.auth().currentUser;
 
@@ -57,6 +52,9 @@ export const PostScreen = (props) => {
       .catch((error) => {
         alert(error);
       });
+    await ref.put(uri);
+
+    let photoUrl = await ref.getDownloadURL();
 
     let newPhoto = {
       firebasePhotoId: photoId,
@@ -65,7 +63,6 @@ export const PostScreen = (props) => {
     };
     return newPhoto;
   };
-
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
@@ -75,7 +72,7 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
-    setClearMap(true)
+    setClearMap(true);
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
@@ -91,7 +88,8 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -100,13 +98,13 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title="Open Camera"
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              title="Upload Photo"
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -114,14 +112,14 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
@@ -135,7 +133,7 @@ export const PostScreen = (props) => {
           clearMap={clearMap}
           setClearMap={setClearMap}
         />
-        <Button title="Post!" onPress={createPost} />
+        <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
   );

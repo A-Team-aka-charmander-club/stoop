@@ -102,7 +102,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getCoordinates: (region) => dispatch(getCoordinatesThunk(region)),
-    getPost: (post) => getPost(post),
+    getPost: (post) => dispatch(getPost(post)),
   };
 };
 
