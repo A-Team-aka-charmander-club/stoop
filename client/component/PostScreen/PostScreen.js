@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles';
+
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, TextInput, Button } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
@@ -13,7 +14,11 @@ import {
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
+
+import { getCoordinatesThunk } from '../../store/coordinates';
+
 import { uploadImage } from '../Services/Services';
+
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -22,11 +27,22 @@ export const PostScreen = (props) => {
   const [longitude, setLongitude] = useState(null);
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
+  const [region, setRegion] = useState({
+    latitude: 40.751343151025615,
+    longitude: -74.00289693630044,
+    latitudeDelta: 0.0025,
+    longitudeDelta: 0.0025,
+  });
+
   const uploadImage = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
+
     const photoName = String(Math.random(1000));
+     
     var ref = firebase.storage().ref().child(photoName);
+
+    await ref.put(uri)
+    
+    let photoUrl = await ref.getDownloadURL();
 
     const user = firebase.auth().currentUser;
 
@@ -44,10 +60,7 @@ export const PostScreen = (props) => {
       .catch((error) => {
         alert(error);
       });
-    await ref.put(blob);
 
-    let photoUrl = await ref.getDownloadURL();
-console.log(photoUrl, 'photoUrl')
     let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
@@ -62,14 +75,18 @@ console.log(photoUrl, 'photoUrl')
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
     await props.submitPost({ post, photo, tags });
-    // props.navigation.navigate('PostNav', {
-    //   screen: 'SinglePost',
-    // });
+    props.getCoordinates();
     props.clearPhoto();
     setTitle('');
     setDescription('');
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
+    setRegion({
+      latitude: 40.751343151025615,
+      longitude: -74.00289693630044,
+      latitudeDelta: 0.0025,
+      longitudeDelta: 0.0025,
+    });
     props.navigation.navigate('SinglePost');
   };
 
@@ -114,8 +131,16 @@ console.log(photoUrl, 'photoUrl')
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
         <Tags setTags={setTags} tags={tags} />
+
+        <GoogleMapView
+          region={region}
+          setRegion={setRegion}
+          setLatitude={setLatitude}
+          setLongitude={setLongitude}
+        />
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title='Post!' onPress={createPost} />
+
       </KeyboardAwareScrollView>
     </View>
   );
@@ -133,6 +158,7 @@ const mapDispatchToProps = (dispatch) => {
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
     removeTags: () => dispatch(removeTags()),
+    getCoordinates: () => dispatch(getCoordinatesThunk()),
   };
 };
 
