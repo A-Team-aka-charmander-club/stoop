@@ -134,7 +134,6 @@ export const PostScreen = (props) => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
-        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>

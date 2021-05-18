@@ -28,11 +28,7 @@ export const createPostThunk = (post) => {
       console.log('IN POST THUNK');
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-<<<<<<< HEAD
         `http://localhost:8080/api/posts/post`,
-=======
-        `http://192.168.1.6:8080/api/posts/post`,
->>>>>>> 1482f201041cc082172e1200c443f0ced054fca8
         post,
         {
           headers: { authorization: user.uid },
@@ -45,18 +41,22 @@ export const createPostThunk = (post) => {
   };
 };
 
-export const destroyPost = (postId, history) => {
+export const destroyPost = (postId, navigation, userId) => {
   return async (dispatch) => {
     try {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.delete(
-        `http://localhost:8080/api/posts/post/${postId}`,
+        `http://localhost:8080/api/posts/post/${postId}/${userId}`,
         {
           headers: { authorization: user.uid },
         }
       );
-      dispatch(deletePost(data));
+
+      if (data) {
+        navigation.navigate('Home');
+        dispatch(deletePost(data));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +70,7 @@ export default function postReducer(state = initState, action) {
     case CREATE_POST:
       return action.post;
     case DELETE_POST:
-      return state.filter((post) => post.id !== action.post.id);
+      return initState;
     default:
       return state;
   }

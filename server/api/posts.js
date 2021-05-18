@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {
   models: { Photo, User, Post, Tag },
 } = require('../db');
-const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
+const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
 const { Op } = require('sequelize');
 
 module.exports = router;
@@ -57,18 +57,23 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.delete('/post/:id', async (req, res, next) => {
-  try {
-    const post = await Post.findOne(req.params.id);
-    if (post) {
-      await post.destroy();
-      res.sendStatus(204);
-    } else {
+router.delete(
+  '/post/:id/:userId',
+  isLoggedIn,
+  verifyUser,
+  async (req, res, next) => {
+    try {
+      const post = await Post.findByPk(req.params.id);
+      if (post) {
+        await post.destroy();
+        res.send(post);
+      } else {
+        next(err);
+      }
+    } catch (err) {
       next(err);
     }
-  } catch (err) {
-    next(err);
   }
-});
+);
 
 // router.put();
