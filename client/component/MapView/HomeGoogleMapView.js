@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { View, Image } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout, CalloutSubview } from 'react-native-maps';
+import { View, Image, Text } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
@@ -55,9 +55,22 @@ export function HomeGoogleMapView(props) {
               }}
               title={post.title}
               description={post.description}
-              // image={require('../../../assets/pin.png')}
-              // resizeMode="contain"
+            // image={require('../../../assets/pin.png')}
+            // resizeMode="contain"
             >
+              <Callout >
+                <View>
+                  {post.photos[0] ? <Image source={{ url: post.photos[0].firebaseUrl }} /> : <Text>''</Text>}
+                </View>
+                <CalloutSubview
+                onPress={() => {
+                  
+                }}
+                style={[styles.calloutButton]}
+              >
+                <Text>Click me</Text>
+              </CalloutSubview>
+              </Callout>
               {/* <Image source={{ url: post.photos[0].firebaseUrl }} /> */}
             </Marker>
           );
