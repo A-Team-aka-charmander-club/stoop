@@ -6,10 +6,7 @@ import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
-import {
-  openCameraAsync,
-  openImagePickerAsync,
-} from '../CameraModal/CameraFunctions';
+import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import Tags from './Tags/Tags';
 import { uploadImage } from '../Services/Services';

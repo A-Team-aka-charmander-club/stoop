@@ -5,7 +5,7 @@ import styles from './styles';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import { createOrFindUserThunk } from '../../store/user';
-import App from '../PhotoApp';
+//import App from '../PhotoApp';
 
 export function RegistrationScreen({ navigation, createUser }) {
   const [fullName, setFullName] = useState('');
