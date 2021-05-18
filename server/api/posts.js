@@ -4,7 +4,6 @@ const {
 } = require('../db');
 const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
 const { Op } = require('sequelize');
-const { MaterialIcons } = require('@expo/vector-icons');
 
 module.exports = router;
 
