@@ -13,7 +13,9 @@ export const SinglePost = (props) => {
     props.deletePost(props.post.id, props.user.id);
   }
 
+
   if (props.post.id) {
+    console.log(props.post.photos[0].firebaseUrl, 'url')
     return (
       <View style={styles.container}>
       <KeyboardAwareScrollView
