@@ -8,6 +8,8 @@ const CREATE_POST = 'CREATE_POST';
 const DELETE_POST = 'DELETE_POST';
 
 const EDIT_POST = 'EDIT_POST';
+
+const GET_POST = 'GET_POST';
 // action creators
 export const createPost = (post) => {
   return {
@@ -29,6 +31,15 @@ export const editPost = (post) => {
     post,
   };
 };
+
+export const getPost = (singlePost) => {
+  //console.log('in the store:', post);
+  return {
+    type: GET_POST,
+    singlePost,
+  };
+};
+
 //thunk
 
 export const createPostThunk = (post) => {

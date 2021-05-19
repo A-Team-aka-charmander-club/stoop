@@ -38,8 +38,6 @@ export const PostScreen = (props) => {
 
     await ref.put(blob);
 
-    let photoUrl = await ref.getDownloadURL();
-
     const user = firebase.auth().currentUser;
 
     const data = {
