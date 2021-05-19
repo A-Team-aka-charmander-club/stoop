@@ -11,12 +11,10 @@ import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
-
 import { getCoordinatesThunk } from '../../store/coordinates';
 
-import { uploadImage } from '../Services/Services';
-
 export const PostScreen = (props) => {
+  console.log('PROPS: ', props);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
@@ -37,6 +35,10 @@ export const PostScreen = (props) => {
     const photoName = String(Math.random(1000));
 
     var ref = firebase.storage().ref().child(photoName);
+
+    await ref.put(blob);
+
+    let photoUrl = await ref.getDownloadURL();
 
     const user = firebase.auth().currentUser;
 
@@ -133,18 +135,13 @@ export const PostScreen = (props) => {
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
         <Tags setTags={setTags} tags={tags} />
-
         <GoogleMapView
           region={region}
           setRegion={setRegion}
           setLatitude={setLatitude}
           setLongitude={setLongitude}
-          clearMap={clearMap}
           setClearMap={setClearMap}
         />
-
-        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
-
         <Button title='Post!' onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
