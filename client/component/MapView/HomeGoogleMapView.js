@@ -19,6 +19,7 @@ export function HomeGoogleMapView(props) {
     longitudeDelta: 0.025,
   });
   installWebGeolocationPolyfill();
+  console.log(props.coordinates.length, 'props.coordinates.length');
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
