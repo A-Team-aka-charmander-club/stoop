@@ -7,6 +7,7 @@ import { addTags, removeTags } from '../../../store/tag';
 import { connect } from 'react-redux';
 
 export function Tags(props) {
+  console.log(props, 'props on tags');
   const updateTagState = (state) => {
     console.log(state);
     props.setTags(state);

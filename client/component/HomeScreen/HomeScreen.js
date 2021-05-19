@@ -1,5 +1,12 @@
-import React from 'react';
-import { Alert, Button, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect } from 'react';
+import {
+  Alert,
+  Button,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from 'react-native';
 import styles from './styles';
 import { connect } from 'react-redux';
 import {
@@ -8,11 +15,13 @@ import {
 } from 'expo-image-picker';
 import { takePhoto } from '../../store/photo';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
+import { getCoordinatesThunk } from '../../store/coordinates';
 
 //add photurl to state (pre-database)
 // see button + click button
 // brings up camera. camera has take picture OR navigate to photo roll (image picker)
 export function HomeScreen(props) {
+  // const [coordinates, getCoordinates] = useState('');
   let openCameraAsync = async () => {
     let permission = await requestCameraPermissionsAsync();
     if (!permission) {
@@ -29,6 +38,16 @@ export function HomeScreen(props) {
   return (
     <View>
       <HomeGoogleMapView navigation={props.navigation} />
+      {/* <ScrollView>
+        {props.coordinates.map((post, index) => {
+          return (
+            <View key={index}>
+              <Text>{post.title}</Text>
+              <Text>{post.title}</Text>
+            </View>
+          );
+        })}
+      </ScrollView> */}
     </View>
   );
 }

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {
   models: { Photo, User, Post, Tag },
 } = require('../db');
-const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
+const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
 const { Op } = require('sequelize');
 
 module.exports = router;
@@ -48,11 +48,86 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
         {
           model: Tag,
         },
+        {
+          model: User,
+          attributes: ['id'],
+        },
       ],
     });
 
     res.send(combinedPost);
   } catch (error) {
     next(error);
+  }
+});
+
+router.delete('/:id/:userId', verifyUser, async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    if (post) {
+      await post.destroy();
+      res.send(post);
+    } else {
+      next(err);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put('/:id/:userId', verifyUser, async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+
+    if (post) {
+      //if sending an updated photo, must do this first
+      if (!req.body.photo.id) {
+        //first get rid of the association btwn the old photo and the post
+        const oldPhoto = await Photo.findByFk(req.params.id);
+        await post.removePhoto(oldPhoto);
+
+        const photo = await Photo.create({
+          firebaseUrl: req.body.photo.firebaseUrl,
+          firebasePhotoId: req.body.photo.firebasePhotoId,
+        });
+        const user = req.user;
+        await user.addPhoto(photo);
+        await post.addPhoto(photo);
+      }
+      await post.update(req.body.post);
+
+      await Promise.all(
+        req.body.tags.map(async (tag) => {
+          let [newTag, isCreated] = await Tag.findOrCreate({
+            where: {
+              name: tag,
+            },
+          });
+          return post.addTag(newTag);
+        })
+      );
+      let updatedPost = await Post.findOne({
+        where: {
+          id: post.id,
+        },
+        include: [
+          {
+            model: Photo,
+          },
+          {
+            model: Tag,
+          },
+          {
+            model: User,
+            attributes: ['id'],
+          },
+        ],
+      });
+      res.send(updatedPost);
+    } else {
+      next(err);
+    }
+  } catch (err) {
+    next(err);
   }
 });

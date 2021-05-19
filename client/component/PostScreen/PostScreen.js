@@ -14,23 +14,26 @@ import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
-import {
-  openCameraAsync,
-  openImagePickerAsync,
-} from '../CameraModal/CameraFunctions';
+import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
 export const PostScreen = (props) => {
+<<<<<<< HEAD
   // console.log('PROPS: ', props);
+=======
+>>>>>>> editDeletePost
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [clearMap, setClearMap] = useState(true);
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
+=======
+>>>>>>> editDeletePost
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
@@ -51,7 +54,11 @@ export const PostScreen = (props) => {
     await ref.put(blob);
     setLoading(false);
 
+<<<<<<< HEAD
     let photoUrl = await ref.getDownloadURL();
+=======
+    await ref.put(blob);
+>>>>>>> editDeletePost
 
     const user = firebase.auth().currentUser;
 
@@ -69,6 +76,9 @@ export const PostScreen = (props) => {
       .catch((error) => {
         alert(error);
       });
+    await ref.put(blob);
+
+    let photoUrl = await ref.getDownloadURL();
 
     let newPhoto = {
       firebasePhotoId: photoId,
@@ -82,13 +92,25 @@ export const PostScreen = (props) => {
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
+<<<<<<< HEAD
     // console.log('POST', post);
+=======
+
+>>>>>>> editDeletePost
     await props.submitPost({ post, photo, tags });
     props.getCoordinates();
     props.clearPhoto();
     setTitle('');
     setDescription('');
+<<<<<<< HEAD
     setClearMap(true);
+=======
+
+    console.log('NAVIGATE TO SINGLE POST');
+
+    setClearMap(true);
+
+>>>>>>> editDeletePost
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
@@ -150,6 +172,7 @@ export const PostScreen = (props) => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
           setClearMap={setClearMap}
+          clear={clearMap}
         />
         <View style={styles.button}>
           <Button color='#fff' title='Post!' onPress={createPost} />
