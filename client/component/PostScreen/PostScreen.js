@@ -32,12 +32,13 @@ export const PostScreen = (props) => {
   });
 
   const uploadImage = async (uri) => {
-
+    const response = await fetch(uri);
+    const blob = await response.blob();
     const photoName = String(Math.random(1000));
      
     var ref = firebase.storage().ref().child(photoName);
 
-    await ref.put(uri)
+    await ref.put(blob)
     
     let photoUrl = await ref.getDownloadURL();
 
@@ -132,7 +133,6 @@ export const PostScreen = (props) => {
           setRegion={setRegion}
           setLatitude={setLatitude}
           setLongitude={setLongitude}
-          clearMap={clearMap}
           setClearMap={setClearMap}
         />
         <Button title="Post!" onPress={createPost} />
