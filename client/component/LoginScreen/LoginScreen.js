@@ -46,7 +46,7 @@ export function LoginScreen({ navigation, fetchUser }) {
       >
         <Image
           style={styles.logo}
-          source={require('../../../assets/icon.png')}
+          source={require('../../../assets/trashPanda.png')}
         />
         <TextInput
           style={styles.input}
