@@ -74,6 +74,7 @@ export const destroyPost = (postId, navigation, userId) => {
 
 export const updatePost = (post, userId, postId) => {
   return async (dispatch) => {
+    console.log('THUNK PHOTO: ');
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.put(

@@ -12,6 +12,8 @@ export const SinglePost = (props) => {
   //     props.navigation.navigate('Home');
   //   }
   // };
+  console.log('PROPS.POST- SINGLE PHOTO', props.post.photos[0].firebaseUrl);
+  // console.log('SINGLE POST PHOTO: ', props.post.photo[0]);
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
@@ -38,7 +40,7 @@ export const SinglePost = (props) => {
           />
         </MapView>
         <Image
-          source={{ url: props.post.photos[0].firebaseUrl }}
+          source={{ uri: props.post.photos[0].firebaseUrl }}
           style={styles.thumbnail}
         />
         <Text>{props.post.title}</Text>

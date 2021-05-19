@@ -67,7 +67,7 @@ export const EditPostScreen = (props) => {
   };
 
   const changePost = async () => {
-    if (props.photo) {
+    if (props.photo.length) {
       const photo = await uploadImage(props.photo);
       console.log('NEW PHOTO: ', photo);
     } else {
@@ -106,7 +106,10 @@ export const EditPostScreen = (props) => {
         <Text>Update Post</Text>
 
         <Image
-          source={{ url: props.post.photos[0].firebaseUrl }}
+          source={{
+            url:
+              'http://firebasestorage.googleapis.com/v0/b/stoop-64867.appspot.com/o/0.856234435655613?alt=media&token=c593bdfb-c9d9-4340-ae60-1faa5b40d036',
+          }}
           style={styles.thumbnail}
         />
 
@@ -147,6 +150,7 @@ export const EditPostScreen = (props) => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
+
         <Button title='Update!' onPress={changePost} />
       </KeyboardAwareScrollView>
     </View>
