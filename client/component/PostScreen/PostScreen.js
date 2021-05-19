@@ -20,6 +20,7 @@ import { getCoordinatesThunk } from '../../store/coordinates';
 import { uploadImage } from '../Services/Services';
 
 export const PostScreen = (props) => {
+  console.log('PROPS: ', props);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
@@ -79,11 +80,7 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
-<<<<<<< HEAD
-    console.log('NAVIGATE TO SINGLE POST');
-=======
     setClearMap(true);
->>>>>>> 89e664a172c501fcbc766d14145966210441cd92
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
