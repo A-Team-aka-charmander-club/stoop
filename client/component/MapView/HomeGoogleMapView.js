@@ -11,7 +11,6 @@ import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 import { getPost } from '../../store/post';
-
 export function HomeGoogleMapView(props) {
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
@@ -19,9 +18,8 @@ export function HomeGoogleMapView(props) {
     latitudeDelta: 0.025,
     longitudeDelta: 0.025,
   });
-
   installWebGeolocationPolyfill();
-
+  console.log(props.coordinates.length, 'props.coordinates.length');
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -36,13 +34,12 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
     props.getCoordinates();
+    console.log();
   }, [props.coordinates.length]);
 
   const onPressButton = (post) => {
-    console.log('click me was pressed');
-    console.log('navigation props:', props.navigation);
     props.getPost(post);
-    props.navigation.navigate('SinglePost');
+    props.navigation.navigate('PostNav', { screen: 'SinglePost' });
   };
   return (
     <View style={styles.container}>
@@ -53,9 +50,8 @@ export function HomeGoogleMapView(props) {
         showsUserLocation={true}
         zoomEnabled={true}
         loadingEnabled
-        loadingBackgroundColor='white'
-        loadingIndicatorColor='black'
-      >
+        loadingBackgroundColor="white"
+        loadingIndicatorColor="black">
         {props.coordinates.map((post, index) => {
           //console.log(post, 'post here');
           return (
@@ -72,8 +68,7 @@ export function HomeGoogleMapView(props) {
             >
               <Callout
                 onPress={() => onPressButton(post)}
-                style={styles.calloutButton}
-              >
+                style={styles.calloutButton}>
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image
@@ -92,7 +87,6 @@ export function HomeGoogleMapView(props) {
     </View>
   );
 }
-
 const mapStateToProps = (state) => {
   return {
     coordinates: state.coordinates,
@@ -104,10 +98,4 @@ const mapDispatchToProps = (dispatch) => {
     getPost: (post) => dispatch(getPost(post)),
   };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
-
-// () => {
-//   //props.navigation.navigate('SinglePost', {post: post});
-//   console.log('click me was pressed');
-// }
