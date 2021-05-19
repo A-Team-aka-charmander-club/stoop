@@ -39,16 +39,14 @@ export default function GoogleMapView(props) {
         provider={PROVIDER_GOOGLE}
         region={props.region}
         showsUserLocation={true}
-        zoomEnabled={true}
-      >
+        zoomEnabled={true}>
         <Marker
           draggable={true}
           coordinate={{
             latitude: props.region.latitude,
             longitude: props.region.longitude,
           }}
-          onDragEnd={onDragEnd}
-        ></Marker>
+          onDragEnd={onDragEnd}></Marker>
       </MapView>
     </View>
   );

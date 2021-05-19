@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './styles';
 //import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { destroyPost } from '../../store/post';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Comments from '../Comments/Comments';
 
@@ -42,8 +41,6 @@ export const SinglePost = (props) => {
             coordinate={{
               latitude: props.post.latitude,
               longitude: props.post.longitude,
-              title: props.post.title,
-              description: props.post.description,
             }}
           />
         </MapView>
@@ -78,7 +75,6 @@ export const SinglePost = (props) => {
     );
   }
 };
-
 const mapStateToProps = (state) => {
   return {
     post: state.post,
@@ -88,8 +84,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
-    deletePost: (post, userId) =>
-      dispatch(destroyPost(post, navigation, userId)),
+    deletePost: (postId, userId) =>
+      dispatch(destroyPost(postId, navigation, userId)),
   };
 };
 

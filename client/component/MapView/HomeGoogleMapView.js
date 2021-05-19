@@ -34,11 +34,10 @@ export function HomeGoogleMapView(props) {
     );
     props.getCoordinates();
   }, [props.coordinates.length]);
+
   const onPressButton = (post) => {
-    console.log('click me was pressed');
-    console.log('navigation props:', props.navigation);
     props.getPost(post);
-    props.navigation.navigate('SinglePost');
+    props.navigation.navigate('PostNav', { screen: 'SinglePost' });
   };
   return (
     <View style={styles.container}>
@@ -101,8 +100,3 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
-
-// () => {
-//   //props.navigation.navigate('SinglePost', {post: post});
-//   console.log('click me was pressed');
-// }

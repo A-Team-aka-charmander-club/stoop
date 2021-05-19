@@ -76,28 +76,27 @@ export const EditPostScreen = (props) => {
       photo = await uploadImage(props.photo);
     } else {
       photo = props.post.photos[0];
-      console.log('OG PHOTO: ', photo);
     }
 
     let post = { title, description, latitude, longitude };
+    let tags = props.tags;
 
-    console.log('photo before edit post', photo);
     await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
 
     props.clearPhoto();
     setTitle('');
     setDescription('');
 
-    // props.removeTags();
+    props.removeTags();
     // setTags({ tag: '', tagsArray: [] });
-    // setRegion({
-    //   //   latitude: 40.751343151025615,
-    //   //   longitude: -74.00289693630044,
-    //   latitude: props.post.latitude,
-    //   longitude: props.post.longitude,
-    //   latitudeDelta: 0.0025,
-    //   longitudeDelta: 0.0025,
-    // });
+    setRegion({
+      //   latitude: 40.751343151025615,
+      //   longitude: -74.00289693630044,
+      latitude: props.post.latitude,
+      longitude: props.post.longitude,
+      latitudeDelta: 0.0025,
+      longitudeDelta: 0.0025,
+    });
     props.navigation.navigate('SinglePost');
   };
   //   console.log('PHOTO PROPS: ', props.post.photos[0]);

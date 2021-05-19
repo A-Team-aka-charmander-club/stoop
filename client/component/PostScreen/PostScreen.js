@@ -21,20 +21,12 @@ import Tags from './Tags/Tags';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
 export const PostScreen = (props) => {
-<<<<<<< HEAD
-  // console.log('PROPS: ', props);
-=======
->>>>>>> editDeletePost
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [clearMap, setClearMap] = useState(true);
-<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
-=======
->>>>>>> editDeletePost
-
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
@@ -54,11 +46,7 @@ export const PostScreen = (props) => {
     await ref.put(blob);
     setLoading(false);
 
-<<<<<<< HEAD
     let photoUrl = await ref.getDownloadURL();
-=======
-    await ref.put(blob);
->>>>>>> editDeletePost
 
     const user = firebase.auth().currentUser;
 
@@ -77,8 +65,6 @@ export const PostScreen = (props) => {
         alert(error);
       });
     await ref.put(blob);
-
-    let photoUrl = await ref.getDownloadURL();
 
     let newPhoto = {
       firebasePhotoId: photoId,

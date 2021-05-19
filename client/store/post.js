@@ -10,7 +10,7 @@ const DELETE_POST = 'DELETE_POST';
 const EDIT_POST = 'EDIT_POST';
 
 const GET_POST = 'GET_POST';
-// action creators
+
 export const createPost = (post) => {
   return {
     type: CREATE_POST,

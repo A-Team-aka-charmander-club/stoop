@@ -12,17 +12,17 @@ import EditPostScreen from '../../PostScreen/EditPostScreen/EditPostScreen';
 const Stack = createStackNavigator();
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName='Home'>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
-        name='Home'
+        name="Home"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name='SinglePost'
         component={SinglePost}
         options={{ headerShown: false }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };
@@ -41,21 +41,25 @@ const HomeStackNavigator = () => {
 
 const PostStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName='Post'>
+    <Stack.Navigator initialRouteName="Post">
       <Stack.Screen
-        name='Post'
+        name="Post"
         component={PostScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='SinglePost'
+        name="SinglePost"
         component={SinglePost}
         options={{ headerShown: false }}
       />
       <Stack.Screen
+<<<<<<< HEAD
         name='Comments'
         component={Comments}
         name='Edit'
+=======
+        name="Edit"
+>>>>>>> editDeletePost
         component={EditPostScreen}
         options={{ headerShown: false }}
       />
@@ -65,9 +69,9 @@ const PostStackNavigator = () => {
 
 const MapStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName='Map'>
+    <Stack.Navigator initialRouteName="Map">
       <Stack.Screen
-        name='Map'
+        name="Map"
         component={GoogleMapView}
         options={{ headerShown: false }}
       />

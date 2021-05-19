@@ -77,7 +77,12 @@ router.delete('/:id/:userId', verifyUser, async (req, res, next) => {
 
 router.put('/:id/:userId', verifyUser, async (req, res, next) => {
   try {
-    const post = await Post.findByPk(req.params.id);
+    const post = await Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: [{ model: Tag }],
+    });
 
     if (post) {
       //if sending an updated photo, must do this first
@@ -95,6 +100,7 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
         await post.addPhoto(photo);
       }
       await post.update(req.body.post);
+      await post.removeTags(post.tags);
 
       await Promise.all(
         req.body.tags.map(async (tag) => {
@@ -123,6 +129,7 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
           },
         ],
       });
+
       res.send(updatedPost);
     } else {
       next(err);
