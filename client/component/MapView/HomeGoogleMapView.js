@@ -83,7 +83,6 @@ export function HomeGoogleMapView(props) {
                 ) : (
                   <Text>''</Text>
                 )}
-                <Text>Click me</Text>
               </Callout>
               {/* <Image source={{ url: post.photos[0].firebaseUrl }} /> */}
             </Marker>
