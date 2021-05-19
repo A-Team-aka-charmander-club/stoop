@@ -16,7 +16,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   calloutButton: {
-    width: 'auto',
+    width: 110,
+    height: 110,
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 6,
     paddingVertical: 6,
@@ -26,8 +27,8 @@ export default StyleSheet.create({
     marginVertical: 10,
   },
   image: {
-    width: 15,
-    height: 15,
+    width: 85,
+    height: 85,
     resizeMode: 'contain',
   },
 });
