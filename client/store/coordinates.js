@@ -17,13 +17,8 @@ export const getCoordinatesThunk = () => {
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
-<<<<<<< HEAD
-        `http://localhost:8080/api/maps/coordinates`
-=======
 
         `http://192.168.1.6:8080/api/maps/coordinates`
-
->>>>>>> 8a1686d5108ff392c9e5d9da4d9c82a7696ac722
       );
       dispatch(getCoordinates(data));
     } catch (error) {

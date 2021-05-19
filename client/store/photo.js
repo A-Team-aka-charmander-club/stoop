@@ -38,15 +38,9 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
       const { data } = await axios.post(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://localhost:8080/api/photos/photo',
-<<<<<<< HEAD
-        //'http://192.168.1.152:8080/api/photos/photo',
-        //anna's ip address: 192.168.1.152
-        `http://localhost:8080/api/photos/photo`,
-=======
 
         'http://192.168.1.6:8080/api/photos/photo',
 
->>>>>>> 8a1686d5108ff392c9e5d9da4d9c82a7696ac722
         {
           firebasePhotoId,
           photoUrl,
