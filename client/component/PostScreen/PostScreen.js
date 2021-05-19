@@ -92,25 +92,12 @@ export const PostScreen = (props) => {
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
-<<<<<<< HEAD
-    // console.log('POST', post);
-=======
-
->>>>>>> editDeletePost
     await props.submitPost({ post, photo, tags });
     props.getCoordinates();
     props.clearPhoto();
     setTitle('');
     setDescription('');
-<<<<<<< HEAD
     setClearMap(true);
-=======
-
-    console.log('NAVIGATE TO SINGLE POST');
-
-    setClearMap(true);
-
->>>>>>> editDeletePost
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
