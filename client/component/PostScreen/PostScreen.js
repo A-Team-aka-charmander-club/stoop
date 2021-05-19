@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import styles from './styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, TextInput, Button, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  ActivityIndicator,
+} from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
@@ -22,12 +29,8 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-<<<<<<< HEAD
   const [clearMap, setClearMap] = useState(true);
-=======
-  const [clearMap, setClearMap] = useState(true)
-  const [loading, setLoading] = useState(false)
->>>>>>> 316046bef402be4102be22141fbfedd5b5094ad4
+  const [loading, setLoading] = useState(false);
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
@@ -45,12 +48,8 @@ export const PostScreen = (props) => {
     var ref = firebase.storage().ref().child(photoName);
     setLoading(true);
 
-<<<<<<< HEAD
     await ref.put(blob);
-=======
-    await ref.put(blob)
-    setLoading(false)
->>>>>>> 316046bef402be4102be22141fbfedd5b5094ad4
+    setLoading(false);
 
     let photoUrl = await ref.getDownloadURL();
 
@@ -115,15 +114,15 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              color="#fff"
-              title="Open Camera"
+              color='#fff'
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
-            <Button 
-              color="#fff"
-              title="Upload Photo"
+            <Button
+              color='#fff'
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -153,10 +152,15 @@ export const PostScreen = (props) => {
           setClearMap={setClearMap}
         />
         <View style={styles.button}>
-        <Button color="#fff" title="Post!" onPress={createPost} />
-        {loading ? <View style={[styles.container, styles.horizontal]}>
-          <ActivityIndicator size="large" color="#00ff00" />
-        </View> : <Text></Text>}</View>
+          <Button color='#fff' title='Post!' onPress={createPost} />
+          {loading ? (
+            <View style={[styles.container, styles.horizontal]}>
+              <ActivityIndicator size='large' color='#00ff00' />
+            </View>
+          ) : (
+            <Text></Text>
+          )}
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );
