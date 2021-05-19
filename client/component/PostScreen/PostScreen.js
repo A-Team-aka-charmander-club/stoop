@@ -22,7 +22,7 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [clearMap, setClearMap] = useState(true) 
+  const [clearMap, setClearMap] = useState(true);
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
@@ -36,11 +36,11 @@ export const PostScreen = (props) => {
     const response = await fetch(uri);
     const blob = await response.blob();
     const photoName = String(Math.random(1000));
-     
+
     var ref = firebase.storage().ref().child(photoName);
 
-    await ref.put(blob)
-    
+    await ref.put(blob);
+
     let photoUrl = await ref.getDownloadURL();
 
     const user = firebase.auth().currentUser;
@@ -78,7 +78,7 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
-    setClearMap(true)
+    setClearMap(true);
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
@@ -94,7 +94,8 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -103,13 +104,13 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title="Open Camera"
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              title="Upload Photo"
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -117,14 +118,14 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
@@ -137,13 +138,7 @@ export const PostScreen = (props) => {
           setLongitude={setLongitude}
           setClearMap={setClearMap}
         />
-<<<<<<< HEAD
-
-        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title='Post!' onPress={createPost} />
-=======
-        <Button title="Post!" onPress={createPost} />
->>>>>>> 8a1686d5108ff392c9e5d9da4d9c82a7696ac722
       </KeyboardAwareScrollView>
     </View>
   );
