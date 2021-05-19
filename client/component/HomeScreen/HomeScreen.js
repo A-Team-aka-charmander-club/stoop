@@ -21,7 +21,7 @@ import { getCoordinatesThunk } from '../../store/coordinates';
 // see button + click button
 // brings up camera. camera has take picture OR navigate to photo roll (image picker)
 export function HomeScreen(props) {
-  const [coordinates, getCoordinates] = useState('');
+  // const [coordinates, getCoordinates] = useState('');
   let openCameraAsync = async () => {
     let permission = await requestCameraPermissionsAsync();
     if (!permission) {
