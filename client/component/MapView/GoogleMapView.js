@@ -1,103 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Callout,
-  CalloutSubview,
-} from 'react-native-maps';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { View } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
-import { connect } from 'react-redux';
-import { getCoordinatesThunk } from '../../store/coordinates';
-import { getPost } from '../../store/post';
-export function HomeGoogleMapView(props) {
-  const [region, setRegion] = useState({
-    latitude: 40.751343151025615,
-    longitude: -74.00289693630044,
-    latitudeDelta: 0.025,
-    longitudeDelta: 0.025,
-  });
+export default function GoogleMapView(props) {
   installWebGeolocationPolyfill();
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setRegion({
+        props.setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.0075,
-          longitudeDelta: 0.0075,
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025,
         });
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    props.getCoordinates();
-  }, [props.coordinates.length]);
-  const onPressButton = (post) => {
-    console.log('click me was pressed');
-    console.log('navigation props:', props.navigation);
-    props.getPost(post);
-    props.navigation.navigate('SinglePost');
+    props.setClearMap(false);
+    props.setLatitude(props.region.latitude);
+    props.setLongitude(props.region.longitude);
+  }, [props.clearMap]);
+  const onDragEnd = (e) => {
+    props.setRegion({
+      latitude: e.nativeEvent.coordinate.latitude,
+      longitude: e.nativeEvent.coordinate.longitude,
+      latitudeDelta: 0.0025,
+      longitudeDelta: 0.0025,
+    });
+    props.setLatitude(e.nativeEvent.coordinate.latitude);
+    props.setLongitude(e.nativeEvent.coordinate.longitude);
   };
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        region={region}
+        region={props.region}
         showsUserLocation={true}
         zoomEnabled={true}
-        loadingEnabled
-        loadingBackgroundColor='white'
-        loadingIndicatorColor='black'
       >
-        {props.coordinates.map((post, index) => {
-          //console.log(post, 'post here');
-          return (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: post.latitude,
-                longitude: post.longitude,
-              }}
-              title={post.title}
-              description={post.description}
-              // image={require('../../../assets/pin.png')}
-              // resizeMode="contain"
-            >
-              <Callout
-                onPress={() => onPressButton(post)}
-                style={styles.calloutButton}
-              >
-                <Text>{post.title}</Text>
-                {post.photos[0] ? (
-                  <Image
-                    source={{ url: post.photos[0].firebaseUrl }}
-                    style={styles.image}
-                  />
-                ) : (
-                  <Text>''</Text>
-                )}
-                <Text>Click me</Text>
-              </Callout>
-              {/* <Image source={{ url: post.photos[0].firebaseUrl }} /> */}
-            </Marker>
-          );
-        })}
+        <Marker
+          draggable={true}
+          coordinate={{
+            latitude: props.region.latitude,
+            longitude: props.region.longitude,
+          }}
+          onDragEnd={onDragEnd}
+        ></Marker>
       </MapView>
     </View>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    coordinates: state.coordinates,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getCoordinates: (region) => dispatch(getCoordinatesThunk(region)),
-    getPost: (post) => dispatch(getPost(post)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
