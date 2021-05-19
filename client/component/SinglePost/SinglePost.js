@@ -65,6 +65,10 @@ export const SinglePost = (props) => {
             />
           </View>
         ) : null}
+        {/* this button redirects to comments */}
+        <TouchableOpacity navigation={props.navigation} onPress={addComment}>
+          <Text>Comments</Text>
+        </TouchableOpacity>
       </View>
     );
   } else {
