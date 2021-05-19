@@ -13,7 +13,8 @@ export const SinglePost = (props) => {
   //   }
   // };
 
-  // console.log('SINGLE POST PHOTO: ', props.post.photo[0]);
+  console.log('props.post in singlepost', props.post);
+
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
@@ -27,15 +28,13 @@ export const SinglePost = (props) => {
           region={{
             latitude: props.post.latitude,
             longitude: props.post.longitude,
-            latitudeDelta: 0.0,
-            longitudeDelta: 0.0,
+            latitudeDelta: 0.0025,
+            longitudeDelta: 0.0025,
           }}>
           <Marker
             coordinate={{
               latitude: props.post.latitude,
               longitude: props.post.longitude,
-              title: props.post.title,
-              description: props.post.description,
             }}
           />
         </MapView>
