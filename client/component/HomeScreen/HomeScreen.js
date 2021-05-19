@@ -14,7 +14,6 @@ import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
 // brings up camera. camera has take picture OR navigate to photo roll (image picker)
 export function HomeScreen(props) {
   let openCameraAsync = async () => {
- 
     let permission = await requestCameraPermissionsAsync();
     if (!permission) {
       alert('Permission to acccess camera roll is required!');
@@ -29,7 +28,7 @@ export function HomeScreen(props) {
 
   return (
     <View>
-      <HomeGoogleMapView />
+      <HomeGoogleMapView navigation={props.navigation} />
     </View>
   );
 }

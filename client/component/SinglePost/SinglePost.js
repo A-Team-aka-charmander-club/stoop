@@ -7,17 +7,19 @@ import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 export const SinglePost = (props) => {
+  console.log('single post props:', props);
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        initialRegion={{
+        region={{
           latitude: props.post.latitude,
           longitude: props.post.longitude,
-          latitudeDelta: 0.0,
-          longitudeDelta: 0.0,
-        }}>
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025,
+        }}
+      >
         <Marker
           coordinate={{
             latitude: props.post.latitude,

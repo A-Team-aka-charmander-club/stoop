@@ -9,7 +9,7 @@ export default function GoogleMapView(props) {
   installWebGeolocationPolyfill();
 
   useEffect(() => {
-    const interval = setInterval(() => {
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
           props.setRegion({
@@ -23,11 +23,10 @@ export default function GoogleMapView(props) {
         { enableHighAccuracy: true, maximumAge: 1000 }
       );
 
+      props.setClearMap(false);
       props.setLatitude(props.region.latitude)
       props.setLongitude(props.region.longitude)
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  }, [props.clearMap]);
 
   const onDragEnd = (e) => {
     props.setRegion({
