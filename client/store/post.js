@@ -5,9 +5,14 @@ import { firebase } from '../../src/firebase/config';
 //action constants
 const CREATE_POST = 'CREATE_POST';
 
+<<<<<<< HEAD
 const DELETE_POST = 'DELETE_POST';
 
 const EDIT_POST = 'EDIT_POST';
+=======
+const GET_POST = 'GET_POST';
+
+>>>>>>> 8a1686d5108ff392c9e5d9da4d9c82a7696ac722
 // action creators
 export const createPost = (post) => {
   return {
@@ -16,19 +21,14 @@ export const createPost = (post) => {
   };
 };
 
-export const deletePost = (post) => {
+export const getPost = (singlePost) => {
+  //console.log('in the store:', post);
   return {
-    type: DELETE_POST,
-    post,
+    type: GET_POST,
+    singlePost,
   };
 };
 
-export const editPost = (post) => {
-  return {
-    type: EDIT_POST,
-    post,
-  };
-};
 //thunk
 
 export const createPostThunk = (post) => {
@@ -37,7 +37,9 @@ export const createPostThunk = (post) => {
       console.log('IN POST THUNK');
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-        `http://localhost:8080/api/posts/post`,
+
+        `http://192.168.1.6:8080/api/posts/post`,
+
         post,
         {
           headers: { authorization: user.uid },
@@ -93,6 +95,8 @@ let initState = {};
 
 export default function postReducer(state = initState, action) {
   switch (action.type) {
+    case GET_POST:
+      return action.singlePost;
     case CREATE_POST:
       return action.post;
     case DELETE_POST:

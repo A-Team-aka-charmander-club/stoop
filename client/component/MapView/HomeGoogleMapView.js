@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { View } from 'react-native';
+import MapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  Callout,
+  CalloutSubview,
+} from 'react-native-maps';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
+import { getPost } from '../../store/post';
 
 export function HomeGoogleMapView(props) {
   const [region, setRegion] = useState({
@@ -23,8 +29,8 @@ export function HomeGoogleMapView(props) {
         setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+          latitudeDelta: 0.0075,
+          longitudeDelta: 0.0075,
         });
       },
       (error) => alert(error.message),
@@ -33,6 +39,12 @@ export function HomeGoogleMapView(props) {
     props.getCoordinates();
   }, [props.coordinates.length]);
 
+  const onPressButton = (post) => {
+    console.log('click me was pressed');
+    console.log('navigation props:', props.navigation);
+    props.getPost(post);
+    props.navigation.navigate('SinglePost');
+  };
   return (
     <View style={styles.container}>
       <MapView
@@ -41,11 +53,11 @@ export function HomeGoogleMapView(props) {
         region={region}
         showsUserLocation={true}
         zoomEnabled={true}
-        // loadingEnabled
-        // loadingBackgroundColor="white"
-        // loadingIndicatorColor="black"
-      >
+        loadingEnabled
+        loadingBackgroundColor="white"
+        loadingIndicatorColor="black">
         {props.coordinates.map((post, index) => {
+          //console.log(post, 'post here');
           return (
             <Marker
               key={index}
@@ -57,7 +69,23 @@ export function HomeGoogleMapView(props) {
               description={post.description}
               // image={require('../../../assets/pin.png')}
               // resizeMode="contain"
-            />
+            >
+              <Callout
+                onPress={() => onPressButton(post)}
+                style={styles.calloutButton}>
+                <Text>{post.title}</Text>
+                {post.photos[0] ? (
+                  <Image
+                    source={{ url: post.photos[0].firebaseUrl }}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Text>''</Text>
+                )}
+                <Text>Click me</Text>
+              </Callout>
+              {/* <Image source={{ url: post.photos[0].firebaseUrl }} /> */}
+            </Marker>
           );
         })}
       </MapView>
@@ -73,7 +101,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getCoordinates: (region) => dispatch(getCoordinatesThunk(region)),
+    getPost: (post) => dispatch(getPost(post)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
+
+// () => {
+//   //props.navigation.navigate('SinglePost', {post: post});
+//   console.log('click me was pressed');
+// }
