@@ -26,22 +26,17 @@ const HomeStackNavigator = () => {
   );
 };
 
-const SinglePostStackNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName='SinglePost'>
-      <Stack.Screen
-        name='SinglePost'
-        component={SinglePost}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='Comments'
-        component={Comments}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-};
+// const SinglePostStackNavigator = () => {
+//   return (
+//     <Stack.Navigator initialRouteName='SinglePost'>
+//       <Stack.Screen
+//         name='SinglePost'
+//         component={SinglePost}
+//         options={{ headerShown: false }}
+//       />
+//     </Stack.Navigator>
+//   );
+// };
 
 const PostStackNavigator = () => {
   return (
@@ -54,6 +49,11 @@ const PostStackNavigator = () => {
       <Stack.Screen
         name='SinglePost'
         component={SinglePost}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Comments'
+        component={Comments}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -75,5 +75,5 @@ export {
   HomeStackNavigator,
   PostStackNavigator,
   MapStackNavigator,
-  SinglePostStackNavigator,
+  // SinglePostStackNavigator,
 };

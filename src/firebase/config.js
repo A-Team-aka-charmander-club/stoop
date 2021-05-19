@@ -11,6 +11,7 @@ import {
 import '@firebase/auth';
 import '@firebase/firestore';
 import '@firebase/storage';
+
 console.log('API KEY');
 const firebaseConfig = {
   apiKey: REACT_APP_API_KEY,
@@ -23,5 +24,11 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+var db = firebase.firestore();
+
+// var storage = firebase.storage();
+// storage.useEmulator('localhost', 9199);
+db.useEmulator('localhost', 8081);
 
 export { firebase };
