@@ -34,6 +34,7 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
     props.getCoordinates();
+    console.log();
   }, [props.coordinates.length]);
 
   const onPressButton = (post) => {
