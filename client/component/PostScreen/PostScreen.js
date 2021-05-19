@@ -25,6 +25,7 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [clearMap, setClearMap] = useState(true);
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
@@ -35,14 +36,11 @@ export const PostScreen = (props) => {
   });
 
   const uploadImage = async (uri) => {
-
+    const response = await fetch(uri);
+    const blob = await response.blob();
     const photoName = String(Math.random(1000));
-     
-    var ref = firebase.storage().ref().child(photoName);
 
-    await ref.put(uri)
-    
-    let photoUrl = await ref.getDownloadURL();
+    var ref = firebase.storage().ref().child(photoName);
 
     const user = firebase.auth().currentUser;
 
@@ -60,6 +58,9 @@ export const PostScreen = (props) => {
       .catch((error) => {
         alert(error);
       });
+    await ref.put(uri);
+
+    let photoUrl = await ref.getDownloadURL();
 
     let newPhoto = {
       firebasePhotoId: photoId,
@@ -68,7 +69,6 @@ export const PostScreen = (props) => {
     };
     return newPhoto;
   };
-
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
@@ -79,6 +79,7 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
+    setClearMap(true);
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
@@ -137,7 +138,10 @@ export const PostScreen = (props) => {
           setRegion={setRegion}
           setLatitude={setLatitude}
           setLongitude={setLongitude}
+          clearMap={clearMap}
+          setClearMap={setClearMap}
         />
+
         <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title='Post!' onPress={createPost} />
 
