@@ -38,7 +38,7 @@ export const SinglePost = (props) => {
           />
         </MapView>
         <Image
-          source={{ uri: props.post.photos[0].firebaseUrl }}
+          source={{ url: props.post.photos[0].firebaseUrl }}
           style={styles.thumbnail}
         />
         <Text>{props.post.title}</Text>
@@ -61,11 +61,12 @@ export const SinglePost = (props) => {
       </View>
     );
   } else {
-    return (
-      <View>
-        <Text>You've deleted the post. </Text>
-      </View>
-    );
+    // <View>
+    //   <Text>You've deleted the post. </Text>
+    // </View>
+    {
+      props.navigation.navigate('Post');
+    }
   }
 };
 const mapStateToProps = (state) => {

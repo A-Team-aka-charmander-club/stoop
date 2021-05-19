@@ -1,5 +1,6 @@
 import { firebase } from '../../../src/firebase/config';
 import * as ImagePicker from 'expo-image-picker';
+import { CommonActions, StackActions } from '@react-navigation/native';
 
 //logout function
 export const onLogoutPress = (props) => {
@@ -81,3 +82,49 @@ export const openCameraAsync = async (props) => {
     props.takePhoto(picture.uri);
   }
 };
+
+const TAB_TO_RESET = 'PostNav';
+
+// export const resetPostStackOnTabPress = ({ navigation, route }) => ({
+//   tabPress: (e) => {
+//     const state = navigation.dangerouslyGetState();
+
+//     if (state) {
+//       const nonTargetTabs = state.routes.filter((r) => r.key !== e.target);
+
+//       nonTargetTabs.forEach((tab) => {
+//         const stackKey = tab.state?.key;
+
+//         if (stackKey) {
+//           navigation.dispatch({
+//             ...StackActions.popToTop(),
+//             target: stackKey,
+//           });
+//         }
+//       });
+//     }
+//   },
+// });
+// tabPress: (e) => {
+//   const state = navigation.dangerouslyGetState();
+
+//   if (state) {
+//     // Grab all the tabs that are NOT the one we just pressed
+//     const nonTargetTabs = state.routes.filter((r) => r.key !== e.target);
+//     console.log(nonTargetTabs);
+//     nonTargetTabs.forEach((tab) => {
+//       // Find the tab we want to reset and grab the key of the nested stack
+//       const tabName = tab?.name;
+//       const stackKey = tab?.state?.key;
+
+//       if (stackKey && tabName === TAB_TO_RESET) {
+//         // Pass the stack key that we want to reset and use popToTop to reset it
+//         navigation.dispatch({
+//           ...StackActions.popToTop(),
+//           target: stackKey,
+//         });
+//       }
+//     });
+//   }
+// },
+// });

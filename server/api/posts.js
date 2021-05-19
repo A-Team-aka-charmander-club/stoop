@@ -77,13 +77,14 @@ router.delete('/:id/:userId', verifyUser, async (req, res, next) => {
 
 router.put('/:id/:userId', verifyUser, async (req, res, next) => {
   try {
+    console.log('AM I IN HERE??? ');
     const post = await Post.findOne({
       where: {
         id: req.params.id,
       },
       include: [{ model: Tag }],
     });
-
+    console.log('post in put route', post);
     if (post) {
       //if sending an updated photo, must do this first
       if (!req.body.photo.id) {
