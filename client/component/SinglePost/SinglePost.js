@@ -7,13 +7,6 @@ import { destroyPost } from '../../store/post';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 export const SinglePost = (props) => {
-  // useEffect = () => {
-  //   if (!props.post.id) {
-  //     props.navigation.navigate('Home');
-  //   }
-  // };
-
-  console.log('props.post in singlepost', props.post);
 
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);

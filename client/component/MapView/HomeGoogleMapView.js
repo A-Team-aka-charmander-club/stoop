@@ -10,8 +10,6 @@ import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
-import { getPost } from '../../store/post';
-
 export function HomeGoogleMapView(props) {
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
@@ -19,10 +17,7 @@ export function HomeGoogleMapView(props) {
     latitudeDelta: 0.025,
     longitudeDelta: 0.025,
   });
-
-  // this allows older browsers to run map component
   installWebGeolocationPolyfill();
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -38,7 +33,12 @@ export function HomeGoogleMapView(props) {
     );
     props.getCoordinates();
   }, [props.coordinates.length]);
-
+  const onPressButton = (post) => {
+    console.log('click me was pressed');
+    console.log('navigation props:', props.navigation);
+    props.getPost(post);
+    props.navigation.navigate('SinglePost');
+  };
   return (
     <View style={styles.container}>
       <MapView
@@ -52,6 +52,7 @@ export function HomeGoogleMapView(props) {
         loadingIndicatorColor='black'
       >
         {props.coordinates.map((post, index) => {
+          //console.log(post, 'post here');
           return (
             <Marker
               key={index}
@@ -87,7 +88,6 @@ export function HomeGoogleMapView(props) {
     </View>
   );
 }
-
 const mapStateToProps = (state) => {
   return {
     coordinates: state.coordinates,
@@ -99,10 +99,4 @@ const mapDispatchToProps = (dispatch) => {
     getPost: (post) => dispatch(getPost(post)),
   };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
-
-// () => {
-//   //props.navigation.navigate('SinglePost', {post: post});
-//   console.log('click me was pressed');
-// }

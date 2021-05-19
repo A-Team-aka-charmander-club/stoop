@@ -86,17 +86,16 @@ export const EditPostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
-
     props.removeTags();
-    // setTags({ tag: '', tagsArray: [] });
+    setTags({ tag: '', tagsArray: [] });
     setRegion({
-      //   latitude: 40.751343151025615,
-      //   longitude: -74.00289693630044,
       latitude: props.post.latitude,
       longitude: props.post.longitude,
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025,
     });
+    setLatitude(props.post.latitude);
+    setLongitude(props.post.longitude);
     props.navigation.navigate('SinglePost');
   };
   //   console.log('PHOTO PROPS: ', props.post.photos[0]);

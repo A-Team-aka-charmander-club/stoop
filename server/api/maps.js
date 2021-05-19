@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Post, Photo, Tag },
+  models: { Post, Photo, Tag, User},
 } = require('../db');
 const { isLoggedIn, isAdmin } = require('./gatekeepingMiddleware');
 
@@ -16,24 +16,12 @@ router.get('/coordinates', async (req, res, next) => {
         {
           model: Tag,
         },
+        {
+          model: User,
+        }
       ],
     });
-    //   let coordinates = await Post.findAll({
-    //     where: {
-    //       latitude: {
-
-    //       },
-    //       latitude: {
-
-    //       },
-    //       longitude: {
-
-    //       },
-    //       longitude: {
-
-    //       }
-    //     }
-    //   })
+  
     res.send(postPins);
   } catch (err) {
     next(err);
