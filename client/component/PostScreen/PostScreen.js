@@ -14,7 +14,11 @@ import {
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
+
 import { getCoordinatesThunk } from '../../store/coordinates';
+
+import { uploadImage } from '../Services/Services';
+
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -65,6 +69,7 @@ export const PostScreen = (props) => {
     };
     return newPhoto;
   };
+
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
@@ -127,6 +132,7 @@ export const PostScreen = (props) => {
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
         <Tags setTags={setTags} tags={tags} />
+
         <GoogleMapView
           region={region}
           setRegion={setRegion}
@@ -135,7 +141,10 @@ export const PostScreen = (props) => {
           clearMap={clearMap}
           setClearMap={setClearMap}
         />
+
+        <GoogleMapView setLatitude={setLatitude} setLongitude={setLongitude} />
         <Button title='Post!' onPress={createPost} />
+
       </KeyboardAwareScrollView>
     </View>
   );
