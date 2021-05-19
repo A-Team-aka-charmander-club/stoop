@@ -5,7 +5,6 @@ import { Text, View, Image, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 export const SinglePost = (props) => {
-  console.log('single post props:', props);
   return (
     <View style={styles.container}>
       <MapView
