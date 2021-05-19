@@ -96,7 +96,7 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
       }
       await post.update(req.body.post);
 
-      let updatedPost = await Post.findByOne({
+      let updatedPost = await Post.findOne({
         where: {
           id: post.id,
         },

@@ -17,6 +17,8 @@ export const SinglePost = (props) => {
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
+  console.log(props.post, 'props.post');
+  console.log(props.user, 'props.user');
   if (props.post.id) {
     return (
       <View style={styles.container}>
@@ -28,8 +30,7 @@ export const SinglePost = (props) => {
             longitude: props.post.longitude,
             latitudeDelta: 0.0,
             longitudeDelta: 0.0,
-          }}
-        >
+          }}>
           <Marker
             coordinate={{
               latitude: props.post.latitude,
@@ -53,9 +54,9 @@ export const SinglePost = (props) => {
         </Text>
         {props.post.users[0].id === props.user.id ? (
           <View>
-            <Button title='Delete Post' onPress={handleDelete} />
+            <Button title="Delete Post" onPress={handleDelete} />
             <Button
-              title='Edit Post'
+              title="Edit Post"
               onPress={() => props.navigation.navigate('Edit')}
             />
           </View>

@@ -96,8 +96,7 @@ export const PostScreen = (props) => {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-      >
+        keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -106,13 +105,13 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              title='Open Camera'
+              title="Open Camera"
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              title='Upload Photo'
+              title="Upload Photo"
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -120,14 +119,14 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder='Title'
+          placeholder="Title"
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder='Description'
+          placeholder="Description"
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
@@ -139,8 +138,9 @@ export const PostScreen = (props) => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
           setClearMap={setClearMap}
+          clear={clearMap}
         />
-        <Button title='Post!' onPress={createPost} />
+        <Button title="Post!" onPress={createPost} />
       </KeyboardAwareScrollView>
     </View>
   );

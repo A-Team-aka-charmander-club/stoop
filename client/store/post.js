@@ -48,7 +48,7 @@ export const createPostThunk = (post) => {
       console.log('IN POST THUNK');
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-        `http://localhost:8080/api/posts/post`,
+        `http://192.168.1.152:8080/api/posts/post`,
 
         post,
         {
@@ -90,12 +90,13 @@ export const updatePost = (post, userId, postId) => {
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.put(
-        `http://localhost:8080/api/posts/${postId}/${userId}`,
+        `http://192.168.1.152:8080/api/posts/${postId}/${userId}`,
         post,
         {
           headers: { authorization: user.uid },
         }
       );
+      dispatch(editPost(data));
     } catch (err) {
       console.log(err);
     }
@@ -109,6 +110,8 @@ export default function postReducer(state = initState, action) {
     case GET_POST:
       return action.singlePost;
     case CREATE_POST:
+      return action.post;
+    case EDIT_POST:
       return action.post;
     case DELETE_POST:
       return initState;
