@@ -35,10 +35,21 @@ export default StyleSheet.create({
   buttonStyle: {
     backgroundColor: '#788eec',
     marginLeft: 15,
-    marginRight: 15,
-    marginTop: 10,
-    height: 24,
+    marginRight: 55,
+    marginTop: 20,
+    height: 48,
     borderRadius: 5,
     justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
   },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  }
 });
