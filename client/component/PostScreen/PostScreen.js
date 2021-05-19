@@ -32,6 +32,8 @@ export const PostScreen = (props) => {
   });
 
   const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
     const photoName = String(Math.random(1000));
 
     var ref = firebase.storage().ref().child(photoName);
