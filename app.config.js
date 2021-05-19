@@ -9,7 +9,7 @@ export default {
     splash: {
       image: './assets/trashPanda.png',
       resizeMode: 'contain',
-      backgroundColor: 'white',
+      backgroundColor: '#FFFFFF',
     },
     updates: {
       fallbackToCacheTimeout: 0,
