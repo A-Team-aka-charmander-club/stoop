@@ -1,25 +1,13 @@
 import React, { useState } from 'react';
 import styles from './styles';
 //import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Comments from '../Comments/Comments';
+import { destroyPost } from '../../store/post';
 
 export const SinglePost = (props) => {
-  console.log('single post props:', props);
-
-  const addComment = () => {
-    props.navigation.navigate('Comments');
-  };
-
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
@@ -66,7 +54,10 @@ export const SinglePost = (props) => {
           </View>
         ) : null}
         {/* this button redirects to comments */}
-        <TouchableOpacity navigation={props.navigation} onPress={addComment}>
+        <TouchableOpacity
+          navigation={props.navigation}
+          onPress={() => props.navigation.navigate('Comments')}
+        >
           <Text>Comments</Text>
         </TouchableOpacity>
       </View>

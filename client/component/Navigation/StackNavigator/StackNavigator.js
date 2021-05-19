@@ -55,6 +55,9 @@ const PostStackNavigator = () => {
       <Stack.Screen
         name='Comments'
         component={Comments}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name='Edit'
         component={EditPostScreen}
         options={{ headerShown: false }}

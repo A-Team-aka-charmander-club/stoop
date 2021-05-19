@@ -1,36 +1,54 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useState } from 'react';
 import {
   View,
   Text,
   Image,
-  TouchableHighlight,
+  Button,
+  // TouchableHighlight,
   TouchableOpacity,
-  Alert,
+  ScrollView,
   TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TimeAgo from 'react-native-timeago';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
+import { createComment } from '../../store/comments';
 
 export function Comments(props) {
+  const [comment, setComment] = useState('');
+  const handleSubmit = () => {
+    console.log('IN HANDLE SUBMIT', props);
+
+    props.addComment(props.comment, props.post.id, props.user.id);
+  };
   return (
-    <View style={styles.commentContainer}>
-      <Text>!!!!!!!!!!!!!!</Text>
-      <Text>{props.post.title}</Text>
-      <View>
-        <TextInput
-          placeholder='Add a comment...'
-          // keyboardType="twitter" // keyboard with no return button
-          // autoFocus={true} // focus and show the keyboard
-          style={styles.input}
-          value={props.comments}
-          // onChangeText={this.onChangeText} // handle input changes
-          // onSubmitEditing={this.onSubmitEditing} // handle submit event
-        />
+    <KeyboardAwareScrollView
+      style={{ flex: 1, width: '100%' }}
+      keyboardShouldPersistTaps='always'
+    >
+      <View style={styles.commentContainer}>
+        <Text>!!!!!!!!!!!!!!</Text>
+        <Text style={styles.name}>{props.post.title}</Text>
+        <View>
+          <ScrollView style={{ padding: 100 }}>
+            <Text>COMMENTS WILL GO HERE </Text>
+          </ScrollView>
+          <TextInput
+            placeholder='Add a comment...'
+            // keyboardType="twitter" // keyboard with no return button
+            // autoFocus={true} // focus and show the keyboard
+            style={styles.input}
+            value={comment}
+            onChangeText={(text) => setComment(text)} // handle input changes
+          />
+        </View>
+        <TouchableOpacity>
+          <Button title='Submit' onPress={handleSubmit} />
+        </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -42,24 +60,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Comments);
-// Comment.propTypes = {
-//   data: PropTypes.object,
-//   body: PropTypes.string,
-//   styles: PropTypes.object,
-//   canEdit: PropTypes.bool,
-//   canEdit: PropTypes.bool,
-//   child: PropTypes.bool,
-//   editComment: PropTypes.func,
-//   likeAction: PropTypes.func,
-//   liked: PropTypes.bool,
-//   likesNr: PropTypes.number,
-//   likesTapAction: PropTypes.func,
-//   replyAction: PropTypes.func,
-//   deleteAction: PropTypes.func,
-//   reportAction: PropTypes.func,
-//   reported: PropTypes.bool,
-//   updatedAt: PropTypes.string,
-//   username: PropTypes.string,
-//   usernameTapAction: PropTypes.func
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addComment: (comment, postId, userId) =>
+      dispatch(createComment(comment, postId, userId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

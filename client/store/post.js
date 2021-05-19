@@ -90,7 +90,7 @@ export const updatePost = (post, userId, postId) => {
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.put(
-        `http://192.168.1.152:8080/api/posts/${postId}/${userId}`,
+        `http://localhost:8080/api/posts/${postId}/${userId}`,
         post,
         {
           headers: { authorization: user.uid },
