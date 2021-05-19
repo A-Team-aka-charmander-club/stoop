@@ -12,20 +12,19 @@ export const SinglePost = (props) => {
   //     props.navigation.navigate('Home');
   //   }
   // };
-  console.log('PROPS.POST- SINGLE PHOTO', props.post.photos[0].firebaseUrl);
+
   // console.log('SINGLE POST PHOTO: ', props.post.photo[0]);
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
-  console.log(props.post, 'props.post');
-  console.log(props.user, 'props.user');
+
   if (props.post.id) {
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
           provider={PROVIDER_GOOGLE}
-          initialRegion={{
+          region={{
             latitude: props.post.latitude,
             longitude: props.post.longitude,
             latitudeDelta: 0.0,

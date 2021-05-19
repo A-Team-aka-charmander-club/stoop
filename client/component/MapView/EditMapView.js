@@ -14,9 +14,12 @@ export default function EditMapView(props) {
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025,
     });
+    console.log('e native lat', e.nativeEvent.coordinate.latitude);
     props.setLatitude(e.nativeEvent.coordinate.latitude);
     props.setLongitude(e.nativeEvent.coordinate.longitude);
   };
+
+  console.log(props.region, 'props.region');
 
   return (
     <View style={styles.container}>

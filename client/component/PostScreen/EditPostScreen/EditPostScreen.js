@@ -10,8 +10,8 @@ import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
 import { takePhoto, clearPhoto } from '../../../store/photo';
 import { updatePost } from '../../../store/post';
 
-// import { removeTags } from '../../../store/tag';
-// import Tags from '../Tags/Tags';
+import { removeTags } from '../../../store/tag';
+import Tags from '../Tags/Tags';
 
 import { getCoordinatesThunk } from '../../../store/coordinates';
 
@@ -22,7 +22,10 @@ export const EditPostScreen = (props) => {
   const [description, setDescription] = useState(props.post.description);
   const [latitude, setLatitude] = useState(props.post.latitude);
   const [longitude, setLongitude] = useState(props.post.longitude);
-  //   const [tags, setTags] = useState({ tag: '', tagsArray: props.post.tags });
+  const [tags, setTags] = useState({
+    tag: '',
+    tagsArray: props.post.tags.map((tag) => tag.name),
+  });
   const [region, setRegion] = useState({
     latitude: props.post.latitude,
     longitude: props.post.longitude,
@@ -32,7 +35,6 @@ export const EditPostScreen = (props) => {
 
   // for uploading
   const uploadImage = async (uri) => {
-    console.log('IN UPLOAD IMAGE WHERE I SHOULD NOT BE!!!');
     const response = await fetch(uri);
     const blob = await response.blob();
     const photoName = String(Math.random(1000));
@@ -69,25 +71,18 @@ export const EditPostScreen = (props) => {
   };
 
   const changePost = async () => {
-    console.log(props.photo, 'props.photo');
     let photo;
     if (props.photo.length) {
       photo = await uploadImage(props.photo);
-      console.log('photo in create photo in change post', photo);
-      console.log('NEW PHOTO: ', photo);
     } else {
       photo = props.post.photos[0];
       console.log('OG PHOTO: ', photo);
     }
 
     let post = { title, description, latitude, longitude };
-    // let tags = props.tags;
+
     console.log('photo before edit post', photo);
-    await props.editPost(
-      { post, photo /* tags */ },
-      props.user.id,
-      props.post.id
-    );
+    await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
 
     props.clearPhoto();
     setTitle('');
@@ -149,7 +144,7 @@ export const EditPostScreen = (props) => {
           onChangeText={(text) => setDescription(text)}
         />
         {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
-        {/* <Tags setTags={setTags} tags={tags} /> */}
+        <Tags setTags={setTags} tags={tags} />
 
         <EditMapView
           region={region}
@@ -178,7 +173,7 @@ const mapDispatchToProps = (dispatch) => {
     clearPhoto: () => dispatch(clearPhoto()),
     editPost: (post, userId, postId) =>
       dispatch(updatePost(post, userId, postId)),
-    // removeTags: () => dispatch(removeTags()),
+    removeTags: () => dispatch(removeTags()),
     getCoordinates: () => dispatch(getCoordinatesThunk()),
   };
 };
