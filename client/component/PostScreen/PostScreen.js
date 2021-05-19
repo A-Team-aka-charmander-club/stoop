@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, TextInput, Button } from 'react-native';
+import { Text, View, Image, TextInput, Button, ActivityIndicator } from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
@@ -19,7 +19,8 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [clearMap, setClearMap] = useState(true);
+  const [clearMap, setClearMap] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
@@ -35,8 +36,20 @@ export const PostScreen = (props) => {
     const photoName = String(Math.random(1000));
 
     var ref = firebase.storage().ref().child(photoName);
+    setLoading(true);
 
+<<<<<<< HEAD
     await ref.put(blob);
+=======
+<<<<<<< HEAD
+    await ref.put(blob);
+=======
+    await ref.put(blob)
+    setLoading(false)
+>>>>>>> 316046bef402be4102be22141fbfedd5b5094ad4
+
+    let photoUrl = await ref.getDownloadURL();
+>>>>>>> main
 
     const user = firebase.auth().currentUser;
 
@@ -76,11 +89,15 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
+<<<<<<< HEAD
 
     console.log('NAVIGATE TO SINGLE POST');
 
     setClearMap(true);
 
+=======
+    setClearMap(true);
+>>>>>>> main
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
@@ -93,7 +110,7 @@ export const PostScreen = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} style={styles.horizontal}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always">
@@ -105,12 +122,14 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
+              color="#fff"
               title="Open Camera"
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
+              color="#fff"
               title="Upload Photo"
               onPress={async () => await openImagePickerAsync(props)}
             />
@@ -134,13 +153,22 @@ export const PostScreen = (props) => {
         <Tags setTags={setTags} tags={tags} />
         <GoogleMapView
           region={region}
+          clear={clearMap}
           setRegion={setRegion}
           setLatitude={setLatitude}
           setLongitude={setLongitude}
           setClearMap={setClearMap}
           clear={clearMap}
         />
+<<<<<<< HEAD
         <Button title="Post!" onPress={createPost} />
+=======
+        <View style={styles.button}>
+        <Button color="#fff" title="Post!" onPress={createPost} />
+        {loading ? <View style={[styles.container, styles.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View> : <Text></Text>}</View>
+>>>>>>> main
       </KeyboardAwareScrollView>
     </View>
   );

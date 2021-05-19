@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './styles';
 //import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { destroyPost } from '../../store/post';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-
 export const SinglePost = (props) => {
   // useEffect = () => {
   //   if (!props.post.id) {
@@ -69,19 +67,9 @@ export const SinglePost = (props) => {
     );
   }
 };
-
 const mapStateToProps = (state) => {
   return {
     post: state.post,
-    user: state.user,
   };
 };
-
-const mapDispatchToProps = (dispatch, { navigation }) => {
-  return {
-    deletePost: (post, userId) =>
-      dispatch(destroyPost(post, navigation, userId)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
+export default connect(mapStateToProps)(SinglePost);

@@ -60,7 +60,7 @@ export function RegistrationScreen({ navigation, createUser }) {
       >
         <Image
           style={styles.logo}
-          source={require('../../../assets/icon.png')}
+          source={require('../../../assets/trashPanda.png')}
         />
         <TextInput
           style={styles.input}
