@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import {
-  //HomeStackNavigator,
+  HomeStackNavigator,
   PostStackNavigator,
   //MapStackNavigator,
 } from '../StackNavigator/StackNavigator';
@@ -26,7 +26,7 @@ const BottomTabNavigator = () => {
     >
       <Tab.Screen
         name='Home'
-        component={HomeScreen}
+        component={HomeStackNavigator}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name='home' color={color} size={size} />

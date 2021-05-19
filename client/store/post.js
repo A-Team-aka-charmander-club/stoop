@@ -38,6 +38,7 @@ export const createPostThunk = (post) => {
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
         `http://localhost:8080/api/posts/post`,
+
         post,
         {
           headers: { authorization: user.uid },
@@ -94,6 +95,8 @@ let initState = {};
 
 export default function postReducer(state = initState, action) {
   switch (action.type) {
+    case GET_POST:
+      return action.singlePost;
     case CREATE_POST:
       return action.post;
     case DELETE_POST:

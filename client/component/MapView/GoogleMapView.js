@@ -8,25 +8,23 @@ export default function GoogleMapView(props) {
   installWebGeolocationPolyfill();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          props.setRegion({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            latitudeDelta: 0.0025,
-            longitudeDelta: 0.0025,
-          });
-        },
-        (error) => alert(error.message),
-        { enableHighAccuracy: true, maximumAge: 1000 }
-      );
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        props.setRegion({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.0025,
+          longitudeDelta: 0.0025,
+        });
+      },
+      (error) => alert(error.message),
+      { enableHighAccuracy: true, maximumAge: 1000 }
+    );
 
-      props.setLatitude(props.region.latitude);
-      props.setLongitude(props.region.longitude);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    props.setClearMap(false);
+    props.setLatitude(props.region.latitude);
+    props.setLongitude(props.region.longitude);
+  }, [props.clearMap]);
 
   const onDragEnd = (e) => {
     props.setRegion({
