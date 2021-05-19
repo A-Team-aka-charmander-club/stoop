@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import styles from './styles';
-//import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { destroyPost } from '../../store/post';
 export const SinglePost = (props) => {
-  // useEffect = () => {
-  //   if (!props.post.id) {
-  //     props.navigation.navigate('Home');
-  //   }
-  // };
 
   console.log('props.post in singlepost', props.post);
 
@@ -21,6 +16,9 @@ export const SinglePost = (props) => {
   if (props.post.id) {
     return (
       <View style={styles.container}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: '100%' }}
+        keyboardShouldPersistTaps="always">
         <MapView
           style={styles.map}
           provider={PROVIDER_GOOGLE}
@@ -31,6 +29,7 @@ export const SinglePost = (props) => {
             longitudeDelta: 0.0025,
           }}>
           <Marker
+            key={ `marker${Date.now()}` }
             coordinate={{
               latitude: props.post.latitude,
               longitude: props.post.longitude,
@@ -58,6 +57,7 @@ export const SinglePost = (props) => {
             />
           </View>
         ) : null}
+        </KeyboardAwareScrollView>
       </View>
     );
   } else {
