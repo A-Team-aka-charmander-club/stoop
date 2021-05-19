@@ -6,6 +6,7 @@ import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
 import HomeGoogleMapView from '../../MapView/HomeGoogleMapView';
 import SinglePost from '../../SinglePost/SinglePost';
+import Comments from '../../Comments/Comments';
 
 const Stack = createStackNavigator();
 const HomeStackNavigator = () => {
@@ -19,6 +20,23 @@ const HomeStackNavigator = () => {
       <Stack.Screen
         name='SinglePost'
         component={SinglePost}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const SinglePostStackNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName='SinglePost'>
+      <Stack.Screen
+        name='SinglePost'
+        component={SinglePost}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Comments'
+        component={Comments}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -53,4 +71,9 @@ const MapStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-export { HomeStackNavigator, PostStackNavigator, MapStackNavigator };
+export {
+  HomeStackNavigator,
+  PostStackNavigator,
+  MapStackNavigator,
+  SinglePostStackNavigator,
+};
