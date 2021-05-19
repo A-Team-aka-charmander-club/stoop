@@ -54,7 +54,7 @@ export const PostScreen = (props) => {
       .catch((error) => {
         alert(error);
       });
-    await ref.put(uri);
+    await ref.put(blob);
 
     let photoUrl = await ref.getDownloadURL();
 
