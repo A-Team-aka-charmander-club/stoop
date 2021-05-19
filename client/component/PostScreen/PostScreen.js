@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import styles from './styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, TextInput, Button, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  ActivityIndicator,
+} from 'react-native';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
@@ -19,8 +26,8 @@ export const PostScreen = (props) => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [clearMap, setClearMap] = useState(true)
-  const [loading, setLoading] = useState(false)
+  const [clearMap, setClearMap] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
@@ -38,18 +45,10 @@ export const PostScreen = (props) => {
     var ref = firebase.storage().ref().child(photoName);
     setLoading(true);
 
-<<<<<<< HEAD
     await ref.put(blob);
-=======
-<<<<<<< HEAD
-    await ref.put(blob);
-=======
-    await ref.put(blob)
-    setLoading(false)
->>>>>>> 316046bef402be4102be22141fbfedd5b5094ad4
+    setLoading(false);
 
     let photoUrl = await ref.getDownloadURL();
->>>>>>> main
 
     const user = firebase.auth().currentUser;
 
@@ -69,8 +68,6 @@ export const PostScreen = (props) => {
       });
     await ref.put(blob);
 
-    let photoUrl = await ref.getDownloadURL();
-
     let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
@@ -89,15 +86,7 @@ export const PostScreen = (props) => {
     props.clearPhoto();
     setTitle('');
     setDescription('');
-<<<<<<< HEAD
-
-    console.log('NAVIGATE TO SINGLE POST');
-
     setClearMap(true);
-
-=======
-    setClearMap(true);
->>>>>>> main
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
     setRegion({
@@ -160,15 +149,16 @@ export const PostScreen = (props) => {
           setClearMap={setClearMap}
           clear={clearMap}
         />
-<<<<<<< HEAD
-        <Button title="Post!" onPress={createPost} />
-=======
         <View style={styles.button}>
-        <Button color="#fff" title="Post!" onPress={createPost} />
-        {loading ? <View style={[styles.container, styles.horizontal]}>
-          <ActivityIndicator size="large" color="#00ff00" />
-        </View> : <Text></Text>}</View>
->>>>>>> main
+          <Button color="#fff" title="Post!" onPress={createPost} />
+          {loading ? (
+            <View style={[styles.container, styles.horizontal]}>
+              <ActivityIndicator size="large" color="#00ff00" />
+            </View>
+          ) : (
+            <Text></Text>
+          )}
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );

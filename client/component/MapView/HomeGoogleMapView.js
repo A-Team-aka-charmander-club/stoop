@@ -37,7 +37,7 @@ export function HomeGoogleMapView(props) {
 
   const onPressButton = (post) => {
     props.getPost(post);
-    props.navigation.navigate('SinglePost');
+    props.navigation.navigate('PostNav', { screen: 'SinglePost' });
   };
   return (
     <View style={styles.container}>

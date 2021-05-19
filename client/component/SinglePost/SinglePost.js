@@ -4,6 +4,7 @@ import styles from './styles';
 import { Text, View, Image, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { destroyPost } from '../../store/post';
 export const SinglePost = (props) => {
   // useEffect = () => {
   //   if (!props.post.id) {
@@ -70,6 +71,15 @@ export const SinglePost = (props) => {
 const mapStateToProps = (state) => {
   return {
     post: state.post,
+    user: state.user,
   };
 };
-export default connect(mapStateToProps)(SinglePost);
+
+const mapDispatchToProps = (dispatch, { navigation }) => {
+  return {
+    deletePost: (postId, userId) =>
+      dispatch(destroyPost(postId, navigation, userId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
