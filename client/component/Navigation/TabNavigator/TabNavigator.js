@@ -11,6 +11,9 @@ import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
 import CameraModal from '../../CameraModal/CameraModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
+
 import UserAccount from '../../UserAccount/UserAccount';
 
 const Tab = createBottomTabNavigator();
@@ -21,15 +24,17 @@ const BottomTabNavigator = () => {
       initialRouteName='Home'
       tabBarOptions={{
         activeTintColor: '#e91e63',
-        showLabel: false,
+        showLabel: true,
       }}
     >
       <Tab.Screen
         name='Home'
         component={HomeStackNavigator}
         options={{
+          tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='home' color={color} size={size} />
+            // <MaterialCommunityIcons name='home' color={color} size={size} />
+            <Fontisto name='ship' size={24} color='black' />
           ),
         }}
       />
@@ -37,8 +42,10 @@ const BottomTabNavigator = () => {
         name='CameraModal'
         component={CameraModal}
         options={{
+          tabBarLabel: 'Search',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='camera' color={color} size={size} />
+            //<MaterialCommunityIcons name='camera' color={color} size={size} />
+            <MaterialCommunityIcons name='telescope' size={24} color='black' />
           ),
         }}
       />
@@ -46,11 +53,17 @@ const BottomTabNavigator = () => {
         name='PostNav'
         component={PostStackNavigator}
         options={{
+          tabBarLabel: 'Add Treasure',
           tabBarIcon: ({ color, size }) => (
+            // <MaterialCommunityIcons
+            //   name='plus-box-outline'
+            //   color={color}
+            //   size={size}
+            // />
             <MaterialCommunityIcons
-              name='plus-box-outline'
-              color={color}
-              size={size}
+              name='treasure-chest'
+              size={24}
+              color='black'
             />
           ),
         }}
@@ -59,8 +72,10 @@ const BottomTabNavigator = () => {
         name='Account'
         component={UserAccount}
         options={{
+          tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='account' color={color} size={size} />
+            // <MaterialCommunityIcons name='account' color={color} size={size} />
+            <FontAwesome5 name='skull-crossbones' size={24} color='black' />
           ),
         }}
       />
