@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const GET_COORDINATES = 'GET_COORDINATES';
 
+const REMOVE_COORDINATE = 'REMOVE_COORDINATE';
+
 const getCoordinates = (coordinates) => {
   return {
     type: GET_COORDINATES,
@@ -9,10 +11,16 @@ const getCoordinates = (coordinates) => {
   };
 };
 
+export const removeCoordinate = (coordinate) => {
+  return {
+    type: REMOVE_COORDINATE,
+    coordinate,
+  };
+};
+
 export const getCoordinatesThunk = () => {
   return async (dispatch) => {
     try {
-      console.log('IN GET COOORDINATES THUNK');
       const { data } = await axios.get(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://localhost:8080/api/photos/photo',
@@ -20,7 +28,6 @@ export const getCoordinatesThunk = () => {
         //anna's ip address: 192.168.1.152
         `http://localhost:8080/api/maps/coordinates`
       );
-      console.log('DATA FROM COORDINATES CALL');
       dispatch(getCoordinates(data));
     } catch (error) {
       console.log(error);
@@ -32,6 +39,10 @@ export default function (state = [], action) {
   switch (action.type) {
     case GET_COORDINATES:
       return action.coordinates;
+    case REMOVE_COORDINATE:
+      return state.filter(
+        (coordinate) => coordinate.id !== action.coordinate.id
+      );
     default:
       return state;
   }

@@ -3,25 +3,10 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { View } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
-export default function GoogleMapView(props) {
+
+export default function EditMapView(props) {
   installWebGeolocationPolyfill();
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        props.setRegion({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.0025,
-          longitudeDelta: 0.0025,
-        });
-      },
-      (error) => alert(error.message),
-      { enableHighAccuracy: true, maximumAge: 1000 }
-    );
-    props.setClearMap(false);
-    props.setLatitude(props.region.latitude);
-    props.setLongitude(props.region.longitude);
-  }, [props.clearMap]);
+
   const onDragEnd = (e) => {
     props.setRegion({
       latitude: e.nativeEvent.coordinate.latitude,
@@ -29,9 +14,13 @@ export default function GoogleMapView(props) {
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025,
     });
+    console.log('e native lat', e.nativeEvent.coordinate.latitude);
     props.setLatitude(e.nativeEvent.coordinate.latitude);
     props.setLongitude(e.nativeEvent.coordinate.longitude);
   };
+
+  console.log(props.region, 'props.region');
+
   return (
     <View style={styles.container}>
       <MapView
