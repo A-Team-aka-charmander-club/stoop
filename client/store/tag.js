@@ -22,7 +22,7 @@ export const removeTags = () => {
 export default function (state = [], action) {
   switch (action.type) {
     case ADD_TAGS:
-      return [...action.tags];
+      return action.tags;
     case REMOVE_TAGS:
       return [];
     default:

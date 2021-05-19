@@ -96,7 +96,17 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
       }
       await post.update(req.body.post);
 
-      let updatedPost = await Post.findByOne({
+      await Promise.all(
+        req.body.tags.map(async (tag) => {
+          let [newTag, isCreated] = await Tag.findOrCreate({
+            where: {
+              name: tag,
+            },
+          });
+          return post.addTag(newTag);
+        })
+      );
+      let updatedPost = await Post.findOne({
         where: {
           id: post.id,
         },

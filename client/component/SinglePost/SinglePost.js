@@ -12,24 +12,24 @@ export const SinglePost = (props) => {
   //     props.navigation.navigate('Home');
   //   }
   // };
-  console.log('PROPS.POST- SINGLE PHOTO', props.post.photos[0].firebaseUrl);
+
   // console.log('SINGLE POST PHOTO: ', props.post.photo[0]);
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
+
   if (props.post.id) {
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
           provider={PROVIDER_GOOGLE}
-          initialRegion={{
+          region={{
             latitude: props.post.latitude,
             longitude: props.post.longitude,
             latitudeDelta: 0.0,
             longitudeDelta: 0.0,
-          }}
-        >
+          }}>
           <Marker
             coordinate={{
               latitude: props.post.latitude,
@@ -53,9 +53,9 @@ export const SinglePost = (props) => {
         </Text>
         {props.post.users[0].id === props.user.id ? (
           <View>
-            <Button title='Delete Post' onPress={handleDelete} />
+            <Button title="Delete Post" onPress={handleDelete} />
             <Button
-              title='Edit Post'
+              title="Edit Post"
               onPress={() => props.navigation.navigate('Edit')}
             />
           </View>
