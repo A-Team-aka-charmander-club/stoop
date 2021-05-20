@@ -6,14 +6,15 @@ const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
 
 module.exports = router;
 
-router.post('/:postId/:userId', isLoggedIn, async (req, res, next) => {
-  console.log('IN COMMENT API ROUTE');
+router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
   try {
     const comment = await Comment.create({
-      content: req.body,
+      content: req.body.comment,
     });
-    await comment.addUser(req.params.userId);
-    await comment.addPost(req.params.postId);
+    let user = req.user;
+    await user.addComment(comment);
+    let post = await Post.findByPk(req.params.postId);
+    await post.addComment(comment);
     //here - do i need to do combined post?
     res.send(comment);
   } catch (err) {

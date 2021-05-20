@@ -21,12 +21,13 @@ export const addComment = (comment) => {
 export const createComment = (comment, postId, userId) => {
   return async (dispatch) => {
     console.log('CREATE COMMENT THUNK');
+    console.log('comment:', comment);
     try {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.post(
         `http://10.0.0.153:8080/api/comments/${postId}/${userId}`,
-        comment,
+        { comment },
         {
           headers: { authorization: user.uid },
         }
