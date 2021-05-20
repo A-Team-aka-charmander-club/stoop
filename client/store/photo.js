@@ -7,11 +7,6 @@ const TAKE_PHOTO = 'TAKE_PHOTO';
 const CLEAR_PHOTO = 'CLEAR_PHOTO';
 
 export const takePhoto = (photo) => {
-<<<<<<< HEAD
-  console.log('photo in store');
-  console.log(photo);
-=======
->>>>>>> 9a8e1a9bdf4eb96ed6278eb2bfeffa2b9dfb7171
   return {
     type: TAKE_PHOTO,
     photo,
