@@ -33,7 +33,6 @@ export const EditPostScreen = (props) => {
   const changePost = async () => {
     let photo;
     if (props.photo.firebaseUrl !== props.post.photos[0].firebaseUrl) {
-      console.log(props.photo, 'in edit')
       photo = props.photo;
     } else {
       photo = props.post.photos[0];
@@ -49,16 +48,9 @@ export const EditPostScreen = (props) => {
 
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
-    setRegion({
-      latitude: props.post.latitude,
-      longitude: props.post.longitude,
-      latitudeDelta: 0.0025,
-      longitudeDelta: 0.0025,
-    });
     props.navigation.navigate('SinglePost');
   };
 
-  console.log(props.photo.firebaseUrl, 'url')
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView

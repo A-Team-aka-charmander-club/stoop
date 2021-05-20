@@ -13,7 +13,6 @@ import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 
 export function HomeGoogleMapView(props) {
-  console.log(props.navigation, 'navigation')
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
     longitude: -74.00289693630044,

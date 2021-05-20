@@ -26,8 +26,6 @@ export const deletePost = (post) => {
 };
 
 export const editPost = (post) => {
-  console.log('picure')
-  console.log(post, 'in edit')
   return {
     type: EDIT_POST,
     post,
@@ -35,7 +33,6 @@ export const editPost = (post) => {
 };
 
 export const getPost = (singlePost) => {
-  //console.log('in the store:', post);
   return {
     type: GET_POST,
     singlePost,

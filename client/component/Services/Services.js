@@ -14,7 +14,6 @@ export const onLogoutPress = (props) => {
 };
 
 const uploadImage = async (uri) => {
-  console.log('in upload Image', uri)
   const response = await fetch(uri);
   const blob = await response.blob();
 
@@ -67,7 +66,6 @@ export const openImagePickerAsync = async (props) => {
 
   if (!pickerResult.cancelled) {
     const photo = await uploadImage(pickerResult.uri)
-    console.log('here')
     props.takePhoto(photo);
   }
 };

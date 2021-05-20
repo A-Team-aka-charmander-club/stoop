@@ -3,7 +3,6 @@ const {
   models: { Photo, User, Post, Tag },
 } = require('../db');
 const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
-const { Op } = require('sequelize');
 
 module.exports = router;
 
@@ -76,32 +75,26 @@ router.delete('/:id/:userId', verifyUser, async (req, res, next) => {
 });
 
 router.put('/:id/:userId', verifyUser, async (req, res, next) => {
-  console.log(req.body, 'boody')
   try {
     const post = await Post.findOne({
       where: {
         id: req.params.id,
       },
-      include: [{ model: Tag }],
+      include: [{ model: Tag }, {model: Photo}],
     });
-    console.log('req.body in put route', req.body);
+
     if (post) {
-      //if sending an updated photo, must do this first
 
-      //first get rid of the association btwn the old photo and the post
+      const oldPhoto = post.photos[0];
 
-      const oldPhoto = await Photo.findAll({
-        where: {
-          userId: req.params.id,
-        },
-      })[0];
       if (req.body.photo.firebaseUrl !== oldPhoto.firebaseUrl) {
-        await post.removePhoto(oldPhoto);
+        await oldPhoto.destroy();
 
         const photo = await Photo.create({
           firebaseUrl: req.body.photo.firebaseUrl,
           firebasePhotoId: req.body.photo.firebasePhotoId,
         });
+
         const user = req.user;
         await user.addPhoto(photo);
         await post.addPhoto(photo);
