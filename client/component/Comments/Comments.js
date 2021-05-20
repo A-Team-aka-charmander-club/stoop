@@ -18,8 +18,6 @@ import { createComment } from '../../store/comments';
 
 export function Comments(props) {
   const [comment, setComment] = useState('');
-  // console.log('PROPS.POST: ', props.post);
-  // console.log('PROPS.USER: ', props.user);
 
   const handleSubmit = () => {
     props.addComment(comment, props.post.id, props.user.id);
@@ -57,7 +55,7 @@ const mapStateToProps = (state) => {
   return {
     post: state.post,
     user: state.user,
-    comment: state.comment,
+    comments: state.comments,
   };
 };
 

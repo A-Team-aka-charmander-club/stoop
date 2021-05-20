@@ -49,7 +49,7 @@ export const createPostThunk = (post) => {
       console.log('IN POST THUNK');
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-        `http://10.0.0.153:8080/api/posts/post`,
+        `http://localhost:8080/api/posts/post`,
 
         post,
         {

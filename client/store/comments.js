@@ -26,7 +26,7 @@ export const createComment = (comment, postId, userId) => {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.post(
-        `http://10.0.0.153:8080/api/comments/${postId}/${userId}`,
+        `http://localhost:8080/api/comments/${postId}/${userId}`,
         { comment },
         {
           headers: { authorization: user.uid },

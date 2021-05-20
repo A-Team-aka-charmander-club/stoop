@@ -74,9 +74,9 @@ export const SinglePost = (props) => {
       </View>
     );
   } else {
-    // <View>
-    //   <Text>You've deleted the post. </Text>
-    // </View>
+    <View>
+      <Text>You've deleted the post. </Text>
+    </View>;
     {
       props.navigation.navigate('Post');
     }
@@ -86,7 +86,6 @@ const mapStateToProps = (state) => {
   return {
     post: state.post,
     user: state.user,
-    //comment: state.comment,
   };
 };
 const mapDispatchToProps = (dispatch, { navigation }) => {
