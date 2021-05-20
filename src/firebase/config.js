@@ -11,6 +11,9 @@ import {
 import '@firebase/auth';
 import '@firebase/firestore';
 import '@firebase/storage';
+// import '@firebase/functions';
+// import functions from '@firebase/functions';
+
 console.log('API KEY');
 const firebaseConfig = {
   apiKey: REACT_APP_API_KEY,
