@@ -1,4 +1,4 @@
-import React, { PureComponent, useState } from 'react';
+import React, { PureComponent, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,16 +12,27 @@ import {
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TimeAgo from 'react-native-timeago';
-import Icon from 'react-native-vector-icons/FontAwesome';
+//import Icon from 'react-native-vector-icons';
 import styles from './styles';
-import { createComment } from '../../store/comments';
+import { createComment, grabComment } from '../../store/comments';
+import Comments from 'react-native-comments';
 
-export function Comments(props) {
+export function CommentView(props) {
   const [comment, setComment] = useState('');
+<<<<<<< HEAD
+=======
+  console.log('PROPS.COMMENTS: ', props.comments);
+  // console.log('PROPS.USER: ', props.user);
+>>>>>>> 445285b5dc7e4676c1c0b9879dc8409484a9c68b
 
   const handleSubmit = () => {
     props.addComment(comment, props.post.id, props.user.id);
   };
+  useEffect(() => {
+    props.getComment(props.post.id);
+  }, [props.comments.length]);
+
+  const data = props.comments;
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1, width: '100%' }}
@@ -32,7 +43,12 @@ export function Comments(props) {
         <Text style={styles.name}>{props.post.title}</Text>
         <View>
           <ScrollView style={{ padding: 100 }}>
-            <Text>COMMENTS WILL GO HERE </Text>
+            <Text>
+              Comments:
+              {props.comments.length > 0 && props.comments ? (
+                <Comments data={data} />
+              ) : null}
+            </Text>
           </ScrollView>
           <TextInput
             placeholder='Add a comment...'
@@ -63,7 +79,19 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
+    getComment: (postId) => dispatch(grabComment(postId)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
+
+{
+  /* <Text>
+              Comments:
+              {props.comments.length > 0 && props.comments
+                ? props.comments.map((comment) => {
+                    return comment.content;
+                  })
+                : null}
+            </Text> */
+}

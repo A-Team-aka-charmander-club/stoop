@@ -16,6 +16,13 @@ export const addComment = (comment) => {
   };
 };
 
+export const getComment = (comments) => {
+  return {
+    type: GET_COMMENTS,
+    comments,
+  };
+};
+
 // THUNKS
 
 export const createComment = (comment, postId, userId) => {
@@ -39,14 +46,29 @@ export const createComment = (comment, postId, userId) => {
   };
 };
 
+export const grabComment = (postId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `http://10.0.0.153:8080/api/comments/${postId}`
+      );
+      dispatch(getComment(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 //REDUCERS
 
-let initState = {};
+let initState = [];
 
 export default function commentReducer(state = initState, action) {
   switch (action.type) {
     case ADD_COMMENT:
-      return action.comment;
+      return [...state, action.comment];
+    case GET_COMMENTS:
+      return action.comments;
     default:
       return state;
   }

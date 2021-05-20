@@ -55,6 +55,12 @@ export const SinglePost = (props) => {
                 })
               : null}
           </Text>
+          <TouchableOpacity
+            navigation={props.navigation}
+            onPress={() => props.navigation.navigate('CommentView')}
+          >
+            <Text>Comments</Text>
+          </TouchableOpacity>
           {props.post.users[0].id === props.user.id ? (
             <View>
               <Button title='Delete Post' onPress={handleDelete} />
@@ -62,12 +68,6 @@ export const SinglePost = (props) => {
                 title='Edit Post'
                 onPress={() => props.navigation.navigate('Edit')}
               />
-              <TouchableOpacity
-                navigation={props.navigation}
-                onPress={() => props.navigation.navigate('Comments')}
-              >
-                <Text>Comments</Text>
-              </TouchableOpacity>
             </View>
           ) : null}
         </KeyboardAwareScrollView>
