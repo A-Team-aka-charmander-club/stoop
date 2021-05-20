@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, YellowBox } from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    backgroundColor: 'white', 
   },
   input: {
     height: 48,
@@ -16,4 +16,15 @@ export default StyleSheet.create({
     marginRight: 30,
     paddingLeft: 16,
   },
+   
+title: {
+  fontSize: 24,
+  color: '#A5A5A5',
+},
+subtitle: {
+  color: '#A5A5A5',
+},
+itemText: {
+  backgroundColor: '#A5A5A5'
+}
 });

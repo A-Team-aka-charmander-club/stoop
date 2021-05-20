@@ -16,8 +16,8 @@ export function HomeGoogleMapView(props) {
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
     longitude: -74.00289693630044,
-    latitudeDelta: 0.025,
-    longitudeDelta: 0.025,
+    latitudeDelta: 0.0075,
+    longitudeDelta: 0.0075,
   });
 
   installWebGeolocationPolyfill();
@@ -36,7 +36,7 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
     props.navigation.addListener('focus', () => {
-      props.getCoordinates();
+      props.getCoordinates(region);
     })
    
   }, [props.navigation]);
@@ -53,6 +53,13 @@ export function HomeGoogleMapView(props) {
         provider={PROVIDER_GOOGLE}
         region={region}
         showsUserLocation={true}
+        onRegionChange={(newRegion) => {
+          if(region.latitudeDelta !== newRegion.latitudeDelta){
+            setRegion(newRegion)
+            props.getCoordinates(newRegion);
+          }
+          
+        }}
         zoomEnabled={true}>
         {props.coordinates.map((post, index) => {
           return (
