@@ -2,10 +2,19 @@ import axios from 'axios';
 
 const GET_COORDINATES = 'GET_COORDINATES';
 
+const REMOVE_COORDINATE = 'REMOVE_COORDINATE';
+
 const getCoordinates = (coordinates) => {
   return {
     type: GET_COORDINATES,
     coordinates,
+  };
+};
+
+export const removeCoordinate = (coordinate) => {
+  return {
+    type: REMOVE_COORDINATE,
+    coordinate,
   };
 };
 
@@ -30,6 +39,10 @@ export default function (state = [], action) {
   switch (action.type) {
     case GET_COORDINATES:
       return action.coordinates;
+    case REMOVE_COORDINATE:
+      return state.filter(
+        (coordinate) => coordinate.id !== action.coordinate.id
+      );
     default:
       return state;
   }
