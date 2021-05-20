@@ -1,6 +1,6 @@
 import React from 'react';
 //import Logout from '../LogoutScreen/Logout';
-import { Button, View, Text } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import { logoutUser } from '../../store/user';
 import { connect } from 'react-redux';
 // import { firebase } from '../../../src/firebase/config';

@@ -2,15 +2,15 @@ import { StyleSheet, PixelRatio } from 'react-native';
 
 const styles = StyleSheet.create({
   commentContainer: {
-    paddingRight: 20,
+    paddingRight: 10,
     marginBottom: 10,
-    paddingTop: 20,
+    paddingTop: 10,
 
     alignItems: 'center',
     //flexDirection: 'row',
   },
   singleComment: {
-    padding: 20,
+    padding: 10,
 
     //color: '#ff0000',
   },
