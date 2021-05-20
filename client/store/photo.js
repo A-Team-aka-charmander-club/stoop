@@ -17,6 +17,8 @@ const addPhoto = (photo) => {
 };
 
 export const takePhoto = (photo) => {
+  console.log('photo in store')
+  console.log(photo)
   return {
     type: TAKE_PHOTO,
     photo,

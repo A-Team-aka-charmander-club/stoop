@@ -7,15 +7,11 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { destroyPost } from '../../store/post';
 export const SinglePost = (props) => {
 
-  console.log('props.post in singlepost', props.post);
-
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
 
-
   if (props.post.id) {
-    console.log(props.post.photos[0].firebaseUrl, 'url')
     return (
       <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -46,9 +42,9 @@ export const SinglePost = (props) => {
         <Text>{props.post.description}</Text>
         <Text>
           Tags:
-          {props.post.tags.map((tag) => {
+          {props.post.tags.length > 0 && props.post.tags ? props.post.tags.map((tag) => {
             return tag.name;
-          })}
+          }) : null }
         </Text>
         {props.post.users[0].id === props.user.id ? (
           <View>

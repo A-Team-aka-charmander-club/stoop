@@ -2,7 +2,6 @@ import { firebase } from '../../../src/firebase/config';
 import * as ImagePicker from 'expo-image-picker';
 import { CommonActions, StackActions } from '@react-navigation/native';
 
-//logout function
 export const onLogoutPress = (props) => {
   firebase
     .auth()
@@ -13,13 +12,19 @@ export const onLogoutPress = (props) => {
   props.logOut();
   props.navigation.navigate('Login');
 };
-//upload image
-export const uploadImage = async (uri) => {
+
+const uploadImage = async (uri) => {
+  console.log('in upload Image', uri)
   const response = await fetch(uri);
   const blob = await response.blob();
 
   const photoName = String(Math.random(1000));
+   
   var ref = firebase.storage().ref().child(photoName);
+
+  await ref.put(blob)
+  
+  let photoUrl = await ref.getDownloadURL();
 
   const user = firebase.auth().currentUser;
 
@@ -37,9 +42,6 @@ export const uploadImage = async (uri) => {
     .catch((error) => {
       alert(error);
     });
-  await ref.put(blob);
-
-  let photoUrl = await ref.getDownloadURL();
 
   let newPhoto = {
     firebasePhotoId: photoId,
@@ -48,7 +50,7 @@ export const uploadImage = async (uri) => {
   };
   return newPhoto;
 };
-// allows you to open camera roll + select image (necessary for app use)
+
 export const openImagePickerAsync = async (props) => {
   let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -64,21 +66,20 @@ export const openImagePickerAsync = async (props) => {
   }
 
   if (!pickerResult.cancelled) {
-    props.takePhoto(pickerResult.uri);
+    const photo = await uploadImage(pickerResult.uri)
+    props.takePhoto(photo);
   }
 };
 
-//allows you to take photo from in the app
 export const openCameraAsync = async (props) => {
-  //returns permission object
   let permission = await ImagePicker.requestCameraPermissionsAsync();
 
   if (!permission) {
     alert('Permission to acccess camera roll is required!');
   }
-  // returns picture object
   const picture = await ImagePicker.launchCameraAsync();
   if (!picture.cancelled) {
-    props.takePhoto(picture.uri);
+    const photo = await uploadImage(pickerResult.uri)
+    props.takePhoto(photo);
   }
 };
