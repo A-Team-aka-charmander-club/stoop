@@ -18,8 +18,12 @@ import { createComment } from '../../store/comments';
 
 export function Comments(props) {
   const [comment, setComment] = useState('');
+  // console.log('PROPS.POST: ', props.post);
+  // console.log('PROPS.USER: ', props.user);
+  console.log('PROPS.COMMENTS', props.comments);
+  console.log('PROPS.COMMENT', props.comment);
   const handleSubmit = () => {
-    console.log('IN HANDLE SUBMIT', props);
+    console.log('IN HANDLE SUBMIT', props.comment);
 
     props.addComment(props.comment, props.post.id, props.user.id);
   };
@@ -56,7 +60,6 @@ const mapStateToProps = (state) => {
   return {
     post: state.post,
     user: state.user,
-    comments: state.comments,
   };
 };
 
