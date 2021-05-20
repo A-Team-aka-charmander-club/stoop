@@ -36,19 +36,12 @@ export const PostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
-
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
+
     const photoName = String(Math.random(1000));
-
     var ref = firebase.storage().ref().child(photoName);
-    setLoading(true);
-
-    await ref.put(blob);
-    setLoading(false);
-
-    let photoUrl = await ref.getDownloadURL();
 
     const user = firebase.auth().currentUser;
 
@@ -68,6 +61,8 @@ export const PostScreen = (props) => {
       });
     await ref.put(blob);
 
+    let photoUrl = await ref.getDownloadURL();
+
     let newPhoto = {
       firebasePhotoId: photoId,
       userId: user.uid,
@@ -75,6 +70,44 @@ export const PostScreen = (props) => {
     };
     return newPhoto;
   };
+  // const uploadImage = async (uri) => {
+  //   const response = await fetch(uri);
+  //   const blob = await response.blob();
+  //   const photoName = String(Math.random(1000));
+
+  //   var ref = firebase.storage().ref().child(photoName);
+  //   setLoading(true);
+
+  //   await ref.put(blob);
+  //   setLoading(false);
+
+  //   let photoUrl = await ref.getDownloadURL();
+
+  //   const user = firebase.auth().currentUser;
+
+  //   const data = {
+  //     userId: user.uid,
+  //     uri: uri,
+  //   };
+
+  //   const photoId = firebase.firestore().collection('photos').doc().id;
+  //   const photosRef = firebase.firestore().collection('photos');
+
+  //   photosRef
+  //     .doc(photoId)
+  //     .set(data)
+  //     .catch((error) => {
+  //       alert(error);
+  //     });
+  //   await ref.put(blob);
+
+  //   let newPhoto = {
+  //     firebasePhotoId: photoId,
+  //     userId: user.uid,
+  //     firebaseUrl: photoUrl,
+  //   };
+  //   return newPhoto;
+  // };
 
   const createPost = async () => {
     const photo = await uploadImage(props.photo);
@@ -102,7 +135,8 @@ export const PostScreen = (props) => {
     <View style={styles.container} style={styles.horizontal}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
 
         {props.photo.length ? (
@@ -111,15 +145,15 @@ export const PostScreen = (props) => {
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              color="#fff"
-              title="Open Camera"
+              color='#fff'
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              color="#fff"
-              title="Upload Photo"
+              color='#fff'
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -127,14 +161,14 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
@@ -150,10 +184,10 @@ export const PostScreen = (props) => {
           clear={clearMap}
         />
         <View style={styles.button}>
-          <Button color="#fff" title="Post!" onPress={createPost} />
+          <Button color='#fff' title='Post!' onPress={createPost} />
           {loading ? (
             <View style={[styles.container, styles.horizontal]}>
-              <ActivityIndicator size="large" color="#00ff00" />
+              <ActivityIndicator size='large' color='#00ff00' />
             </View>
           ) : (
             <Text></Text>
