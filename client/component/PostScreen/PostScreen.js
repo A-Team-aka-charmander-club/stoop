@@ -10,7 +10,6 @@ import {
   Button,
   ActivityIndicator,
 } from 'react-native';
-import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -35,86 +34,11 @@ export const PostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
-  const uploadImage = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    const photoName = String(Math.random(1000));
-
-    var ref = firebase.storage().ref().child(photoName);
-
-    await ref.put(blob);
-
-    let photoUrl = await ref.getDownloadURL();
-
-    const user = firebase.auth().currentUser;
-
-    const data = {
-      userId: user.uid,
-      uri: uri,
-    };
-
-    const photoId = firebase.firestore().collection('photos').doc().id;
-    const photosRef = firebase.firestore().collection('photos');
-
-    photosRef
-      .doc(photoId)
-      .set(data)
-      .catch((error) => {
-        alert(error);
-      });
-
-    let newPhoto = {
-      firebasePhotoId: photoId,
-      userId: user.uid,
-      firebaseUrl: photoUrl,
-    };
-    return newPhoto;
-  };
-  // const uploadImage = async (uri) => {
-  //   const response = await fetch(uri);
-  //   const blob = await response.blob();
-  //   const photoName = String(Math.random(1000));
-
-  //   var ref = firebase.storage().ref().child(photoName);
-  //   setLoading(true);
-
-  //   await ref.put(blob);
-  //   setLoading(false);
-
-  //   let photoUrl = await ref.getDownloadURL();
-
-  //   const user = firebase.auth().currentUser;
-
-  //   const data = {
-  //     userId: user.uid,
-  //     uri: uri,
-  //   };
-
-  //   const photoId = firebase.firestore().collection('photos').doc().id;
-  //   const photosRef = firebase.firestore().collection('photos');
-
-  //   photosRef
-  //     .doc(photoId)
-  //     .set(data)
-  //     .catch((error) => {
-  //       alert(error);
-  //     });
-  //   await ref.put(blob);
-
-  //   let newPhoto = {
-  //     firebasePhotoId: photoId,
-  //     userId: user.uid,
-  //     firebaseUrl: photoUrl,
-  //   };
-  //   return newPhoto;
-  // };
 
   const createPost = async () => {
-    const photo = await uploadImage(props.photo);
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
-
+    let photo = props.photo;
     await props.submitPost({ post, photo, tags });
     props.getCoordinates();
     props.clearPhoto();
@@ -139,9 +63,11 @@ export const PostScreen = (props) => {
         keyboardShouldPersistTaps='always'
       >
         <Text>Create Post</Text>
-
-        {props.photo.length ? (
-          <Image source={{ uri: props.photo }} style={styles.thumbnail} />
+        {props.photo.firebaseUrl ? (
+          <Image
+            source={{ url: props.photo.firebaseUrl }}
+            style={styles.thumbnail}
+          />
         ) : null}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
@@ -168,6 +94,7 @@ export const PostScreen = (props) => {
         />
 
         <TextInput
+          required
           style={styles.input}
           placeholder='Description'
           value={description}

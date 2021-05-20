@@ -9,9 +9,7 @@ import {
 import { takePhoto } from '../../store/photo';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
 
-//add photurl to state (pre-database)
-// see button + click button
-// brings up camera. camera has take picture OR navigate to photo roll (image picker)
+
 export function HomeScreen(props) {
   let openCameraAsync = async () => {
     let permission = await requestCameraPermissionsAsync();
