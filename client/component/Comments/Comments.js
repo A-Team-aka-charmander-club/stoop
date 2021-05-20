@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Text,
   Image,
-  Button,
   // TouchableHighlight,
   TouchableOpacity,
   ScrollView,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -19,6 +18,15 @@ import {
   grabComment,
   destroyComment,
 } from '../../store/comments';
+import {
+  Divider,
+  Text,
+  List,
+  Paragraph,
+  Card,
+  Title,
+  Button,
+} from 'react-native-paper';
 
 export function CommentView(props) {
   const [comment, setComment] = useState('');
@@ -39,45 +47,50 @@ export function CommentView(props) {
       style={{ flex: 1, width: '100%' }}
       keyboardShouldPersistTaps='always'
     >
-      <View style={styles.commentContainer}>
-        <Text>!!!!!!!!!!!!!!</Text>
-        <Text style={styles.name}>{props.post.title}</Text>
-        <View>
-          <ScrollView style={{ padding: 100 }}>
-            <Text>
-              Comments:
-              {props.comments.length > 0 && props.comments
-                ? props.comments.map((comment) => {
-                    return (
-                      <View key={comment.id}>
-                        <Text>{comment.content}</Text>
-
-                        <View>
-                          <Button
-                            title='Delete'
-                            onPress={() => handleDelete(comment)}
-                          />
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.commentContainer}>
+          <View>
+            <ScrollView
+              style={{
+                padding: 20,
+                height: 100,
+                // automaticallyAdjustContentInsets: true,
+              }}
+            >
+              <Text>
+                {props.comments.length > 0 && props.comments
+                  ? props.comments.map((comment) => {
+                      return (
+                        <View key={comment.id}>
+                          <Card>
+                            <Card.Content>
+                              <Text>{comment.content}</Text>
+                              <Button onPress={() => handleDelete(comment)}>
+                                Delete
+                              </Button>
+                            </Card.Content>
+                          </Card>
                         </View>
-                      </View>
-                    );
-                  })
-                : null}
-            </Text>
-          </ScrollView>
-
-          <TextInput
-            placeholder='Add a comment...'
-            // keyboardType="twitter" // keyboard with no return button
-            // autoFocus={true} // focus and show the keyboard
-            style={styles.input}
-            value={comment}
-            onChangeText={(text) => setComment(text)} // handle input changes
-          />
+                      );
+                    })
+                  : null}
+                ;
+              </Text>
+            </ScrollView>
+            <TextInput
+              placeholder='Add a comment...'
+              // keyboardType="twitter" // keyboard with no return button
+              // autoFocus={true} // focus and show the keyboard
+              style={styles.input}
+              value={comment}
+              onChangeText={(text) => setComment(text)} // handle input changes
+            />
+          </View>
+          <TouchableOpacity>
+            <Text onPress={handleSubmit}>Submit</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Button title='Submit' onPress={handleSubmit} />
-        </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </KeyboardAwareScrollView>
   );
 }
@@ -101,3 +114,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
+
+//onPress={() => handleDelete(comment)}
