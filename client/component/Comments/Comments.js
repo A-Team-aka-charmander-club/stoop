@@ -64,6 +64,7 @@ export function CommentView(props) {
                 : null}
             </Text>
           </ScrollView>
+
           <TextInput
             placeholder='Add a comment...'
             // keyboardType="twitter" // keyboard with no return button
