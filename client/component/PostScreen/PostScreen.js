@@ -21,7 +21,6 @@ import Tags from './Tags/Tags';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
 export const PostScreen = (props) => {
-  console.log('PROPS: ', props);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
@@ -40,6 +39,7 @@ export const PostScreen = (props) => {
   const uploadImage = async (uri) => {
     const response = await fetch(uri);
     const blob = await response.blob();
+
     const photoName = String(Math.random(1000));
      
     var ref = firebase.storage().ref().child(photoName);

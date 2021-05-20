@@ -52,20 +52,20 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Login'>
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
-            name='Home'
+            name="Home"
             component={BottomTabNavigator}
             options={{ headerShown: false }}
           />
           {/* {(props) => <HomeScreen {...props} extraData={user} />} */}
           <Stack.Screen
-            name='Login'
+            name="Login"
             component={LoginScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name='Registration'
+            name="Registration"
             component={RegistrationScreen}
             options={{ headerShown: false }}
           />

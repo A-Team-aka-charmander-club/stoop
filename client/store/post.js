@@ -98,6 +98,7 @@ export const updatePost = (post, userId, postId) => {
           headers: { authorization: user.uid },
         }
       );
+      console.log(data, 'DATA IN UPDATE POST');
       dispatch(editPost(data));
     } catch (err) {
       console.log(err);

@@ -19,7 +19,6 @@ export function HomeGoogleMapView(props) {
     longitudeDelta: 0.025,
   });
   installWebGeolocationPolyfill();
-  console.log(props.coordinates.length, 'props.coordinates.length');
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -34,7 +33,6 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
     props.getCoordinates();
-    console.log();
   }, [props.coordinates.length]);
 
   const onPressButton = (post) => {
@@ -53,7 +51,6 @@ export function HomeGoogleMapView(props) {
         loadingBackgroundColor="white"
         loadingIndicatorColor="black">
         {props.coordinates.map((post, index) => {
-          //console.log(post, 'post here');
           return (
             <Marker
               key={index}
