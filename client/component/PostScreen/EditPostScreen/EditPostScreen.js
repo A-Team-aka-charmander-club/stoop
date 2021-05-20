@@ -3,7 +3,6 @@ import styles from '../styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, TextInput, Button } from 'react-native';
-import { firebase } from '../../../../src/firebase/config';
 import { connect } from 'react-redux';
 import EditMapView from '../../MapView/EditMapView';
 import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
@@ -33,43 +32,6 @@ export const EditPostScreen = (props) => {
     longitudeDelta: 0.0025,
   });
 
-  // for uploading
-  const uploadImage = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const photoName = String(Math.random(1000));
-
-    var ref = firebase.storage().ref().child(photoName);
-
-    await ref.put(blob);
-
-    let photoUrl = await ref.getDownloadURL();
-
-    const user = firebase.auth().currentUser;
-
-    const data = {
-      userId: user.uid,
-      uri: uri,
-    };
-
-    const photoId = firebase.firestore().collection('photos').doc().id;
-    const photosRef = firebase.firestore().collection('photos');
-
-    photosRef
-      .doc(photoId)
-      .set(data)
-      .catch((error) => {
-        alert(error);
-      });
-
-    let newPhoto = {
-      firebasePhotoId: photoId,
-      userId: user.uid,
-      firebaseUrl: photoUrl,
-    };
-    return newPhoto;
-  };
-
   const changePost = async () => {
     let photo;
     if (props.photo.length) {
@@ -88,10 +50,8 @@ export const EditPostScreen = (props) => {
     setDescription('');
 
     props.removeTags();
-    // setTags({ tag: '', tagsArray: [] });
+    setTags({ tag: '', tagsArray: [] });
     setRegion({
-      //   latitude: 40.751343151025615,
-      //   longitude: -74.00289693630044,
       latitude: props.post.latitude,
       longitude: props.post.longitude,
       latitudeDelta: 0.0025,
@@ -99,17 +59,16 @@ export const EditPostScreen = (props) => {
     });
     props.navigation.navigate('SinglePost');
   };
-  //   console.log('PHOTO PROPS: ', props.post.photos[0]);
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always">
         <Text>Update Post</Text>
-
         <Image
           source={{
-            url: props.post.photos[0].firebaseUrl,
+            url: props.photo.firebaseUrl,
           }}
           style={styles.thumbnail}
         />
@@ -165,6 +124,7 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
