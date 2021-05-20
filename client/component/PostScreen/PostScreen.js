@@ -21,7 +21,6 @@ import Tags from './Tags/Tags';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
 export const PostScreen = (props) => {
-  console.log('PROPS: ', props);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState(null);
