@@ -8,8 +8,13 @@ const GET_COMMENTS = 'GET_COMMENTS';
 
 const ADD_COMMENT = 'ADD_COMMENT';
 
-<<<<<<< HEAD
 // ACTION CREATORS
+export const addComment = (comment) => {
+  return {
+    type: ADD_COMMENT,
+    comment,
+  };
+};
 
 // THUNKS
 
@@ -17,6 +22,8 @@ export const createComment = (comment, postId, userId) => {
   return async (dispatch) => {
     console.log('CREATE COMMENT THUNK');
     try {
+      const user = firebase.auth().currentUser;
+
       const { data } = await axios.post(
         `http://localhost:8080/api/comments/${postId}/${userId}`,
         comment,
@@ -43,21 +50,3 @@ export default function commentReducer(state = initState, action) {
       return state;
   }
 }
-=======
-const DELETE_COMMENT = 'DELETE_COMMENT';
-
-const EDIT_COMMENT = 'EDIT COMMENT';
-
-// ACTION CREATORS
-
-export const addComment = (comment) => {
-  return {
-    type: ADD_COMMENT,
-    comment,
-  };
-};
-
-// THUNKS
-
-//REDUCERS
->>>>>>> main
