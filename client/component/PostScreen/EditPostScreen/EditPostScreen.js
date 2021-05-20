@@ -14,8 +14,6 @@ import Tags from '../Tags/Tags';
 
 import { getCoordinatesThunk } from '../../../store/coordinates';
 
-import { uploadImage } from '../../Services/Services';
-
 export const EditPostScreen = (props) => {
   const [title, setTitle] = useState(props.post.title);
   const [description, setDescription] = useState(props.post.description);
@@ -34,15 +32,14 @@ export const EditPostScreen = (props) => {
 
   const changePost = async () => {
     let photo;
-    if (props.photo.length) {
-      photo = await uploadImage(props.photo);
+    if (props.photo.firebaseUrl !== props.post.photos[0].firebaseUrl) {
+      photo = props.photo;
     } else {
       photo = props.post.photos[0];
     }
 
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
-
     await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
 
     props.clearPhoto();
@@ -51,12 +48,6 @@ export const EditPostScreen = (props) => {
 
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
-    setRegion({
-      latitude: props.post.latitude,
-      longitude: props.post.longitude,
-      latitudeDelta: 0.0025,
-      longitudeDelta: 0.0025,
-    });
     props.navigation.navigate('SinglePost');
   };
 

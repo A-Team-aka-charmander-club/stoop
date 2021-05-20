@@ -47,12 +47,6 @@ export const PostScreen = (props) => {
     setClearMap(true);
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
-    setRegion({
-      latitude: 40.751343151025615,
-      longitude: -74.00289693630044,
-      latitudeDelta: 0.0025,
-      longitudeDelta: 0.0025,
-    });
     props.navigation.navigate('SinglePost');
   };
 
@@ -64,7 +58,7 @@ export const PostScreen = (props) => {
         <Text>Create Post</Text>
         {props.photo.firebaseUrl ? (
           <Image source={{ url: props.photo.firebaseUrl }} style={styles.thumbnail} />
-        ) : null}
+        ) : <ActivityIndicator size="large" color="#00ff00" />}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
@@ -107,15 +101,9 @@ export const PostScreen = (props) => {
           setClearMap={setClearMap}
           clear={clearMap}
         />
-        <View style={styles.button}>
+        <View >
           <Button color="#fff" title="Post!" onPress={createPost} />
-          {loading ? (
-            <View style={[styles.container, styles.horizontal]}>
-              <ActivityIndicator size="large" color="#00ff00" />
-            </View>
-          ) : (
-            <Text></Text>
-          )}
+          <View style={[styles.container, styles.horizontal]}></View>
         </View>
       </KeyboardAwareScrollView>
     </View>

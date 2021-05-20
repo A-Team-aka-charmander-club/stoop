@@ -3,7 +3,6 @@ import user from './user';
 import { firebase } from '../../src/firebase/config';
 import { removeCoordinate } from './coordinates';
 
-//action constants
 const CREATE_POST = 'CREATE_POST';
 
 const DELETE_POST = 'DELETE_POST';
@@ -34,7 +33,6 @@ export const editPost = (post) => {
 };
 
 export const getPost = (singlePost) => {
-  //console.log('in the store:', post);
   return {
     type: GET_POST,
     singlePost,
@@ -46,11 +44,14 @@ export const getPost = (singlePost) => {
 export const createPostThunk = (post) => {
   return async (dispatch) => {
     try {
-      console.log('IN POST THUNK');
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
+<<<<<<< HEAD
         `http://localhost:8080/api/posts/post`,
 
+=======
+        `http://192.168.1.6:8080/api/posts/post`,
+>>>>>>> 9a8e1a9bdf4eb96ed6278eb2bfeffa2b9dfb7171
         post,
         {
           headers: { authorization: user.uid },
@@ -88,7 +89,6 @@ export const destroyPost = (postId, navigation, userId) => {
 
 export const updatePost = (post, userId, postId) => {
   return async (dispatch) => {
-    console.log('THUNK PHOTO: ');
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.put(
@@ -98,7 +98,6 @@ export const updatePost = (post, userId, postId) => {
           headers: { authorization: user.uid },
         }
       );
-      console.log(data, 'DATA IN UPDATE POST');
       dispatch(editPost(data));
     } catch (err) {
       console.log(err);
