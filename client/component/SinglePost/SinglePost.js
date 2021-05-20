@@ -50,6 +50,12 @@ export const SinglePost = (props) => {
               return tag.name;
             })}
           </Text>
+          <TouchableOpacity
+            navigation={props.navigation}
+            onPress={() => props.navigation.navigate('Comments')}
+          >
+            <Text>Comments</Text>
+          </TouchableOpacity>
           {props.post.users[0].id === props.user.id ? (
             <View>
               <Button title='Delete Post' onPress={handleDelete} />
