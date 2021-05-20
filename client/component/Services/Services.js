@@ -1,5 +1,6 @@
 import { firebase } from '../../../src/firebase/config';
 import * as ImagePicker from 'expo-image-picker';
+import { CommonActions, StackActions } from '@react-navigation/native';
 
 //logout function
 export const onLogoutPress = (props) => {

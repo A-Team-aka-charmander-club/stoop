@@ -33,7 +33,6 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
     props.getCoordinates();
-    console.log();
   }, [props.coordinates.length]);
 
   const onPressButton = (post) => {
@@ -53,7 +52,6 @@ export function HomeGoogleMapView(props) {
         loadingIndicatorColor='black'
       >
         {props.coordinates.map((post, index) => {
-          //console.log(post, 'post here');
           return (
             <Marker
               key={index}
