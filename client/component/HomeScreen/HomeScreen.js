@@ -17,9 +17,7 @@ import { takePhoto } from '../../store/photo';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
 import { getCoordinatesThunk } from '../../store/coordinates';
 
-//add photurl to state (pre-database)
-// see button + click button
-// brings up camera. camera has take picture OR navigate to photo roll (image picker)
+
 export function HomeScreen(props) {
   // const [coordinates, getCoordinates] = useState('');
   let openCameraAsync = async () => {

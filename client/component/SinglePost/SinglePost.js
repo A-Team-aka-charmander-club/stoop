@@ -1,26 +1,15 @@
 import React, { useState } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, Image, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import Comments from '../Comments/Comments';
 import { destroyPost } from '../../store/post';
-
 export const SinglePost = (props) => {
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
-
   if (props.post.id) {
-    console.log(props.post.photos[0].firebaseUrl, 'url');
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView
@@ -53,16 +42,12 @@ export const SinglePost = (props) => {
           <Text>{props.post.description}</Text>
           <Text>
             Tags:
-            {props.post.tags.map((tag) => {
-              return tag.name;
-            })}
+            {props.post.tags.length > 0 && props.post.tags
+              ? props.post.tags.map((tag) => {
+                  return tag.name;
+                })
+              : null}
           </Text>
-          <TouchableOpacity
-            navigation={props.navigation}
-            onPress={() => props.navigation.navigate('Comments')}
-          >
-            <Text>Comments</Text>
-          </TouchableOpacity>
           {props.post.users[0].id === props.user.id ? (
             <View>
               <Button title='Delete Post' onPress={handleDelete} />
@@ -70,6 +55,12 @@ export const SinglePost = (props) => {
                 title='Edit Post'
                 onPress={() => props.navigation.navigate('Edit')}
               />
+              <TouchableOpacity
+                navigation={props.navigation}
+                onPress={() => props.navigation.navigate('Comments')}
+              >
+                <Text>Comments</Text>
+              </TouchableOpacity>
             </View>
           ) : null}
         </KeyboardAwareScrollView>
@@ -90,12 +81,10 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
-
 const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
     deletePost: (postId, userId) =>
       dispatch(destroyPost(postId, navigation, userId)),
   };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
