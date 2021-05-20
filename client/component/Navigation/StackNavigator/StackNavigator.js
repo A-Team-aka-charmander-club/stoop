@@ -6,7 +6,7 @@ import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
 import HomeGoogleMapView from '../../MapView/HomeGoogleMapView';
 import SinglePost from '../../SinglePost/SinglePost';
-import Comments from '../../Comments/Comments';
+import CommentView from '../../Comments/Comments';
 import EditPostScreen from '../../PostScreen/EditPostScreen/EditPostScreen';
 
 const Stack = createStackNavigator();
@@ -53,9 +53,9 @@ const PostStackNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='Comments'
-        component={Comments}
-        options={{ headerShown: false }}
+        name='CommentView'
+        component={CommentView}
+        options={{ headerShown: true }}
       />
       <Stack.Screen
         name='Edit'

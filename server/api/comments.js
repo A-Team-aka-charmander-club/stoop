@@ -21,3 +21,14 @@ router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
     next(err);
   }
 });
+
+router.get('/:postId', async (req, res, next) => {
+  try {
+    const comments = await Comment.findAll({
+      where: { postId: req.params.postId },
+    });
+    res.send(comments);
+  } catch (err) {
+    next(err);
+  }
+});
