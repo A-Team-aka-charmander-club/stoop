@@ -1,7 +1,6 @@
 import React, { PureComponent, useState, useEffect } from 'react';
 import {
   View,
-  Text,
   Image,
   Button,
   // TouchableHighlight,
@@ -15,7 +14,14 @@ import TimeAgo from 'react-native-timeago';
 //import Icon from 'react-native-vector-icons';
 import styles from './styles';
 import { createComment, grabComment } from '../../store/comments';
-import Comments from 'react-native-comments';
+import {
+  Divider,
+  Text,
+  List,
+  Paragraph,
+  Card,
+  Title,
+} from 'react-native-paper';
 
 export function CommentView(props) {
   const [comment, setComment] = useState('');
@@ -36,15 +42,29 @@ export function CommentView(props) {
       keyboardShouldPersistTaps='always'
     >
       <View style={styles.commentContainer}>
-        <Text>!!!!!!!!!!!!!!</Text>
-        <Text style={styles.name}>{props.post.title}</Text>
         <View>
           <ScrollView style={{ padding: 100 }}>
             <Text>
-              Comments:
-              {props.comments.length > 0 && props.comments ? (
-                <Comments data={data} />
-              ) : null}
+              {props.comments.length > 0 && props.comments
+                ? props.comments.map((comment) => {
+                    return (
+                      <Card>
+                        <Card.Content>
+                          <Text>{comment.content}</Text>
+                        </Card.Content>
+                      </Card>
+                      //<CommentCard comment={comment.content} />
+                      // <View key={comment.id} style={styles.singleComment}>
+                      // <View>
+                      //   <Paragraph style={styles.singleComment}>
+                      //     {comment.content}
+                      //   </Paragraph>
+                      //   <Paragraph> </Paragraph>
+                      // </View>
+                      // </View> */
+                    );
+                  })
+                : null}
             </Text>
           </ScrollView>
           <TextInput
@@ -81,14 +101,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
-
-{
-  /* <Text>
-              Comments:
-              {props.comments.length > 0 && props.comments
-                ? props.comments.map((comment) => {
-                    return comment.content;
-                  })
-                : null}
-            </Text> */
-}
