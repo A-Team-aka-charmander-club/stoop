@@ -76,6 +76,7 @@ router.delete('/:id/:userId', verifyUser, async (req, res, next) => {
 });
 
 router.put('/:id/:userId', verifyUser, async (req, res, next) => {
+  console.log(req.body, 'boody')
   try {
     const post = await Post.findOne({
       where: {
@@ -86,26 +87,26 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
     console.log('req.body in put route', req.body);
     if (post) {
       //if sending an updated photo, must do this first
-      if (!req.body.photo.id) {
-        //first get rid of the association btwn the old photo and the post
-        const oldPhoto = await Photo.findOne({
-          where: {
-            userId: req.params.id,
-          },
-        });
-        console.log('THIS IS THE OLD PHOTO', oldPhoto);
+
+      //first get rid of the association btwn the old photo and the post
+
+      const oldPhoto = await Photo.findAll({
+        where: {
+          userId: req.params.id,
+        },
+      })[0];
+      if (req.body.photo.firebaseUrl !== oldPhoto.firebaseUrl) {
         await post.removePhoto(oldPhoto);
 
         const photo = await Photo.create({
           firebaseUrl: req.body.photo.firebaseUrl,
           firebasePhotoId: req.body.photo.firebasePhotoId,
         });
-
-        console.log('THIS IS THE NEW PHOTO', photo);
         const user = req.user;
         await user.addPhoto(photo);
         await post.addPhoto(photo);
       }
+
       await post.update(req.body.post);
       await post.removeTags(post.tags);
 

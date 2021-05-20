@@ -14,8 +14,6 @@ import Tags from '../Tags/Tags';
 
 import { getCoordinatesThunk } from '../../../store/coordinates';
 
-import { uploadImage } from '../../Services/Services';
-
 export const EditPostScreen = (props) => {
   const [title, setTitle] = useState(props.post.title);
   const [description, setDescription] = useState(props.post.description);
@@ -34,15 +32,15 @@ export const EditPostScreen = (props) => {
 
   const changePost = async () => {
     let photo;
-    if (props.photo.length) {
-      photo = await uploadImage(props.photo);
+    if (props.photo.firebaseUrl !== props.post.photos[0].firebaseUrl) {
+      console.log(props.photo, 'in edit')
+      photo = props.photo;
     } else {
       photo = props.post.photos[0];
     }
 
     let post = { title, description, latitude, longitude };
     let tags = props.tags;
-
     await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
 
     props.clearPhoto();
@@ -60,6 +58,7 @@ export const EditPostScreen = (props) => {
     props.navigation.navigate('SinglePost');
   };
 
+  console.log(props.photo.firebaseUrl, 'url')
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView

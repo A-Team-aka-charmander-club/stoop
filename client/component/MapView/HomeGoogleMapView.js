@@ -3,7 +3,6 @@ import MapView, {
   PROVIDER_GOOGLE,
   Marker,
   Callout,
-  CalloutSubview,
 } from 'react-native-maps';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
@@ -11,14 +10,19 @@ import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 import { getPost } from '../../store/post';
+import { takePhoto } from '../../store/photo';
+
 export function HomeGoogleMapView(props) {
+  console.log(props.navigation, 'navigation')
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
     longitude: -74.00289693630044,
     latitudeDelta: 0.025,
     longitudeDelta: 0.025,
   });
+
   installWebGeolocationPolyfill();
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -32,11 +36,15 @@ export function HomeGoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    props.getCoordinates();
-  }, [props.coordinates.length]);
+    props.navigation.addListener('focus', () => {
+      props.getCoordinates();
+    })
+   
+  }, [props.navigation]);
 
   const onPressButton = (post) => {
     props.getPost(post);
+    props.getPhoto(post.photos[0])
     props.navigation.navigate('PostNav', { screen: 'SinglePost' });
   };
   return (
@@ -46,10 +54,7 @@ export function HomeGoogleMapView(props) {
         provider={PROVIDER_GOOGLE}
         region={region}
         showsUserLocation={true}
-        zoomEnabled={true}
-        loadingEnabled
-        loadingBackgroundColor="white"
-        loadingIndicatorColor="black">
+        zoomEnabled={true}>
         {props.coordinates.map((post, index) => {
           return (
             <Marker
@@ -93,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getCoordinates: (region) => dispatch(getCoordinatesThunk(region)),
     getPost: (post) => dispatch(getPost(post)),
+    getPhoto: (photo) => dispatch(takePhoto(photo))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);
