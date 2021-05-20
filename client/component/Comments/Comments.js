@@ -1,4 +1,4 @@
-import React, { PureComponent, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,25 +14,26 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import TimeAgo from 'react-native-timeago';
 //import Icon from 'react-native-vector-icons';
 import styles from './styles';
-import { createComment, grabComment } from '../../store/comments';
-import Comments from 'react-native-comments';
+import {
+  createComment,
+  grabComment,
+  destroyComment,
+} from '../../store/comments';
 
 export function CommentView(props) {
   const [comment, setComment] = useState('');
-<<<<<<< HEAD
-=======
-  console.log('PROPS.COMMENTS: ', props.comments);
-  // console.log('PROPS.USER: ', props.user);
->>>>>>> 445285b5dc7e4676c1c0b9879dc8409484a9c68b
 
   const handleSubmit = () => {
     props.addComment(comment, props.post.id, props.user.id);
+  };
+  const handleDelete = (comment) => {
+    console.log('IN HANDLE DELETE: ', comment.id);
+    props.deleteComment(comment.id);
   };
   useEffect(() => {
     props.getComment(props.post.id);
   }, [props.comments.length]);
 
-  const data = props.comments;
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1, width: '100%' }}
@@ -45,9 +46,22 @@ export function CommentView(props) {
           <ScrollView style={{ padding: 100 }}>
             <Text>
               Comments:
-              {props.comments.length > 0 && props.comments ? (
-                <Comments data={data} />
-              ) : null}
+              {props.comments.length > 0 && props.comments
+                ? props.comments.map((comment) => {
+                    return (
+                      <View key={comment.id}>
+                        <Text>{comment.content}</Text>
+
+                        <View>
+                          <Button
+                            title='Delete'
+                            onPress={() => handleDelete(comment)}
+                          />
+                        </View>
+                      </View>
+                    );
+                  })
+                : null}
             </Text>
           </ScrollView>
           <TextInput
@@ -76,22 +90,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  console.log('IN MAPDISPATCH');
   return {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
+    deleteComment: (commentId) => dispatch(destroyComment(commentId)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
-
-{
-  /* <Text>
-              Comments:
-              {props.comments.length > 0 && props.comments
-                ? props.comments.map((comment) => {
-                    return comment.content;
-                  })
-                : null}
-            </Text> */
-}
