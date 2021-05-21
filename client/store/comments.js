@@ -41,13 +41,12 @@ export const createComment = (comment, postId, userId) => {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.post(
-        `http://10.0.0.153:8080/api/comments/${postId}/${userId}`,
+        `http://localhost:8080/api/comments/${postId}/${userId}`,
         { comment },
         {
           headers: { authorization: user.uid },
         }
       );
-      console.log('USER OBJECT SHOULD BE HERE', data);
       dispatch(addComment(data));
     } catch (err) {
       console.log(err);
@@ -59,7 +58,7 @@ export const grabComment = (postId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://10.0.0.153:8080/api/comments/${postId}`
+        `http://localhost:8080/api/comments/${postId}`
       );
       dispatch(getComment(data));
       console.log('GRABBING COMMENTS: ', data[0]);
@@ -74,7 +73,7 @@ export const destroyComment = (commentId) => {
     try {
       const user = firebase.auth().currentUser.uid;
       const { data } = await axios.delete(
-        `http://10.0.0.153:8080/api/comments/${commentId}`,
+        `http://localhost:8080/api/comments/${commentId}`,
         {
           headers: { authorization: user },
         }
