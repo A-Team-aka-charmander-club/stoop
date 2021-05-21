@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  Text,
-  View,
-  Image,
-  Button,
-  ActivityIndicator,
-} from 'react-native';
+import { Text, View, Image, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -16,7 +10,6 @@ import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
-import { getCoordinatesThunk } from '../../store/coordinates';
 import { HelperText, TextInput } from 'react-native-paper';
 
 export const PostScreen = (props) => {
@@ -50,7 +43,6 @@ export const PostScreen = (props) => {
     let tags = props.tags;
     let photo = props.photo;
     await props.submitPost({ post, photo, tags });
-    props.getCoordinates();
     props.clearPhoto();
     setTitle('');
     setDescription('');
@@ -67,8 +59,13 @@ export const PostScreen = (props) => {
         keyboardShouldPersistTaps="always">
         <Text>Create Post</Text>
         {props.photo.firebaseUrl ? (
-          <Image source={{ url: props.photo.firebaseUrl }} style={styles.thumbnail} />
-        ) : <ActivityIndicator size="large" color="#00ff00" />}
+          <Image
+            source={{ url: props.photo.firebaseUrl }}
+            style={styles.thumbnail}
+          />
+        ) : (
+          <ActivityIndicator size="large" color="#00ff00" />
+        )}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
@@ -94,7 +91,7 @@ export const PostScreen = (props) => {
         />
         <HelperText type="error" visible={titleErrors()}>
           Title is required
-       </HelperText>
+        </HelperText>
 
         <TextInput
           required
@@ -105,7 +102,7 @@ export const PostScreen = (props) => {
         />
         <HelperText type="error" visible={descriptionErrors()}>
           Description is required
-       </HelperText>
+        </HelperText>
         <Tags setTags={setTags} tags={tags} />
         <GoogleMapView
           region={region}
@@ -116,7 +113,7 @@ export const PostScreen = (props) => {
           setClearMap={setClearMap}
           clear={clearMap}
         />
-        <View >
+        <View>
           <Button color="#fff" title="Post!" onPress={createPost} />
           <View style={[styles.container, styles.horizontal]}></View>
         </View>
@@ -137,7 +134,6 @@ const mapDispatchToProps = (dispatch) => {
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
     removeTags: () => dispatch(removeTags()),
-    getCoordinates: () => dispatch(getCoordinatesThunk()),
   };
 };
 

@@ -12,8 +12,6 @@ import { HelperText, TextInput } from 'react-native-paper';
 import { removeTags } from '../../../store/tag';
 import Tags from '../Tags/Tags';
 
-import { getCoordinatesThunk } from '../../../store/coordinates';
-
 export const EditPostScreen = (props) => {
   const [title, setTitle] = useState(props.post.title);
   const [description, setDescription] = useState(props.post.description);
@@ -95,7 +93,7 @@ export const EditPostScreen = (props) => {
         />
         <HelperText type="error" visible={titleErrors()}>
           Title is required
-       </HelperText>
+        </HelperText>
 
         <TextInput
           style={styles.input}
@@ -105,7 +103,7 @@ export const EditPostScreen = (props) => {
         />
         <HelperText type="error" visible={descriptionErrors()}>
           Description is required
-       </HelperText>
+        </HelperText>
         <Tags setTags={setTags} tags={tags} />
         <EditMapView
           region={region}
@@ -136,7 +134,6 @@ const mapDispatchToProps = (dispatch) => {
     editPost: (post, userId, postId) =>
       dispatch(updatePost(post, userId, postId)),
     removeTags: () => dispatch(removeTags()),
-    getCoordinates: () => dispatch(getCoordinatesThunk()),
   };
 };
 
