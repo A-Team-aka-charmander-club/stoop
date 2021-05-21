@@ -30,6 +30,9 @@ export function createOrFindUserThunk(user) {
         `http://192.168.1.152:8080/api/users/user`,
         {
           user,
+        },
+        {
+          headers: { authorization: process.env.SECRET },
         }
       );
       dispatch(createUser(data));

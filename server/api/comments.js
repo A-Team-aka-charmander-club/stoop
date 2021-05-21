@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {
   models: { User, Post, Comment },
 } = require('../db');
-const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
+const { verifyUser, verifySite } = require('./gatekeepingMiddleware');
 
 module.exports = router;
 // why is this verifyuser and not isloggedin?
@@ -34,7 +34,7 @@ router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
   }
 });
 
-router.get('/:postId', async (req, res, next) => {
+router.get('/:postId', verifySite, async (req, res, next) => {
   try {
     const comments = await Comment.findAll({
       where: { postId: req.params.postId },
