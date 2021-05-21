@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import HomeScreen from '../../HomeScreen/HomeScreen';
 import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
@@ -18,27 +17,9 @@ const HomeStackNavigator = () => {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name='SinglePost'
-        component={SinglePost}
-        options={{ headerShown: false }}
-      /> */}
     </Stack.Navigator>
   );
 };
-
-// const SinglePostStackNavigator = () => {
-//   return (
-//     <Stack.Navigator initialRouteName='SinglePost'>
-//       <Stack.Screen
-//         name='SinglePost'
-//         component={SinglePost}
-//         options={{ headerShown: false }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
-
 const PostStackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Post'>
@@ -65,7 +46,6 @@ const PostStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-
 const MapStackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Map'>
