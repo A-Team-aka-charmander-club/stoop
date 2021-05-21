@@ -40,6 +40,7 @@ export function HomeGoogleMapView(props) {
     if (props.region.latitudeDelta !== newRegion.latitudeDelta) {
       props.setRegion(newRegion);
       props.getCoordinates(newRegion, props.tags);
+
     }
   };
 
@@ -57,6 +58,7 @@ export function HomeGoogleMapView(props) {
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
         zoomEnabled={true}>
+
         {props.coordinates.map((post, index) => {
           return (
             <Marker
@@ -73,6 +75,7 @@ export function HomeGoogleMapView(props) {
               <Callout
                 onPress={() => onPressButton(post)}
                 style={styles.calloutButton}>
+
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image

@@ -56,7 +56,8 @@ export const PostScreen = (props) => {
     <View style={styles.container} style={styles.horizontal}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
+        keyboardShouldPersistTaps='always'
+      >
         <Text>Create Post</Text>
         {props.photo.firebaseUrl ? (
           <Image
@@ -65,19 +66,20 @@ export const PostScreen = (props) => {
           />
         ) : (
           <ActivityIndicator size="large" color="#00ff00" />
+
         )}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
-              color="#fff"
-              title="Open Camera"
+              color='#fff'
+              title='Open Camera'
               onPress={async () => await openCameraAsync(props)}
             />
           </View>
           <View style={styles.buttonStyle}>
             <Button
-              color="#fff"
-              title="Upload Photo"
+              color='#fff'
+              title='Upload Photo'
               onPress={async () => await openImagePickerAsync(props)}
             />
           </View>
@@ -85,7 +87,7 @@ export const PostScreen = (props) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Title"
+          placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
@@ -96,7 +98,7 @@ export const PostScreen = (props) => {
         <TextInput
           required
           style={styles.input}
-          placeholder="Description"
+          placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
