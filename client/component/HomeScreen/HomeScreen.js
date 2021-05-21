@@ -25,10 +25,14 @@ export function HomeScreen(props) {
     longitudeDelta: 0.0075,
   });
 
-  function onTagPress(tag) {
-    if (!tags.includes(tag)) {
-      setTags([...tags, tag]);
-      props.getCoordinates(region, [...tags, tag]);
+  function onTagPress(tagId) {
+    if (!tags.includes(tagId)) {
+      setTags([...tags, tagId]);
+      props.getCoordinates(region, [...tags, tagId]);
+    } else {
+      let newArray = tags.filter((tag) => tag !== tagId);
+      setTags(newArray);
+      props.getCoordinates(region, newArray);
     }
   }
 
@@ -61,10 +65,14 @@ export function HomeScreen(props) {
                 <ListItem.Subtitle>
                   {post.tags.map((tag, index) => {
                     const tagId = tag.id;
+                    let selected = false;
+                    if (tags.includes(tagId)) {
+                      selected = true;
+                    }
                     return (
                       <Chip
                         selectedColor="#3ca897"
-                        selected={false}
+                        selected={selected}
                         icon="tag"
                         key={index}
                         onPress={() => onTagPress(tagId)}>
