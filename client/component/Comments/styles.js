@@ -3,7 +3,8 @@ import { StyleSheet, PixelRatio } from 'react-native';
 const styles = StyleSheet.create({
   commentContainer: {
     paddingRight: 10,
-    marginBottom: 10,
+    marginBottom: 30,
+    paddingBottom: 50,
     paddingTop: 30,
     flex: 1,
     alignItems: 'center',
@@ -177,11 +178,25 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
     color: '#424242',
+    //position: 'absolute',
+    //bottom: 0,
+  },
+  keyboard: {
+    flex: 1,
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    zIndex: 2,
+    backgroundColor: '#FFFFFF',
   },
   scrollView: {
     backgroundColor: '#788eec',
-    paddingBottom: 10,
+    paddingBottom: 20,
   },
+  // stickyInput: {
+  //   position: 'absolute',
+  //   bottom: 0,
+  // },
   buttonStyle: {
     backgroundColor: '#788eec',
     marginLeft: 15,

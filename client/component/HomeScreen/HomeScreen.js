@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> 980bfed48815bf70431a4c4f4486f2a0270bd45f
 import {
   View,
   Animated,

@@ -55,6 +55,7 @@ export function CommentView(props) {
           <Text>{item.content}</Text>
           <Divider />
           <Text>{item.user.fullName}</Text>
+          <TimeAgo time={item.createdAt} />
           {item.user.id === props.user.id ? (
             <Button onPress={() => handleDelete(item)}>Delete</Button>
           ) : null}
@@ -82,7 +83,7 @@ export function CommentView(props) {
       </View>
       {/* replace this block w/flat list + renderitem  */}
       <KeyboardAvoidingView
-        style={{ flex: 1, width: '100%' }}
+        style={styles.keyboard}
         keyboardShouldPersistTaps='always'
       >
         <TextInput
