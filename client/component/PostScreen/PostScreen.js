@@ -6,7 +6,6 @@ import {
   Text,
   View,
   Image,
-  TextInput,
   Button,
   ActivityIndicator,
 } from 'react-native';
@@ -18,6 +17,7 @@ import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 import { getCoordinatesThunk } from '../../store/coordinates';
+import { HelperText, TextInput } from 'react-native-paper';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -25,11 +25,6 @@ export const PostScreen = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [clearMap, setClearMap] = useState(true);
-
-  useEffect(() => {
-    props.clearPhoto();
-  });
-
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
@@ -37,6 +32,18 @@ export const PostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
+
+  useEffect(() => {
+    props.clearPhoto();
+  });
+
+  const titleErrors = () => {
+    return !title.length;
+  };
+
+  const descriptionErrors = () => {
+    return !description.length;
+  };
 
   const createPost = async () => {
     let post = { title, description, latitude, longitude };
@@ -85,6 +92,9 @@ export const PostScreen = (props) => {
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
+        <HelperText type="error" visible={titleErrors()}>
+          Title is required
+       </HelperText>
 
         <TextInput
           required
@@ -93,7 +103,9 @@ export const PostScreen = (props) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
+        <HelperText type="error" visible={descriptionErrors()}>
+          Description is required
+       </HelperText>
         <Tags setTags={setTags} tags={tags} />
         <GoogleMapView
           region={region}

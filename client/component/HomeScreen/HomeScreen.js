@@ -38,7 +38,6 @@ export class HomeScreen extends React.Component {
         )}     
         </ScrollView>
         </SafeAreaView>
-
     );
   }
 

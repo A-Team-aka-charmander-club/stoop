@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styles from '../styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, TextInput, Button } from 'react-native';
+import { Text, View, Image, Button } from 'react-native';
 import { connect } from 'react-redux';
 import EditMapView from '../../MapView/EditMapView';
 import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
 import { takePhoto, clearPhoto } from '../../../store/photo';
 import { updatePost } from '../../../store/post';
-
+import { HelperText, TextInput } from 'react-native-paper';
 import { removeTags } from '../../../store/tag';
 import Tags from '../Tags/Tags';
 
@@ -29,6 +29,14 @@ export const EditPostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
+
+  const titleErrors = () => {
+    return !title.length;
+  };
+
+  const descriptionErrors = () => {
+    return !description.length;
+  };
 
   const changePost = async () => {
     let photo;
@@ -85,6 +93,9 @@ export const EditPostScreen = (props) => {
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
+        <HelperText type="error" visible={titleErrors()}>
+          Title is required
+       </HelperText>
 
         <TextInput
           style={styles.input}
@@ -92,9 +103,10 @@ export const EditPostScreen = (props) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        {/* <TextInput style={styles.input} placeholder="Tags"></TextInput> */}
+        <HelperText type="error" visible={descriptionErrors()}>
+          Description is required
+       </HelperText>
         <Tags setTags={setTags} tags={tags} />
-
         <EditMapView
           region={region}
           setRegion={setRegion}
