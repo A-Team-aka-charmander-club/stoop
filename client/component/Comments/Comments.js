@@ -10,6 +10,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TimeAgo from 'react-native-timeago';
@@ -64,7 +65,7 @@ export function CommentView(props) {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <KeyboardAwareScrollView>
       {/* <View style={styles.commentContainer}> */}
       <View>
         {/* {props.comments.length > 0 && props.comments */}
@@ -82,10 +83,9 @@ export function CommentView(props) {
         />
       </View>
       {/* replace this block w/flat list + renderitem  */}
-      <KeyboardAvoidingView
-        style={styles.keyboard}
-        keyboardShouldPersistTaps='always'
-      >
+
+      {/* //keyboardShouldPersistTaps='always' */}
+      <View style={styles.keyboard}>
         <TextInput
           placeholder='Add a comment...'
           style={styles.input}
@@ -96,8 +96,8 @@ export function CommentView(props) {
         <Button>
           <Text onPress={handleSubmit}>Submit</Text>
         </Button>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -121,3 +121,42 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
 
 //onPress={() => handleDelete(comment)}
+
+// (<SafeAreaView style={{ flex: 1 }}>
+// {/* <View style={styles.commentContainer}> */}
+// <View>
+//   {/* {props.comments.length > 0 && props.comments */}
+//   <FlatList
+//     style={{
+//       padding: 20,
+//       // height: 100,
+//       automaticallyAdjustContentInsets: true,
+//     }}
+//     data={props.comments}
+//     renderItem={renderItem}
+//     keyExtractor={(item) => item.id.toString()}
+//     ListHeaderComponent={getHeader}
+//     // ListFooterComponent={getFooter}
+//   />
+// </View>
+// {/* replace this block w/flat list + renderitem  */}
+// <KeyboardAvoidingView
+//   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+//   style={styles.keyboard}
+//   //keyboardShouldPersistTaps='always'
+// >
+//   <View style={styles.innerS}>
+//     <TextInput
+//       placeholder='Add a comment...'
+//       style={styles.input}
+//       value={comment}
+//       onChangeText={(text) => setComment(text)} // handle input changes
+//     />
+
+//     <Button style={styles.submit}>
+//       <Text onPress={handleSubmit}>Submit</Text>
+//     </Button>
+//   </View>
+// </KeyboardAvoidingView>
+// </SafeAreaView>
+// );

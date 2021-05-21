@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   commentContainer: {
     paddingRight: 10,
     marginBottom: 30,
-    paddingBottom: 50,
+    paddingBottom: 30,
     paddingTop: 30,
     flex: 1,
     alignItems: 'center',
@@ -174,10 +174,13 @@ const styles = StyleSheet.create({
     //   textAlign: 'center',
   },
   input: {
-    flex: 1,
-    padding: 10,
+    //flex: 1,
+    //padding: 10,
     backgroundColor: '#fff',
     color: '#424242',
+    height: 40,
+    borderBottomWidth: 1,
+
     //position: 'absolute',
     //bottom: 0,
   },
@@ -186,9 +189,10 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     bottom: 0,
-    zIndex: 2,
+    //zIndex: 2,
     backgroundColor: '#FFFFFF',
   },
+
   scrollView: {
     backgroundColor: '#788eec',
     paddingBottom: 20,

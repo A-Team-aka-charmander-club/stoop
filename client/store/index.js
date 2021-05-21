@@ -6,6 +6,7 @@ import user from './user';
 import photo from './photo';
 import post from './post';
 import comments from './comments';
+import profile from './profile';
 
 import tags from './tag';
 
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   coordinates,
   tags,
   comments,
+  profile,
 });
 
 //createLogger({ collapsed: true }

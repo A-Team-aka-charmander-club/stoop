@@ -1,24 +1,72 @@
-import React from 'react';
-//import Logout from '../LogoutScreen/Logout';
-import { View, Button, Text } from 'react-native';
+import React, { useState } from 'react';
+
+import { View, Button, Text, Image, ScrollView } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { logoutUser } from '../../store/user';
 import { connect } from 'react-redux';
 // import { firebase } from '../../../src/firebase/config';
 import { onLogoutPress } from '../Services/Services';
+import styles from './styles';
+//import { grabPosts } from '../../store/profile';
+import { getPost } from '../../store/post';
 
-export function UserAccount(props) {
-  return (
-    <View>
-      <Text>User Profile</Text>
-      <Text>User</Text>
-      <Button title='Logout' onPress={() => onLogoutPress(props)} />
-    </View>
-  );
+export class UserAccount extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log('Props:', this.props);
+  }
+
+  render() {
+    return (
+      <View>
+        <Text> hi</Text>
+        <Text> hey</Text>
+        <View>
+          <Image
+            style={styles.logo}
+            source={require('../../../assets/trashPanda.png')}
+          />
+          <Text>My Posts</Text>
+          <Text>hey</Text>
+          <ScrollView>
+            <Text>My Posts</Text>
+            {/* {this.props.posts.map((post, index) => {
+              return (
+                <ListItem
+                  key={index}
+                  onPress={() => {
+                    this.props.getPost(post);
+                  }}
+                >
+                  <ListItem.Title>{post.title}</ListItem.Title>
+                </ListItem>
+              );
+            })} */}
+          </ScrollView>
+          <Button
+            style={styles.logout}
+            title='Logout'
+            onPress={() => onLogoutPress(this.props)}
+          />
+        </View>
+      </View>
+    );
+  }
 }
-const mapDispatch = (dispatch) => {
+
+//console.log('profile props post;', props.getPosts(posts));
+
+const mapState = (state) => {
   return {
-    logOut: () => dispatch(logoutUser()),
+    post: state.post,
   };
 };
 
-export default connect(null, mapDispatch)(UserAccount);
+const mapDispatch = (dispatch) => {
+  return {
+    logOut: () => dispatch(logoutUser()),
+    getPost: (post) => dispatch(getPost(post)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(UserAccount);
