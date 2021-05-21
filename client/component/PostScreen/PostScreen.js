@@ -25,15 +25,11 @@ export const PostScreen = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [clearMap, setClearMap] = useState(true);
-<<<<<<< HEAD
-  const [loading, setLoading] = useState(false);
-=======
 
   useEffect(() => {
     props.clearPhoto();
   });
 
->>>>>>> f07d8294dfecbf4affd2b5be13ec95dc232a016e
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
@@ -65,8 +61,13 @@ export const PostScreen = (props) => {
       >
         <Text>Create Post</Text>
         {props.photo.firebaseUrl ? (
-          <Image source={{ url: props.photo.firebaseUrl }} style={styles.thumbnail} />
-        ) : <ActivityIndicator size="large" color="#00ff00" />}
+          <Image
+            source={{ url: props.photo.firebaseUrl }}
+            style={styles.thumbnail}
+          />
+        ) : (
+          <ActivityIndicator size='large' color='#00ff00' />
+        )}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
@@ -109,8 +110,8 @@ export const PostScreen = (props) => {
           setClearMap={setClearMap}
           clear={clearMap}
         />
-        <View >
-          <Button color="#fff" title="Post!" onPress={createPost} />
+        <View>
+          <Button color='#fff' title='Post!' onPress={createPost} />
           <View style={[styles.container, styles.horizontal]}></View>
         </View>
       </KeyboardAwareScrollView>
