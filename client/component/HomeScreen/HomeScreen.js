@@ -1,39 +1,58 @@
-import React from 'react';
-import { Alert, Button, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Animated, TouchableOpacity, Text, ScrollView, SafeAreaView } from 'react-native';
+import { ListItem, Avatar } from 'react-native-elements'
 import styles from './styles';
 import { connect } from 'react-redux';
-import {
-  launchCameraAsync,
-  requestCameraPermissionsAsync,
-} from 'expo-image-picker';
-import { takePhoto } from '../../store/photo';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
+import { getPost } from '../../store/post';
+import { takePhoto } from '../../store/photo';
 
+export class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
-export function HomeScreen(props) {
-  let openCameraAsync = async () => {
-    let permission = await requestCameraPermissionsAsync();
-    if (!permission) {
-      alert('Permission to acccess camera roll is required!');
-    }
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <HomeGoogleMapView navigation={this.props.navigation} />  
+        <ScrollView style={ styles.scrollView }stickyHeaderIndices={[0]}>
+        {<Text style={styles.input}>Nearby Treasure</Text>}
+        {this.props.coordinates.map((post, index) => {
+          return (
+            <ListItem key={index} style ={styles.itemText} bottomDivider onPress={() => {
+              this.props.getPost(post);
+              this.props.getPhoto(post.photos[0])
+              this.props.navigation.navigate('PostNav', { screen: 'SinglePost' });
+            }}>
+            <Avatar source={{url: post.photos[0].firebaseUrl}} />
+            <ListItem.Content>
+              <ListItem.Title>{post.title}</ListItem.Title>
+              <ListItem.Subtitle>{post.tags.map((tag, index) => {
+                return (<Text key={index}>{tag.name} </Text>)
+              })} </ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+          )
+        }
+        )}     
+        </ScrollView>
+        </SafeAreaView>
 
-    const picture = await launchCameraAsync();
-    if (!picture.cancelled) {
-      props.takePhoto(picture.uri);
-      props.navigation.navigate('Post');
-    }
-  };
+    );
+  }
 
-  return (
-    <View>
-      <HomeGoogleMapView navigation={props.navigation} />
-    </View>
-  );
 }
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    takePhoto: (photo) => dispatch(takePhoto(photo)),
+    coordinates: state.coordinates,
   };
 };
-export default connect(null, mapDispatchToProps)(HomeScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPost: (post) => dispatch(getPost(post)),
+    getPhoto: (photo) => dispatch(takePhoto(photo))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
