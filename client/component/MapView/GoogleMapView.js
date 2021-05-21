@@ -3,6 +3,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { View } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
+
 export default function GoogleMapView(props) {
   installWebGeolocationPolyfill();
   useEffect(() => {
@@ -39,14 +40,16 @@ export default function GoogleMapView(props) {
         provider={PROVIDER_GOOGLE}
         region={props.region}
         showsUserLocation={true}
-        zoomEnabled={true}>
+        zoomEnabled={true}
+      >
         <Marker
           draggable={true}
           coordinate={{
             latitude: props.region.latitude,
             longitude: props.region.longitude,
           }}
-          onDragEnd={onDragEnd}></Marker>
+          onDragEnd={onDragEnd}
+        ></Marker>
       </MapView>
     </View>
   );

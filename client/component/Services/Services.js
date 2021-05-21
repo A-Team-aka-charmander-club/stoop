@@ -14,7 +14,6 @@ export const onLogoutPress = (props) => {
 };
 
 const uploadImage = async (uri) => {
-  console.log('in upload Image', uri)
   const response = await fetch(uri);
   const blob = await response.blob();
 

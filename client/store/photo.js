@@ -2,23 +2,11 @@ import axios from 'axios';
 
 import { firebase } from '../../src/firebase/config';
 
-const ADD_PHOTO = 'ADD_PHOTO';
-
 const TAKE_PHOTO = 'TAKE_PHOTO';
 
 const CLEAR_PHOTO = 'CLEAR_PHOTO';
 
-// action creators
-const addPhoto = (photo) => {
-  return {
-    type: ADD_PHOTO,
-    photo,
-  };
-};
-
 export const takePhoto = (photo) => {
-  console.log('photo in store');
-  console.log(photo);
   return {
     type: TAKE_PHOTO,
     photo,
@@ -51,17 +39,15 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
           headers: { authorization: user.uid },
         }
       );
-      dispatch(addPhoto(data));
+      dispatch(takePhoto(data));
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-export default function (state = '', action) {
+export default function (state = {}, action) {
   switch (action.type) {
-    case ADD_PHOTO:
-      return action.photo;
     case TAKE_PHOTO:
       return action.photo;
     case CLEAR_PHOTO:

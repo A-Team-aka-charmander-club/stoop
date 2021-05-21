@@ -12,10 +12,18 @@ import {
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { destroyPost } from '../../store/post';
+import { takePhoto } from '../../store/photo';
+
 export const SinglePost = (props) => {
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
+
+  function handleEdit() {
+    props.takePhoto(props.post.photos[0]);
+    props.navigation.navigate('Edit');
+  }
+
   if (props.post.id) {
     return (
       <View style={styles.container}>
@@ -55,28 +63,23 @@ export const SinglePost = (props) => {
                 })
               : null}
           </Text>
+          {props.post.users[0].id === props.user.id ? (
+            <View>
+              <Button title='Delete Post' onPress={handleDelete} />
+              <Button title='Edit Post' onPress={handleEdit} />
+            </View>
+          ) : null}
+
           <TouchableOpacity
             navigation={props.navigation}
             onPress={() => props.navigation.navigate('CommentView')}
           >
             <Text>Comments</Text>
           </TouchableOpacity>
-          {props.post.users[0].id === props.user.id ? (
-            <View>
-              <Button title='Delete Post' onPress={handleDelete} />
-              <Button
-                title='Edit Post'
-                onPress={() => props.navigation.navigate('Edit')}
-              />
-            </View>
-          ) : null}
         </KeyboardAwareScrollView>
       </View>
     );
   } else {
-    <View>
-      <Text>You've deleted the post. </Text>
-    </View>;
     {
       props.navigation.navigate('Post');
     }
@@ -92,6 +95,7 @@ const mapDispatchToProps = (dispatch, { navigation }) => {
   return {
     deletePost: (postId, userId) =>
       dispatch(destroyPost(postId, navigation, userId)),
+    takePhoto: (photo) => dispatch(takePhoto(photo)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
