@@ -8,7 +8,6 @@ module.exports = router;
 
 router.post('/photo', isLoggedIn, async (req, res, next) => {
   try {
-    console.log('IN PHOTO API ROUTE');
     const photo = await Photo.create({
       firebaseUrl: req.body.photoUrl,
       firebasePhotoId: req.body.firebasePhotoId,

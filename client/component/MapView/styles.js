@@ -5,9 +5,13 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: 15,
+    marginRight: 15,
   },
   map: {
-    width: Dimensions.get('window').width,
+    marginLeft: 30,
+    marginRight: 30,
+    width: Dimensions.get('window').width - 30,
     height: Dimensions.get('window').height / 2,
   },
   mapCenterMapView: {

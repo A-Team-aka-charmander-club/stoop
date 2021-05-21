@@ -19,7 +19,7 @@ export const removeCoordinate = (coordinate) => {
   };
 };
 
-export const getCoordinatesThunk = () => {
+export const getCoordinatesThunk = (region) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
@@ -27,7 +27,12 @@ export const getCoordinatesThunk = () => {
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
-        `http://localhost:8080/api/maps/coordinates`
+        `http://192.168.1.6:8080/api/maps/coordinates`,
+        {
+          params: {
+            region,
+          },
+        }
       );
       dispatch(getCoordinates(data));
     } catch (error) {

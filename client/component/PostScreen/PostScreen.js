@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -25,7 +25,15 @@ export const PostScreen = (props) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [clearMap, setClearMap] = useState(true);
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
+=======
+
+  useEffect(() => {
+    props.clearPhoto();
+  });
+
+>>>>>>> f07d8294dfecbf4affd2b5be13ec95dc232a016e
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
@@ -46,12 +54,6 @@ export const PostScreen = (props) => {
     setClearMap(true);
     props.removeTags();
     setTags({ tag: '', tagsArray: [] });
-    setRegion({
-      latitude: 40.751343151025615,
-      longitude: -74.00289693630044,
-      latitudeDelta: 0.0025,
-      longitudeDelta: 0.0025,
-    });
     props.navigation.navigate('SinglePost');
   };
 
@@ -64,7 +66,7 @@ export const PostScreen = (props) => {
         <Text>Create Post</Text>
         {props.photo.firebaseUrl ? (
           <Image source={{ url: props.photo.firebaseUrl }} style={styles.thumbnail} />
-        ) : null}
+        ) : <ActivityIndicator size="large" color="#00ff00" />}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
@@ -107,15 +109,9 @@ export const PostScreen = (props) => {
           setClearMap={setClearMap}
           clear={clearMap}
         />
-        <View style={styles.button}>
-          <Button color='#fff' title='Post!' onPress={createPost} />
-          {loading ? (
-            <View style={[styles.container, styles.horizontal]}>
-              <ActivityIndicator size='large' color='#00ff00' />
-            </View>
-          ) : (
-            <Text></Text>
-          )}
+        <View >
+          <Button color="#fff" title="Post!" onPress={createPost} />
+          <View style={[styles.container, styles.horizontal]}></View>
         </View>
       </KeyboardAwareScrollView>
     </View>
