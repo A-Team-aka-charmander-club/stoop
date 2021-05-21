@@ -15,19 +15,12 @@ import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 
 export function HomeGoogleMapView(props) {
-  const [region, setRegion] = useState({
-    latitude: 40.751343151025615,
-    longitude: -74.00289693630044,
-    latitudeDelta: 0.0075,
-    longitudeDelta: 0.0075,
-  });
-
   installWebGeolocationPolyfill();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setRegion({
+        props.setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           latitudeDelta: 0.0075,
@@ -37,15 +30,17 @@ export function HomeGoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    props.navigation.addListener('focus', () => {
-      props.getCoordinates(region);
+    const mapFocus = props.navigation.addListener('focus', () => {
+      props.getCoordinates(props.region, props.tags);
     });
+    mapFocus();
   }, [props.navigation]);
 
   const setNewRegion = (newRegion) => {
-    if (region.latitudeDelta !== newRegion.latitudeDelta) {
-      setRegion(newRegion);
-      props.getCoordinates(newRegion);
+    if (props.region.latitudeDelta !== newRegion.latitudeDelta) {
+      props.setRegion(newRegion);
+      props.getCoordinates(newRegion, props.tags);
+
     }
   };
 
@@ -59,11 +54,11 @@ export function HomeGoogleMapView(props) {
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        region={region}
+        region={props.region}
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
-        zoomEnabled={true}
-      >
+        zoomEnabled={true}>
+
         {props.coordinates.map((post, index) => {
           return (
             <Marker
@@ -79,8 +74,8 @@ export function HomeGoogleMapView(props) {
             >
               <Callout
                 onPress={() => onPressButton(post)}
-                style={styles.calloutButton}
-              >
+                style={styles.calloutButton}>
+
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image
@@ -105,7 +100,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCoordinates: (region) => dispatch(getCoordinatesThunk(region)),
+    getCoordinates: (region, tags) =>
+      dispatch(getCoordinatesThunk(region, tags)),
     getPost: (post) => dispatch(getPost(post)),
     getPhoto: (photo) => dispatch(takePhoto(photo)),
   };

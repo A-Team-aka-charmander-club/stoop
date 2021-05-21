@@ -19,18 +19,22 @@ export const removeCoordinate = (coordinate) => {
   };
 };
 
-export const getCoordinatesThunk = (region) => {
+export const getCoordinatesThunk = (region, tags) => {
   return async (dispatch) => {
+    console.log(tags);
     try {
       const { data } = await axios.get(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
-        `http://10.0.0.153:8080/api/maps/coordinates`,
+        `http://192.168.1.152:8080/api/maps/coordinates`,
         {
           params: {
-            region,
+            coordinates: {
+              region,
+              tags,
+            },
           },
         }
       );
