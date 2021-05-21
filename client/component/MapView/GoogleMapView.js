@@ -6,7 +6,6 @@ import { installWebGeolocationPolyfill } from 'expo-location';
 
 export default function GoogleMapView(props) {
   installWebGeolocationPolyfill();
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -20,12 +19,10 @@ export default function GoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-
     props.setClearMap(false);
     props.setLatitude(props.region.latitude);
     props.setLongitude(props.region.longitude);
   }, [props.clearMap]);
-
   const onDragEnd = (e) => {
     props.setRegion({
       latitude: e.nativeEvent.coordinate.latitude,
@@ -36,7 +33,6 @@ export default function GoogleMapView(props) {
     props.setLatitude(e.nativeEvent.coordinate.latitude);
     props.setLongitude(e.nativeEvent.coordinate.longitude);
   };
-
   return (
     <View style={styles.container}>
       <MapView
@@ -44,14 +40,16 @@ export default function GoogleMapView(props) {
         provider={PROVIDER_GOOGLE}
         region={props.region}
         showsUserLocation={true}
-        zoomEnabled={true}>
+        zoomEnabled={true}
+      >
         <Marker
           draggable={true}
           coordinate={{
             latitude: props.region.latitude,
             longitude: props.region.longitude,
           }}
-          onDragEnd={onDragEnd}></Marker>
+          onDragEnd={onDragEnd}
+        ></Marker>
       </MapView>
     </View>
   );

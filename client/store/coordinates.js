@@ -4,6 +4,7 @@ const GET_COORDINATES = 'GET_COORDINATES';
 
 const REMOVE_COORDINATE = 'REMOVE_COORDINATE';
 
+//getCoordinates returns an array of posts
 const getCoordinates = (coordinates) => {
   return {
     type: GET_COORDINATES,
@@ -26,10 +27,11 @@ export const getCoordinatesThunk = (region) => {
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
-        `http://192.168.1.6:8080/api/maps/coordinates`, {
+        `http://10.0.0.153:8080/api/maps/coordinates`,
+        {
           params: {
-            region
-          }
+            region,
+          },
         }
       );
       dispatch(getCoordinates(data));

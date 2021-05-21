@@ -7,7 +7,7 @@ import { addTags, removeTags } from '../../../store/tag';
 import { connect } from 'react-redux';
 
 export function Tags(props) {
-  console.log(props, 'props on tags');
+  // console.log(props, 'props on tags');
   const updateTagState = (state) => {
     console.log(state);
     props.setTags(state);
@@ -21,10 +21,10 @@ export function Tags(props) {
       <TagInput
         updateState={updateTagState}
         tags={props.tags}
-        placeholder="Tags..."
-        label="Press space to add a tag"
+        placeholder='Tags...'
+        label='Press space to add a tag'
         labelStyle={{ color: '#fff' }}
-        leftElement={<MaterialCommunityIcons name="tag-multiple" />}
+        leftElement={<MaterialCommunityIcons name='tag-multiple' />}
         leftElementContainerStyle={{ marginLeft: 3 }}
         containerStyle={{ width: Dimensions.get('window').width - 40 }}
         inputContainerStyle={[styles.textInput]}
