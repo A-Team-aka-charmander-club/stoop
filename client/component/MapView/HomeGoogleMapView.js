@@ -30,9 +30,10 @@ export function HomeGoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    props.navigation.addListener('focus', () => {
+    const mapFocus = props.navigation.addListener('focus', () => {
       props.getCoordinates(props.region, props.tags);
     });
+    mapFocus();
   }, [props.navigation]);
 
   const setNewRegion = (newRegion) => {

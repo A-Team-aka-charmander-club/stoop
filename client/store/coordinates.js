@@ -20,6 +20,7 @@ export const removeCoordinate = (coordinate) => {
 
 export const getCoordinatesThunk = (region, tags) => {
   return async (dispatch) => {
+    console.log(tags);
     try {
       const { data } = await axios.get(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,

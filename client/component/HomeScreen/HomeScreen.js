@@ -26,8 +26,10 @@ export function HomeScreen(props) {
   });
 
   function onTagPress(tag) {
-    setTags([...tags, tag]);
-    props.getCoordinates(region, tags);
+    if (!tags.includes(tag)) {
+      setTags([...tags, tag]);
+      props.getCoordinates(region, [...tags, tag]);
+    }
   }
 
   return (

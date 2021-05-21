@@ -30,6 +30,7 @@ const BottomTabNavigator = () => {
         name="Home"
         component={HomeStackNavigator}
         options={{
+          unmountOnBlur: true,
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             // <MaterialCommunityIcons name='home' color={color} size={size} />
