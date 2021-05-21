@@ -7,6 +7,7 @@ import {
   ScrollView,
   TextInput,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -33,15 +34,15 @@ export function CommentView(props) {
 
   const handleSubmit = () => {
     props.addComment(comment, props.post.id, props.user.id);
+    setComment('');
   };
   const handleDelete = (comment) => {
-    console.log('IN HANDLE DELETE: ', comment.id);
     props.deleteComment(comment.id);
   };
   useEffect(() => {
     props.getComment(props.post.id);
   }, [props.comments.length]);
-
+  console.log('PROPS.COMMENTS: ', props.comments[0]);
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1, width: '100%' }}
@@ -50,45 +51,40 @@ export function CommentView(props) {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.commentContainer}>
           <View>
-            <ScrollView
+            <FlatList
               style={{
                 padding: 20,
                 height: 100,
                 // automaticallyAdjustContentInsets: true,
               }}
             >
-              <Text>
-                {props.comments.length > 0 && props.comments
-                  ? props.comments.map((comment) => {
-                      return (
-                        <View key={comment.id}>
-                          <Card>
-                            <Card.Content>
-                              <Text>{comment.content}</Text>
-                              <Button onPress={() => handleDelete(comment)}>
-                                Delete
-                              </Button>
-                            </Card.Content>
-                          </Card>
-                        </View>
-                      );
-                    })
-                  : null}
-                ;
-              </Text>
-            </ScrollView>
+              {/* replace this block w/flat list + renderitem  */}
+              {props.comments.length > 0 && props.comments
+                ? props.comments.map((comment) => {
+                    return (
+                      <Card key={comment.id} style={styles.commentCard}>
+                        <Card.Content>
+                          <Text>{comment.content}</Text>
+                          <Button onPress={() => handleDelete(comment)}>
+                            Delete
+                          </Button>
+                        </Card.Content>
+                      </Card>
+                    );
+                  })
+                : null}
+              ;
+            </FlatList>
             <TextInput
               placeholder='Add a comment...'
-              // keyboardType="twitter" // keyboard with no return button
-              // autoFocus={true} // focus and show the keyboard
               style={styles.input}
               value={comment}
               onChangeText={(text) => setComment(text)} // handle input changes
             />
           </View>
-          <TouchableOpacity>
+          <Button>
             <Text onPress={handleSubmit}>Submit</Text>
-          </TouchableOpacity>
+          </Button>
         </View>
       </SafeAreaView>
     </KeyboardAwareScrollView>
@@ -104,7 +100,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('IN MAPDISPATCH');
   return {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),

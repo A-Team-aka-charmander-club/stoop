@@ -4,15 +4,18 @@ const styles = StyleSheet.create({
   commentContainer: {
     paddingRight: 10,
     marginBottom: 10,
-    paddingTop: 10,
-
+    paddingTop: 30,
+    flex: 1,
     alignItems: 'center',
+    flexDirection: 'column',
     //flexDirection: 'row',
   },
   singleComment: {
     padding: 10,
-
-    //color: '#ff0000',
+  },
+  commentCard: {
+    margin: 5,
+    shadowOffset: 10,
   },
   // left: {
   //   padding: 50,
@@ -175,6 +178,10 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
     color: '#424242',
+  },
+  scrollView: {
+    backgroundColor: '#788eec',
+    paddingBottom: 10,
   },
   buttonStyle: {
     backgroundColor: '#788eec',

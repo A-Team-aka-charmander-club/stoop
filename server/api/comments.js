@@ -15,8 +15,19 @@ router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
     await user.addComment(comment);
     let post = await Post.findByPk(req.params.postId);
     await post.addComment(comment);
+    const fullComment = await Comment.findOne({
+      where: {
+        id: comment.id,
+      },
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+    console.log('FULL COMMENT: ', fullComment);
     //here - do i need to do combined post?
-    res.send(comment);
+    res.send(fullComment);
   } catch (err) {
     next(err);
   }
@@ -34,10 +45,8 @@ router.get('/:postId', async (req, res, next) => {
 });
 
 router.delete('/:commentId', async (req, res, next) => {
-  console.log('EXPRESS ROUTE: ', req.params);
   try {
     const comment = await Comment.findByPk(req.params.commentId);
-    console.log('EXPRESS ROUTE-COMMENT ', comment);
     if (comment) {
       await comment.destroy();
       res.send(comment);

@@ -36,8 +36,6 @@ export const deleteComment = (comment) => {
 
 export const createComment = (comment, postId, userId) => {
   return async (dispatch) => {
-    console.log('CREATE COMMENT THUNK');
-    console.log('comment:', comment);
     try {
       const user = firebase.auth().currentUser;
 
@@ -48,6 +46,7 @@ export const createComment = (comment, postId, userId) => {
           headers: { authorization: user.uid },
         }
       );
+      console.log(data);
       dispatch(addComment(data));
     } catch (err) {
       console.log(err);
@@ -69,7 +68,6 @@ export const grabComment = (postId) => {
 };
 
 export const destroyComment = (commentId) => {
-  console.log('IN THUNK: ', commentId);
   return async (dispatch) => {
     try {
       const user = firebase.auth().currentUser;

@@ -86,7 +86,6 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
       },
       include: [{ model: Tag }],
     });
-    console.log('req.body in put route', req.body);
     if (post) {
       //if sending an updated photo, must do this first
       if (!req.body.photo.id) {
@@ -96,7 +95,6 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
             userId: req.params.id,
           },
         });
-        console.log('THIS IS THE OLD PHOTO', oldPhoto);
         await post.removePhoto(oldPhoto);
 
         const photo = await Photo.create({
@@ -104,7 +102,6 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
           firebasePhotoId: req.body.photo.firebasePhotoId,
         });
 
-        console.log('THIS IS THE NEW PHOTO', photo);
         const user = req.user;
         await user.addPhoto(photo);
         await post.addPhoto(photo);
