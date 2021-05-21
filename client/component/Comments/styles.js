@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   },
   commentCard: {
     margin: 5,
-    shadowOffset: 10,
   },
   // left: {
   //   padding: 50,

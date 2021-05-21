@@ -12,6 +12,7 @@ const DELETE_COMMENT = 'DELETE_COMMENT';
 
 // ACTION CREATORS
 export const addComment = (comment) => {
+  console.log('ACTION CREATOR COMMENT: ', comment);
   return {
     type: ADD_COMMENT,
     comment,
@@ -46,7 +47,7 @@ export const createComment = (comment, postId, userId) => {
           headers: { authorization: user.uid },
         }
       );
-      console.log(data);
+      console.log('USER OBJECT SHOULD BE HERE', data);
       dispatch(addComment(data));
     } catch (err) {
       console.log(err);
@@ -61,6 +62,7 @@ export const grabComment = (postId) => {
         `http://localhost:8080/api/comments/${postId}`
       );
       dispatch(getComment(data));
+      console.log('GRABBING COMMENTS: ', data[0]);
     } catch (err) {
       console.log(err);
     }
@@ -70,12 +72,11 @@ export const grabComment = (postId) => {
 export const destroyComment = (commentId) => {
   return async (dispatch) => {
     try {
-      const user = firebase.auth().currentUser;
-      console.log('USER', user);
+      const user = firebase.auth().currentUser.uid;
       const { data } = await axios.delete(
         `http://localhost:8080/api/comments/${commentId}`,
         {
-          headers: { authorization: user.uid },
+          headers: { authorization: user },
         }
       );
       if (data) {

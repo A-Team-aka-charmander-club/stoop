@@ -22,6 +22,7 @@ router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
       include: [
         {
           model: User,
+          attributes: ['id', 'fullName'],
         },
       ],
     });
@@ -37,6 +38,12 @@ router.get('/:postId', async (req, res, next) => {
   try {
     const comments = await Comment.findAll({
       where: { postId: req.params.postId },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'fullName'],
+        },
+      ],
     });
     res.send(comments);
   } catch (err) {

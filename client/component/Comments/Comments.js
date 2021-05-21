@@ -8,9 +8,10 @@ import {
   TextInput,
   SafeAreaView,
   FlatList,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TimeAgo from 'react-native-timeago';
 //import Icon from 'react-native-vector-icons';
 import styles from './styles';
@@ -42,52 +43,60 @@ export function CommentView(props) {
   useEffect(() => {
     props.getComment(props.post.id);
   }, [props.comments.length]);
-  console.log('PROPS.COMMENTS: ', props.comments[0]);
+
+  const getHeader = () => {
+    return <Text>{props.post.Title}</Text>;
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <Card style={styles.commentCard}>
+        <Card.Content>
+          <Text>{item.content}</Text>
+          <Divider />
+          <Text>{item.user.fullName}</Text>
+          {item.user.id === props.user.id ? (
+            <Button onPress={() => handleDelete(item)}>Delete</Button>
+          ) : null}
+        </Card.Content>
+      </Card>
+    );
+  };
   return (
-    <KeyboardAwareScrollView
-      style={{ flex: 1, width: '100%' }}
-      keyboardShouldPersistTaps='always'
-    >
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.commentContainer}>
-          <View>
-            <FlatList
-              style={{
-                padding: 20,
-                height: 100,
-                // automaticallyAdjustContentInsets: true,
-              }}
-            >
-              {/* replace this block w/flat list + renderitem  */}
-              {props.comments.length > 0 && props.comments
-                ? props.comments.map((comment) => {
-                    return (
-                      <Card key={comment.id} style={styles.commentCard}>
-                        <Card.Content>
-                          <Text>{comment.content}</Text>
-                          <Button onPress={() => handleDelete(comment)}>
-                            Delete
-                          </Button>
-                        </Card.Content>
-                      </Card>
-                    );
-                  })
-                : null}
-              ;
-            </FlatList>
-            <TextInput
-              placeholder='Add a comment...'
-              style={styles.input}
-              value={comment}
-              onChangeText={(text) => setComment(text)} // handle input changes
-            />
-          </View>
-          <Button>
-            <Text onPress={handleSubmit}>Submit</Text>
-          </Button>
-        </View>
-      </SafeAreaView>
-    </KeyboardAwareScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* <View style={styles.commentContainer}> */}
+      <View>
+        {/* {props.comments.length > 0 && props.comments */}
+        <FlatList
+          style={{
+            padding: 20,
+            // height: 100,
+            automaticallyAdjustContentInsets: true,
+          }}
+          data={props.comments}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          ListHeaderComponent={getHeader}
+          // ListFooterComponent={getFooter}
+        />
+      </View>
+      {/* replace this block w/flat list + renderitem  */}
+      <KeyboardAvoidingView
+        style={{ flex: 1, width: '100%' }}
+        keyboardShouldPersistTaps='always'
+      >
+        <TextInput
+          placeholder='Add a comment...'
+          style={styles.input}
+          value={comment}
+          onChangeText={(text) => setComment(text)} // handle input changes
+        />
+
+        <Button>
+          <Text onPress={handleSubmit}>Submit</Text>
+        </Button>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
