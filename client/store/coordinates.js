@@ -19,8 +19,9 @@ export const removeCoordinate = (coordinate) => {
   };
 };
 
-export const getCoordinatesThunk = (region) => {
+export const getCoordinatesThunk = (region, tags) => {
   return async (dispatch) => {
+    console.log(tags);
     try {
       const { data } = await axios.get(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
@@ -30,7 +31,10 @@ export const getCoordinatesThunk = (region) => {
         `http://192.168.1.152:8080/api/maps/coordinates`,
         {
           params: {
-            region,
+            coordinates: {
+              region,
+              tags,
+            },
           },
         }
       );
