@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> 980bfed48815bf70431a4c4f4486f2a0270bd45f
 import {
   View,
   Animated,
@@ -11,7 +15,6 @@ import { ListItem, Avatar } from 'react-native-elements';
 import styles from './styles';
 import { connect } from 'react-redux';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
-import { getCoordinatesThunk } from '../../store/coordinates';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 

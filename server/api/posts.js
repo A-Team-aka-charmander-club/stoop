@@ -83,11 +83,10 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
       where: {
         id: req.params.id,
       },
-      include: [{ model: Tag }, {model: Photo}],
+      include: [{ model: Tag }, { model: Photo }],
     });
 
     if (post) {
-
       const oldPhoto = post.photos[0];
 
       if (req.body.photo.firebaseUrl !== oldPhoto.firebaseUrl) {

@@ -25,10 +25,4 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-var db = firebase.firestore();
-
-// var storage = firebase.storage();
-// storage.useEmulator('localhost', 9199);
-// db.useEmulator('localhost', 8081);
-
 export { firebase };

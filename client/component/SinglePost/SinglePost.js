@@ -66,6 +66,10 @@ export const SinglePost = (props) => {
               <Button title='Edit Post' onPress={handleEdit} />
             </View>
           ) : null}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 980bfed48815bf70431a4c4f4486f2a0270bd45f
           <TouchableOpacity
             navigation={props.navigation}
             onPress={() => props.navigation.navigate('CommentView')}
