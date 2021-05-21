@@ -12,14 +12,11 @@ export class HomeScreen extends React.Component {
     super(props)
   }
 
-  
   render() {
     return (
       <SafeAreaView style={styles.container}>
-
         <HomeGoogleMapView navigation={this.props.navigation} />  
-
-        <ScrollView stickyHeaderIndices={[0]}>
+        <ScrollView style={ styles.scrollView }stickyHeaderIndices={[0]}>
         {<Text style={styles.input}>Nearby Treasure</Text>}
         {this.props.coordinates.map((post, index) => {
           return (
@@ -32,19 +29,10 @@ export class HomeScreen extends React.Component {
             <ListItem.Content>
               <ListItem.Title>{post.title}</ListItem.Title>
               <ListItem.Subtitle>{post.tags.map((tag, index) => {
-                return (<Text key={index}>{tag.name}</Text>)
+                return (<Text key={index}>{tag.name} </Text>)
               })} </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
-            // <ListItem
-            //   key={index}
-            //   // leftAvatar={{ source: post.photos[0], size: 'large' }}
-            //   title={post.title}
-            //   // titleStyle={styles.title}
-            //   subtitle={post.tags}
-            //   // subtitleStyle={styles.subtitle}
-            //   //chevron
-            // />
           )
         }
         )}     

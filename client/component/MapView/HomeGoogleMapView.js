@@ -4,7 +4,7 @@ import MapView, {
   Marker,
   Callout,
 } from 'react-native-maps';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
@@ -38,62 +38,62 @@ export function HomeGoogleMapView(props) {
     props.navigation.addListener('focus', () => {
       props.getCoordinates(region);
     })
-   
+
   }, [props.navigation]);
 
-  const onPressButton = (post) => {
-    props.getPost(post);
-    props.getPhoto(post.photos[0])
-    props.navigation.navigate('PostNav', { screen: 'SinglePost' });
-  };
-  return (
-    <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        provider={PROVIDER_GOOGLE}
-        region={region}
-        showsUserLocation={true}
-        onRegionChange={(newRegion) => {
-          if(region.latitudeDelta !== newRegion.latitudeDelta){
-            setRegion(newRegion)
-            props.getCoordinates(newRegion);
-          }
-          
-        }}
-        zoomEnabled={true}>
-        {props.coordinates.map((post, index) => {
-          return (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: post.latitude,
-                longitude: post.longitude,
-              }}
-              title={post.title}
-              description={post.description}
-              // image={require('../../../assets/pin.png')}
-              // resizeMode="contain"
-            >
-              <Callout
-                onPress={() => onPressButton(post)}
-                style={styles.calloutButton}>
-                <Text>{post.title}</Text>
-                {post.photos[0] ? (
-                  <Image
-                    source={{ url: post.photos[0].firebaseUrl }}
-                    style={styles.image}
-                  />
-                ) : (
+  const setNewRegion = (newRegion) => {
+    if (region.latitudeDelta !== newRegion.latitudeDelta) {
+      setRegion(newRegion)
+      props.getCoordinates(newRegion);
+    }
+  }
+
+const onPressButton = (post) => {
+  props.getPost(post);
+  props.getPhoto(post.photos[0])
+  props.navigation.navigate('PostNav', { screen: 'SinglePost' });
+};
+return (
+  <SafeAreaView style={styles.container}>
+    <MapView
+      style={styles.map}
+      provider={PROVIDER_GOOGLE}
+      region={region}
+      showsUserLocation={true}
+      onRegionChangeComplete={setNewRegion}
+      zoomEnabled={true}>
+      {props.coordinates.map((post, index) => {
+        return (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: post.latitude,
+              longitude: post.longitude,
+            }}
+            title={post.title}
+            description={post.description}
+          // image={require('../../../assets/pin.png')}
+          // resizeMode="contain"
+          >
+            <Callout
+              onPress={() => onPressButton(post)}
+              style={styles.calloutButton}>
+              <Text>{post.title}</Text>
+              {post.photos[0] ? (
+                <Image
+                  source={{ url: post.photos[0].firebaseUrl }}
+                  style={styles.image}
+                />
+              ) : (
                   <Text>''</Text>
                 )}
-              </Callout>
-              {/* <Image source={{ url: post.photos[0].firebaseUrl }} /> */}
-            </Marker>
-          );
-        })}
-      </MapView>
-    </View>
-  );
+            </Callout>
+          </Marker>
+        );
+      })}
+    </MapView>
+  </SafeAreaView>
+);
 }
 const mapStateToProps = (state) => {
   return {
