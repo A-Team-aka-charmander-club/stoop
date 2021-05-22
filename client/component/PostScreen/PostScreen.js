@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, Button, ActivityIndicator } from 'react-native';
+import { Text, View, Image, Button } from 'react-native';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -10,7 +10,7 @@ import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
-import { HelperText, TextInput, Snackbar } from 'react-native-paper';
+import { TextInput, Snackbar } from 'react-native-paper';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -29,19 +29,16 @@ export const PostScreen = (props) => {
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
 
-  const onToggleSnackBar = () => setVisible(!visible);
-
   const onDismissSnackBar = () => setVisible(false);
 
   const createPost = async () => {
-    console.log('here')
     if (!title.length) {
       setErrMessage('Title')
       setVisible(true)
     } else if (!description.length) {
       setErrMessage('Description')
       setVisible(true)
-    } else if (!photo.id) {
+    } else if (!props.photo) {
       setErrMessage('Photo')
       setVisible(true)
     } else {
@@ -49,6 +46,7 @@ export const PostScreen = (props) => {
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
       let photo = props.photo;
+      console.log(photo, 'photo')
       await props.submitPost({ post, photo, tags });
       props.clearPhoto();
       setTitle('');
@@ -69,13 +67,11 @@ export const PostScreen = (props) => {
         keyboardShouldPersistTaps='always'
       >
         <Text>Create Post</Text>
-        {props.photo.firebaseUrl ? (
+        {props.photo.firebaseUrl && (
           <Image
             source={{ url: props.photo.firebaseUrl }}
             style={styles.thumbnail}
           />
-        ) : (
-          <ActivityIndicator size="large" color="#00ff00" />
         )}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
@@ -118,10 +114,12 @@ export const PostScreen = (props) => {
           clear={clearMap}
         />
         <View>
-          <Snackbar
+          <Snackbar 
+            style={styles.snackbar}
             visible={visible}
             onDismiss={onDismissSnackBar}
             action={{
+              color: '#f8f5f2',
               label: 'Dismiss',
               onPress: onDismissSnackBar
             }}>

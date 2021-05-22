@@ -69,8 +69,8 @@ export function HomeGoogleMapView(props) {
               }}
               title={post.title}
               description={post.description}
-              // image={require('../../../assets/pin.png')}
-              // resizeMode="contain"
+              image={require('../../../assets/x.png')}
+              resizeMode="contain"
             >
               <Callout
                 onPress={() => onPressButton(post)}

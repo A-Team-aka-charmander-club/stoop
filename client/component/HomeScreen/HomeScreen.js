@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-native-get-random-values';
 import {
   View,
@@ -25,6 +25,18 @@ export function HomeScreen(props) {
     latitudeDelta: 0.0075,
     longitudeDelta: 0.0075,
   });
+
+  useEffect(() => {
+    return () => {
+      setTags([]);
+      setRegion({
+        latitude: 40.751343151025615,
+        longitude: -74.00289693630044,
+        latitudeDelta: 0.0075,
+        longitudeDelta: 0.0075,
+      })
+    }
+  }, [])
 
   function onTagPress(tagId) {
     if (!tags.includes(tagId)) {

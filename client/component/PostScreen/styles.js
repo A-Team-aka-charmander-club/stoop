@@ -51,5 +51,9 @@ export default StyleSheet.create({
     justifyContent: "space-around",
     padding: 30,
     marginTop: 80
+  }, 
+  snackbar: {
+    backgroundColor: '#f03a47',
+    color: '#f8f5f2'
   }
 });
