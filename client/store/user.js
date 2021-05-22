@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { SECRET } from '@env';
+
 // ACTION CONSTANTS
 const CREATE_USER = 'CREATE_USER';
 
@@ -32,7 +34,7 @@ export function createOrFindUserThunk(user) {
           user,
         },
         {
-          headers: { authorization: process.env.SECRET },
+          headers: { authorization: SECRET },
         }
       );
       dispatch(createUser(data));

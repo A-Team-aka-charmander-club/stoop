@@ -43,9 +43,6 @@ const verifyUser = async (req, res, next) => {
 
 const verifySite = async (req, res, next) => {
   try {
-    console.log('reqqqqq', req);
-    console.log(req.headers.authorization, 'REQHEADERS');
-    console.log(process.env.SECRET, 'SECRET');
     if (req.headers.authorization === process.env.SECRET) {
       next();
     } else {

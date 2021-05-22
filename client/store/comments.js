@@ -1,6 +1,7 @@
 import axios from 'axios';
 import user from './user';
 // import post from './post';
+import { SECRET } from '@env';
 import { firebase } from '../../src/firebase/config';
 
 // ACTION CONSTANTS
@@ -47,7 +48,6 @@ export const createComment = (comment, postId, userId) => {
           headers: { authorization: user.uid },
         }
       );
-      console.log('USER OBJECT SHOULD BE HERE', data);
       dispatch(addComment(data));
     } catch (err) {
       console.log(err);
@@ -61,11 +61,10 @@ export const grabComment = (postId) => {
       const { data } = await axios.get(
         `http://192.168.1.152:8080/api/comments/${postId}`,
         {
-          headers: { authorization: process.env.SECRET },
+          headers: { authorization: SECRET },
         }
       );
       dispatch(getComment(data));
-      console.log('GRABBING COMMENTS: ', data[0]);
     } catch (err) {
       console.log(err);
     }

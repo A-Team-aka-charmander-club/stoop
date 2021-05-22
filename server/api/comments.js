@@ -5,7 +5,7 @@ const {
 const { verifyUser, verifySite } = require('./gatekeepingMiddleware');
 
 module.exports = router;
-// why is this verifyuser and not isloggedin?
+
 router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
   try {
     const comment = await Comment.create({
@@ -26,8 +26,7 @@ router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
         },
       ],
     });
-    console.log('FULL COMMENT: ', fullComment);
-    //here - do i need to do combined post?
+
     res.send(fullComment);
   } catch (err) {
     next(err);
