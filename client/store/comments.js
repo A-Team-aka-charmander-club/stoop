@@ -42,7 +42,7 @@ export const createComment = (comment, postId, userId) => {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.post(
-        `http://192.168.1.6:8080/api/comments/${postId}/${userId}`,
+        `http://192.168.1.152:8080/api/comments/${postId}/${userId}`,
         { comment },
         {
           headers: { authorization: user.uid },
@@ -59,7 +59,7 @@ export const grabComment = (postId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://192.168.1.6:8080/api/comments/${postId}`,
+        `http://192.168.1.152:8080/api/comments/${postId}`,
         {
           headers: { authorization: SECRET },
         }
@@ -76,7 +76,7 @@ export const destroyComment = (commentId) => {
     try {
       const user = firebase.auth().currentUser.uid;
       const { data } = await axios.delete(
-        `http://192.168.1.6:8080/api/comments/${commentId}`,
+        `http://192.168.1.152:8080/api/comments/${commentId}`,
         {
           headers: { authorization: user },
         }

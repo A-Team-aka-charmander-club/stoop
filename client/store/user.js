@@ -29,7 +29,7 @@ export function createOrFindUserThunk(user) {
       //`http://192.168.1.152:8080/api/users/user`
       const { data } = await axios.post(
         // `https://trashpandapirates.herokuapp.com/api/users/user`,
-        `http://192.168.1.6:8080/api/users/user`,
+        `http://192.168.1.152:8080/api/users/user`,
         {
           user,
         },
@@ -40,6 +40,23 @@ export function createOrFindUserThunk(user) {
       dispatch(createUser(data));
     } catch (err) {
       console.log(err);
+    }
+  };
+}
+
+export function getUserPostsThunk(userId) {
+  return async (dispatch) => {
+    const user = firebase.auth().currentUser;
+    try {
+      const { data } = await axios.get(
+        `http://192.168.1.152:8080/api/users/user/${userId}`,
+        {
+          headers: { authorization: user.uid },
+        }
+      );
+      dispatch(createUser(data));
+    } catch (error) {
+      console.log(error);
     }
   };
 }

@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const { verifySite } = require('./gatekeepingMiddleware');
+const { verifySite, verifyUser } = require('./gatekeepingMiddleware');
 const {
-  models: { User },
+  models: { User, Post },
 } = require('../db');
 module.exports = router;
 
@@ -19,5 +19,17 @@ router.post('/user', verifySite, async (req, res, next) => {
     res.json(newUser);
   } catch (err) {
     next(err);
+  }
+});
+
+router.post('/user/:userId', verifyUser, async (req, res, next) => {
+  try {
+    let userPosts = User.findAll({
+      where: { id: req.params.userId },
+      include: [{ model: Post }],
+    });
+    res.send(userPosts);
+  } catch (error) {
+    next(error);
   }
 });
