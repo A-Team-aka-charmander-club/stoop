@@ -1,6 +1,7 @@
 import { firebase } from '../../../src/firebase/config';
+import 'react-native-get-random-values';
 import * as ImagePicker from 'expo-image-picker';
-import { CommonActions, StackActions } from '@react-navigation/native';
+import { v4 as uuidv4 } from 'uuid';
 
 export const onLogoutPress = (props) => {
   firebase
@@ -17,12 +18,12 @@ const uploadImage = async (uri) => {
   const response = await fetch(uri);
   const blob = await response.blob();
 
-  const photoName = String(Math.random(1000));
-   
+  const photoName = uuidv4();
+
   var ref = firebase.storage().ref().child(photoName);
 
-  await ref.put(blob)
-  
+  await ref.put(blob);
+
   let photoUrl = await ref.getDownloadURL();
 
   const user = firebase.auth().currentUser;
@@ -63,11 +64,8 @@ export const openImagePickerAsync = async (props) => {
   if (pickerResult.cancelled) {
     return;
   }
-
-  if (!pickerResult.cancelled) {
-    const photo = await uploadImage(pickerResult.uri)
-    props.takePhoto(photo);
-  }
+  const photo = await uploadImage(pickerResult.uri);
+  props.takePhoto(photo);
 };
 
 export const openCameraAsync = async (props) => {
@@ -78,7 +76,7 @@ export const openCameraAsync = async (props) => {
   }
   const picture = await ImagePicker.launchCameraAsync();
   if (!picture.cancelled) {
-    const photo = await uploadImage(pickerResult.uri)
+    const photo = await uploadImage(pickerResult.uri);
     props.takePhoto(photo);
   }
 };

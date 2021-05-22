@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import { firebase } from '../../src/firebase/config';
 
 const ADD_TAGS = 'ADD_TAGS';
 

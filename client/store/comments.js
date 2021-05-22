@@ -1,6 +1,7 @@
 import axios from 'axios';
 import user from './user';
 // import post from './post';
+import { SECRET } from '@env';
 import { firebase } from '../../src/firebase/config';
 
 // ACTION CONSTANTS
@@ -61,7 +62,6 @@ export const grabComment = (postId) => {
         `http://localhost:8080/api/comments/${postId}`
       );
       dispatch(getComment(data));
-      console.log('GRABBING COMMENTS: ', data[0]);
     } catch (err) {
       console.log(err);
     }

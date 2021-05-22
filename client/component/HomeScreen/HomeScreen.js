@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import theme from '../../../CustomProps/Theme';
+import 'react-native-get-random-values';
 import {
   View,
   Animated,

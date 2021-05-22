@@ -41,6 +41,18 @@ const verifyUser = async (req, res, next) => {
   }
 };
 
+const verifySite = async (req, res, next) => {
+  try {
+    if (req.headers.authorization === process.env.SECRET) {
+      next();
+    } else {
+      return res.status(412).send('WHO ARE YOU?');
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 const isAdmin = async (req, res, next) => {
   try {
     if (!req.user.isAdmin) {
@@ -57,4 +69,5 @@ module.exports = {
   isLoggedIn,
   verifyUser,
   isAdmin,
+  verifySite,
 };
