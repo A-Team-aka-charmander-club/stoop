@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import {
-  View,
   Image,
   Text,
-  TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
 import styles from './styles';
@@ -15,6 +13,7 @@ import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 
 export function HomeGoogleMapView(props) {
+
   installWebGeolocationPolyfill();
 
   useEffect(() => {
@@ -30,9 +29,11 @@ export function HomeGoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
+
     const mapFocus = props.navigation.addListener('focus', () => {
       props.getCoordinates(props.region, props.tags);
     });
+
     mapFocus();
   }, [props.navigation]);
 
@@ -40,7 +41,6 @@ export function HomeGoogleMapView(props) {
     if (props.region.latitudeDelta !== newRegion.latitudeDelta) {
       props.setRegion(newRegion);
       props.getCoordinates(newRegion, props.tags);
-
     }
   };
 
@@ -49,6 +49,7 @@ export function HomeGoogleMapView(props) {
     props.getPhoto(post.photos[0]);
     props.navigation.navigate('PostNav', { screen: 'SinglePost' });
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <MapView
@@ -58,7 +59,6 @@ export function HomeGoogleMapView(props) {
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
         zoomEnabled={true}>
-
         {props.coordinates.map((post, index) => {
           return (
             <Marker
@@ -93,11 +93,13 @@ export function HomeGoogleMapView(props) {
     </SafeAreaView>
   );
 }
+
 const mapStateToProps = (state) => {
   return {
     coordinates: state.coordinates,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getCoordinates: (region, tags) =>
@@ -106,4 +108,5 @@ const mapDispatchToProps = (dispatch) => {
     getPhoto: (photo) => dispatch(takePhoto(photo)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);

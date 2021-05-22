@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -27,9 +27,27 @@ export const EditPostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
-
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setTitle(props.post.title);
+    setRegion({
+      latitude: props.post.latitude,
+      longitude: props.post.longitude,
+      latitudeDelta: 0.0025,
+      longitudeDelta: 0.0025,
+    }),
+      setDescription(props.post.description),
+      setLatitude(props.post.latitude),
+      setLongitude(props.post.longitude),
+      setTags({
+        tag: '',
+        tagsArray: props.post.tags.map((tag) => tag.name),
+      }),
+      setErrMessage(''),
+      setVisible(false)
+  }, [props.navigation])
 
   const onDismissSnackBar = () => setVisible(false);
 
@@ -54,11 +72,7 @@ export const EditPostScreen = (props) => {
       await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
 
       props.clearPhoto();
-      setTitle('');
-      setDescription('');
-
       props.removeTags();
-      setTags({ tag: '', tagsArray: [] });
       props.navigation.navigate('SinglePost');
     }
   };
@@ -75,7 +89,6 @@ export const EditPostScreen = (props) => {
           }}
           style={styles.thumbnail}
         />
-
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
@@ -109,7 +122,7 @@ export const EditPostScreen = (props) => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
-       <View>
+        <View>
           <Snackbar
             visible={visible}
             onDismiss={onDismissSnackBar}
@@ -120,7 +133,7 @@ export const EditPostScreen = (props) => {
             <Text>{errMessage} is required</Text>
           </Snackbar>
           {!visible && <Button color='blue' title='Update!' onPress={changePost} />}
-          </View>
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );

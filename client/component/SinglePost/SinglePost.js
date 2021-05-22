@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Text,
   View,
   Image,
-  TextInput,
   Button,
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { destroyPost } from '../../store/post';
-import { takePhoto } from '../../store/photo';
+import { takePhoto, clearPhoto } from '../../store/photo';
 
 export const SinglePost = (props) => {
+  
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
@@ -23,9 +23,8 @@ export const SinglePost = (props) => {
     props.takePhoto(props.post.photos[0]);
     props.navigation.navigate('Edit');
   }
-
+  
   if (props.post.id) {
-    console.log(props.user, 'userId')
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView
@@ -96,6 +95,7 @@ const mapDispatchToProps = (dispatch, { navigation }) => {
     deletePost: (postId, userId) =>
       dispatch(destroyPost(postId, navigation, userId)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
+    clearPhoto: () => dispatch(clearPhoto()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);

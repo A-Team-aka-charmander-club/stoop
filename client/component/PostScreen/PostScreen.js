@@ -28,22 +28,21 @@ export const PostScreen = (props) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    return () => {
       setTitle('');
       setRegion({
-      latitude: 40.751343151025615,
-      longitude: -74.00289693630044,
-      latitudeDelta: 0.0075,
-      longitudeDelta: 0.0075,
-    }),
-    setDescription(''),
-    setLatitude(null),
-    setLongitude(null),
-    setClearMap(true),
-    setTags({ tag: '', tagsArray: [] }),
-    setErrMessage(''),
-    setVisible(false)
-    }
+        latitude: 40.751343151025615,
+        longitude: -74.00289693630044,
+        latitudeDelta: 0.0075,
+        longitudeDelta: 0.0075,
+      }),
+        setDescription(''),
+        setLatitude(null),
+        setLongitude(null),
+        setClearMap(true),
+        setTags({ tag: '', tagsArray: [] }),
+        setErrMessage(''),
+        setVisible(false)
+        props.clearPhoto()
   }, [props.navigation])
 
   const onDismissSnackBar = () => setVisible(false);
@@ -63,16 +62,16 @@ export const PostScreen = (props) => {
       let tags = props.tags;
       let photo = props.photo;
       await props.submitPost({ post, photo, tags });
-      props.clearPhoto();
-      setTitle('');
-      setDescription('');
-      setClearMap(true);
-      setTags({ tag: '', tagsArray: [] });
-      props.removeTags();
+      //props.clearPhoto();
+      //setTitle('');
+      //setDescription('');
+      //setClearMap(true);
+      //setTags({ tag: '', tagsArray: [] });
+      //props.clearPhoto()
+      //props.removeTags();
       props.navigation.navigate('SinglePost');
     }
   };
-
 
   return (
     <View style={styles.container} style={styles.horizontal}>
@@ -103,7 +102,6 @@ export const PostScreen = (props) => {
             />
           </View>
         </View>
-
         <TextInput
           style={styles.input}
           placeholder='Title'
@@ -128,7 +126,7 @@ export const PostScreen = (props) => {
           clear={clearMap}
         />
         <View>
-          <Snackbar 
+          <Snackbar
             style={styles.snackbar}
             visible={visible}
             onDismiss={onDismissSnackBar}
@@ -140,7 +138,7 @@ export const PostScreen = (props) => {
             <Text>{errMessage} is required</Text>
           </Snackbar>
           {!visible && <Button color='blue' title='Post!' onPress={createPost} />}
-          </View>
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );

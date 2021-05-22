@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'react-native-get-random-values';
 import {
-  View,
-  Animated,
-  TouchableOpacity,
   Text,
   ScrollView,
   SafeAreaView,
@@ -27,15 +24,13 @@ export function HomeScreen(props) {
   });
 
   useEffect(() => {
-    return () => {
-      setTags([]);
-      setRegion({
+    setTags([]);
+    setRegion({
       latitude: 40.751343151025615,
       longitude: -74.00289693630044,
       latitudeDelta: 0.0075,
       longitudeDelta: 0.0075,
     })
-    }
   }, [props.navigation])
 
   function onTagPress(tagId) {
