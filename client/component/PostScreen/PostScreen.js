@@ -10,7 +10,7 @@ import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
-import { HelperText, TextInput } from 'react-native-paper';
+import { HelperText, TextInput, Snackbar } from 'react-native-paper';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -26,31 +26,41 @@ export const PostScreen = (props) => {
     longitudeDelta: 0.0025,
   });
 
-  useEffect(() => {
-    props.clearPhoto();
-  });
+  const [errMessage, setErrMessage] = useState('');
+  const [visible, setVisible] = useState(false);
 
-  const titleErrors = () => {
-    return !title.length;
-  };
+  const onToggleSnackBar = () => setVisible(!visible);
 
-  const descriptionErrors = () => {
-    return !description.length;
-  };
+  const onDismissSnackBar = () => setVisible(false);
 
   const createPost = async () => {
-    let post = { title, description, latitude, longitude };
-    let tags = props.tags;
-    let photo = props.photo;
-    await props.submitPost({ post, photo, tags });
-    props.clearPhoto();
-    setTitle('');
-    setDescription('');
-    setClearMap(true);
-    props.removeTags();
-    setTags({ tag: '', tagsArray: [] });
-    props.navigation.navigate('SinglePost');
+    console.log('here')
+    if (!title.length) {
+      setErrMessage('Title')
+      setVisible(true)
+    } else if (!description.length) {
+      setErrMessage('Description')
+      setVisible(true)
+    } else if (!photo.id) {
+      setErrMessage('Photo')
+      setVisible(true)
+    } else {
+      setVisible(false)
+      let post = { title, description, latitude, longitude };
+      let tags = props.tags;
+      let photo = props.photo;
+      await props.submitPost({ post, photo, tags });
+      props.clearPhoto();
+      setTitle('');
+      setDescription('');
+      setClearMap(true);
+      props.removeTags();
+      setTags({ tag: '', tagsArray: [] });
+
+      props.navigation.navigate('SinglePost');
+    }
   };
+
 
   return (
     <View style={styles.container} style={styles.horizontal}>
@@ -66,7 +76,6 @@ export const PostScreen = (props) => {
           />
         ) : (
           <ActivityIndicator size="large" color="#00ff00" />
-
         )}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
@@ -91,10 +100,6 @@ export const PostScreen = (props) => {
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
-        <HelperText type="error" visible={titleErrors()}>
-          Title is required
-        </HelperText>
-
         <TextInput
           required
           style={styles.input}
@@ -102,9 +107,6 @@ export const PostScreen = (props) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        <HelperText type="error" visible={descriptionErrors()}>
-          Description is required
-        </HelperText>
         <Tags setTags={setTags} tags={tags} />
         <GoogleMapView
           region={region}
@@ -116,9 +118,17 @@ export const PostScreen = (props) => {
           clear={clearMap}
         />
         <View>
-          <Button color='blue' title='Post!' onPress={createPost} />
-          <View style={[styles.container, styles.horizontal]}></View>
-        </View>
+          <Snackbar
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            action={{
+              label: 'Dismiss',
+              onPress: onDismissSnackBar
+            }}>
+            <Text>{errMessage} is required</Text>
+          </Snackbar>
+          {!visible && <Button color='blue' title='Post!' onPress={createPost} />}
+          </View>
       </KeyboardAwareScrollView>
     </View>
   );
