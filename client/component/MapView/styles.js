@@ -31,8 +31,8 @@ export default StyleSheet.create({
     marginVertical: 10,
   },
   image: {
-    width: 85,
-    height: 85,
+    flex: 1,
     resizeMode: 'contain',
+    aspectRatio: 1.5,
   },
 });

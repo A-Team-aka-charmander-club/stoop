@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Post, Photo, Tag, User },
+  models: { Post, Photo, Tag, User, Comment },
 } = require('../db');
 const { verifySite } = require('./gatekeepingMiddleware');
 const { Op } = require('sequelize');
@@ -41,6 +41,9 @@ router.get('/coordinates', verifySite, async (req, res, next) => {
         },
         {
           model: User,
+        },
+        {
+          model: Comment,
         },
       ],
     });
