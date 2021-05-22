@@ -15,7 +15,12 @@ const HomeStackNavigator = () => {
     <Stack.Navigator
       initialRouteName='Home'
       screenOptions={{
-        cardStyle: { backgroundColor: theme.backgroundColor },
+        mode: 'card',
+        headerMode: 'float',
+        cardStyle: {
+          backgroundColor: theme.backgroundColor,
+          footerView: theme.footerView,
+        },
       }}
     >
       <Stack.Screen

@@ -53,7 +53,7 @@ export const PostScreen = (props) => {
   };
 
   return (
-    <View style={theme.backgroundColor} style={styles.horizontal}>
+    <View style={styles.container} style={styles.horizontal}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps='always'

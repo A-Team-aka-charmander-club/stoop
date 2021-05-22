@@ -8,7 +8,7 @@ import CameraModal from '../../CameraModal/CameraModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-
+import theme from '../../../../CustomProps/Theme';
 import UserAccount from '../../UserAccount/UserAccount';
 
 const Tab = createBottomTabNavigator();
@@ -20,6 +20,14 @@ const BottomTabNavigator = () => {
       tabBarOptions={{
         activeTintColor: '#e91e63',
         showLabel: true,
+      }}
+      screenOptions={{
+        mode: 'card',
+        headerMode: 'float',
+        cardStyle: {
+          backgroundColor: theme.backgroundColor,
+          footerView: theme.footerView,
+        },
       }}
     >
       <Tab.Screen

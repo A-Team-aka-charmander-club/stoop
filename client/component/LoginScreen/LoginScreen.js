@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import theme from '../../../CustomProps/Theme';
@@ -40,7 +47,7 @@ export function LoginScreen({ navigation, fetchUser }) {
       });
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={theme.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps='always'
@@ -84,7 +91,7 @@ export function LoginScreen({ navigation, fetchUser }) {
           </Text>
         </View>
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

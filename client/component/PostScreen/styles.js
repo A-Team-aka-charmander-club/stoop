@@ -7,6 +7,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.backgroundColor,
   },
+
   thumbnail: {
     height: 300,
     width: 300,

@@ -47,6 +47,16 @@ const theme = {
     fontSize: 16,
     fontWeight: 'bold',
   },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#EFE6DD',
+  },
+  footerView: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 20,
+  },
 };
 
 export default theme;
