@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { SECRET } from '@env';
+
 // ACTION CONSTANTS
 const CREATE_USER = 'CREATE_USER';
 
@@ -27,9 +29,12 @@ export function createOrFindUserThunk(user) {
       //`http://192.168.1.152:8080/api/users/user`
       const { data } = await axios.post(
         // `https://trashpandapirates.herokuapp.com/api/users/user`,
-        `http://localhost:8080/api/users/user`,
+        `http://10.0.0.153:8080/api/users/user`,
         {
           user,
+        },
+        {
+          headers: { authorization: SECRET },
         }
       );
       dispatch(createUser(data));

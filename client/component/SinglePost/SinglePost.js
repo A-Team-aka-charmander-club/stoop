@@ -13,15 +13,19 @@ import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { destroyPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
+
 export const SinglePost = (props) => {
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
+
   function handleEdit() {
     props.takePhoto(props.post.photos[0]);
     props.navigation.navigate('Edit');
   }
+
   if (props.post.id) {
+    console.log(props.user, 'userId')
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView

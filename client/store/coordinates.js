@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { SECRET } from '@env';
 const GET_COORDINATES = 'GET_COORDINATES';
 
 const REMOVE_COORDINATE = 'REMOVE_COORDINATE';
@@ -28,7 +28,7 @@ export const getCoordinatesThunk = (region, tags) => {
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
-        `http://localhost:8080/api/maps/coordinates`,
+        `http://10.0.0.153:8080/api/maps/coordinates`,
         {
           params: {
             coordinates: {
@@ -36,6 +36,7 @@ export const getCoordinatesThunk = (region, tags) => {
               tags,
             },
           },
+          headers: { authorization: SECRET },
         }
       );
       dispatch(getCoordinates(data));

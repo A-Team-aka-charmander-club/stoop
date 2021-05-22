@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {
   models: { Photo, User, Post, Tag, Comment },
 } = require('../db');
-const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
+const { isLoggedIn, verifyUser } = require('./gatekeepingMiddleware');
 
 module.exports = router;
 
