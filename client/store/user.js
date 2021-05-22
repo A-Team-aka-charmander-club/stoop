@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SECRET } from '@env';
+import { firebase } from '../../src/firebase/config';
 
 // ACTION CONSTANTS
 const CREATE_USER = 'CREATE_USER';
@@ -54,6 +55,7 @@ export function getUserPostsThunk(userId) {
           headers: { authorization: user.uid },
         }
       );
+      console.log(data, 'data in thunk');
       dispatch(createUser(data));
     } catch (error) {
       console.log(error);
