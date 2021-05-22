@@ -10,6 +10,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
 } from 'react-native';
+//import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TimeAgo from 'react-native-timeago';
@@ -82,21 +83,24 @@ export function CommentView(props) {
         />
       </View>
       {/* replace this block w/flat list + renderitem  */}
-      <KeyboardAvoidingView
+      <View
+        //behavior='padding'
         style={styles.keyboard}
-        keyboardShouldPersistTaps='always'
+        //keyboardShouldPersistTaps='always'
       >
-        <TextInput
-          placeholder='Add a comment...'
-          style={styles.input}
-          value={comment}
-          onChangeText={(text) => setComment(text)} // handle input changes
-        />
+        <KeyboardAvoidingView>
+          <TextInput
+            placeholder='Add a comment...'
+            style={styles.input}
+            value={comment}
+            onChangeText={(text) => setComment(text)} // handle input changes
+          />
 
-        <Button>
-          <Text onPress={handleSubmit}>Submit</Text>
-        </Button>
-      </KeyboardAvoidingView>
+          <Button style={styles.submit}>
+            <Text onPress={handleSubmit}>Submit</Text>
+          </Button>
+        </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -119,5 +123,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
-
-//onPress={() => handleDelete(comment)}
