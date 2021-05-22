@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Image,
+  TouchableWithoutFeedback,
+  Keyboard,
   // TouchableHighlight,
   TouchableOpacity,
   ScrollView,
@@ -66,40 +68,42 @@ export function CommentView(props) {
     );
   };
   return (
-    <SafeAreaView
-    // style={{ flex: 1 }}
-    >
-      <View>
-        <FlatList
-          style={{
-            padding: 20,
-            // height: 100,
-            automaticallyAdjustContentInsets: true,
-          }}
-          data={props.comments}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-          ListHeaderComponent={getHeader}
-          // ListFooterComponent={getFooter}
-        />
-      </View>
-      {/* replace this block w/flat list + renderitem  */}
-      <KeyboardAvoidingView
-        style={styles.keyboard}
-        keyboardShouldPersistTaps='always'
-      >
-        <TextInput
-          placeholder='Add a comment...'
-          style={styles.input}
-          value={comment}
-          onChangeText={(text) => setComment(text)} // handle input changes
-        />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={{ flex: 1 }}>
+        {/* <View style={styles.commentContainer}> */}
+        <View>
+          {/* {props.comments.length > 0 && props.comments */}
+          <FlatList
+            style={{
+              padding: 20,
+              // height: 100,
+              automaticallyAdjustContentInsets: true,
+            }}
+            data={props.comments}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            ListHeaderComponent={getHeader}
+            // ListFooterComponent={getFooter}
+          />
+        </View>
+        {/* replace this block w/flat list + renderitem  */}
+        <KeyboardAvoidingView
+          style={styles.keyboard}
+          keyboardShouldPersistTaps='always'
+        >
+          <TextInput
+            placeholder='Add a comment...'
+            style={styles.input}
+            value={comment}
+            onChangeText={(text) => setComment(text)} // handle input changes
+          />
 
-        <Button>
-          <Text onPress={handleSubmit}>Submit</Text>
-        </Button>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          <Button>
+            <Text onPress={handleSubmit}>Submit</Text>
+          </Button>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

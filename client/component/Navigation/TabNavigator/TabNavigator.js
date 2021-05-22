@@ -4,7 +4,7 @@ import {
   HomeStackNavigator,
   PostStackNavigator,
 } from '../StackNavigator/StackNavigator';
-import CameraModal from '../../CameraModal/CameraModal';
+import { TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
@@ -13,7 +13,9 @@ import UserAccount from '../../UserAccount/UserAccount';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = (props) => {
+  const navigation = props.navigation;
+
   return (
     <Tab.Navigator
       initialRouteName='Home'
@@ -42,16 +44,6 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name='CameraModal'
-        component={CameraModal}
-        options={{
-          tabBarLabel: 'Search',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='telescope' size={24} color='black' />
-          ),
-        }}
-      />
-      <Tab.Screen
         name='PostNav'
         component={PostStackNavigator}
         unmountOnBlur={true}
@@ -66,6 +58,12 @@ const BottomTabNavigator = () => {
               name='treasure-chest'
               size={24}
               color='black'
+            />
+          ),
+          tabBarButton: (props) => (
+            <TouchableOpacity
+              {...props}
+              onPress={() => navigation.navigate('PostNav', { screen: 'Post' })}
             />
           ),
         }}

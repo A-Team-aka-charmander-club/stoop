@@ -30,8 +30,16 @@ export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
         // 'http://localhost:8080/api/photos/photo',
         //'http://192.168.1.152:8080/api/photos/photo',
         //anna's ip address: 192.168.1.152
+<<<<<<< HEAD
         `http://localhost:8080/api/photos/photo`,
 
+=======
+<<<<<<< HEAD
+        `http://localhost:8080/api/photos/photo`,
+=======
+        `http://192.168.1.152:8080/api/photos/photo`,
+>>>>>>> 9cd67d795a3f274e435aea50baa2a7acc7eab64f
+>>>>>>> main
         {
           firebasePhotoId,
           photoUrl,

@@ -13,7 +13,6 @@ const DELETE_COMMENT = 'DELETE_COMMENT';
 
 // ACTION CREATORS
 export const addComment = (comment) => {
-  console.log('ACTION CREATOR COMMENT: ', comment);
   return {
     type: ADD_COMMENT,
     comment,
@@ -59,7 +58,10 @@ export const grabComment = (postId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/comments/${postId}`
+        `http://localhost:8080/api/comments/${postId}`,
+        {
+          headers: { authorization: SECRET },
+        }
       );
       dispatch(getComment(data));
     } catch (err) {

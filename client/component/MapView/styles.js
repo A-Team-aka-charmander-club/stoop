@@ -33,7 +33,7 @@ export default StyleSheet.create({
   },
   image: {
     flex: 1,
-    aspectRatio: 1.5,
     resizeMode: 'contain',
+    aspectRatio: 1.5,
   },
 });

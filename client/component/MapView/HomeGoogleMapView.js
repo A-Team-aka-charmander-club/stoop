@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  Dimensions,
-} from 'react-native';
+import { Image, Text, SafeAreaView, Dimensions } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
@@ -32,9 +25,11 @@ export function HomeGoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
+
     const mapFocus = props.navigation.addListener('focus', () => {
       props.getCoordinates(props.region, props.tags);
     });
+
     mapFocus();
   }, [props.navigation]);
 
@@ -50,6 +45,7 @@ export function HomeGoogleMapView(props) {
     props.getPhoto(post.photos[0]);
     props.navigation.navigate('PostNav', { screen: 'SinglePost' });
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <MapView
@@ -63,15 +59,15 @@ export function HomeGoogleMapView(props) {
         {props.coordinates.map((post, index) => {
           return (
             <Marker
-              key={index}
+              key={index + ':' + post.latitude + ':' + post.longitude}
               coordinate={{
                 latitude: post.latitude,
                 longitude: post.longitude,
               }}
               title={post.title}
               description={post.description}
-              // image={require('../../../assets/pin.png')}
-              // resizeMode="contain"
+              image={require('../../../assets/x.png')}
+              resizeMode='contain'
             >
               <Callout
                 onPress={() => onPressButton(post)}
@@ -94,11 +90,13 @@ export function HomeGoogleMapView(props) {
     </SafeAreaView>
   );
 }
+
 const mapStateToProps = (state) => {
   return {
     coordinates: state.coordinates,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getCoordinates: (region, tags) =>
@@ -107,4 +105,5 @@ const mapDispatchToProps = (dispatch) => {
     getPhoto: (photo) => dispatch(takePhoto(photo)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);

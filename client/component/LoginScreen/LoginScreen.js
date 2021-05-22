@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
   Text,
@@ -19,9 +19,15 @@ export function LoginScreen({ navigation, fetchUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, []);
+
   const onFooterLinkPress = () => {
     navigation.navigate('Registration');
   };
+
   const onLoginPress = () => {
     firebase
       .auth()

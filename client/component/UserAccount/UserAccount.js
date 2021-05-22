@@ -3,7 +3,6 @@ import React from 'react';
 import { View, Button, Text, SafeAreaView } from 'react-native';
 import { logoutUser } from '../../store/user';
 import { connect } from 'react-redux';
-// import { firebase } from '../../../src/firebase/config';
 import { onLogoutPress } from '../Services/Services';
 import theme from '../../../CustomProps/Theme';
 
@@ -20,6 +19,7 @@ export function UserAccount(props) {
     </SafeAreaView>
   );
 }
+
 const mapDispatch = (dispatch) => {
   return {
     logOut: () => dispatch(logoutUser()),
