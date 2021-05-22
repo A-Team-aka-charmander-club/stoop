@@ -1,4 +1,4 @@
-git import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -65,8 +65,7 @@ export const PostScreen = (props) => {
             style={styles.thumbnail}
           />
         ) : (
-          <ActivityIndicator size="large" color="#00ff00" />
-
+          <ActivityIndicator size='large' color='#00ff00' />
         )}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
@@ -91,7 +90,7 @@ export const PostScreen = (props) => {
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
-        <HelperText type="error" visible={titleErrors()}>
+        <HelperText type='error' visible={titleErrors()}>
           Title is required
         </HelperText>
 
@@ -102,7 +101,7 @@ export const PostScreen = (props) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        <HelperText type="error" visible={descriptionErrors()}>
+        <HelperText type='error' visible={descriptionErrors()}>
           Description is required
         </HelperText>
         <Tags setTags={setTags} tags={tags} />
