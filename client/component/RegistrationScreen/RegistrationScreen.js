@@ -5,7 +5,6 @@ import styles from './styles';
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import { createOrFindUserThunk } from '../../store/user';
-//import App from '../PhotoApp';
 
 export function RegistrationScreen({ navigation, createUser }) {
   const [fullName, setFullName] = useState('');
@@ -17,11 +16,18 @@ export function RegistrationScreen({ navigation, createUser }) {
     navigation.navigate('Login');
   };
 
+  useEffect(() => {
+    setFullName('');
+    setEmail(''),
+    setPassword(''),
+    setConfirmPassword('')
+  }, [props.navigation])
+
   const onRegisterPress = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match.");
       return;
-    }
+  }
 
     firebase
       .auth()
@@ -30,8 +36,6 @@ export function RegistrationScreen({ navigation, createUser }) {
         const uid = userCredential.user.uid;
         const data = {
           id: uid,
-          // email: email,
-          // fullName: fullName,
         };
 
         createUser({ uid, email, fullName });
