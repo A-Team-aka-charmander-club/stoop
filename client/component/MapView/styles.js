@@ -1,17 +1,18 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import theme from '../../../CustomProps/Theme';
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.backgroundColor,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 15,
     marginRight: 15,
   },
   map: {
-    marginLeft: 30,
-    marginRight: 30,
-    width: Dimensions.get('window').width - 30,
+    // marginLeft: 30,
+    // marginRight: 30,
+    width: Dimensions.get('window').width,
     height: Dimensions.get('window').height / 2,
   },
   mapCenterMapView: {
