@@ -13,7 +13,6 @@ import UserAccount from '../../UserAccount/UserAccount';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = (props) => {
-
   // const handleTabPress = () => {
   //   console.log(props.navigation)
   //   props.navigation.popToTop();
@@ -21,25 +20,24 @@ const BottomTabNavigator = (props) => {
   // }
   return (
     <Tab.Navigator
-      initialRouteName='Home'
+      initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#e91e63',
         showLabel: true,
-      }}
-    >
+      }}>
       <Tab.Screen
-        name='Home'
+        name="Home"
         component={HomeStackNavigator}
         options={{
           unmountOnBlur: true,
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <Fontisto name='ship' size={24} color='black' />
+            <Fontisto name="ship" size={24} color="black" />
           ),
         }}
       />
       <Tab.Screen
-        name='PostNav'
+        name="PostNav"
         component={PostStackNavigator}
         unmountOnBlur={true}
         listeners={({ navigation }) => ({
@@ -50,21 +48,21 @@ const BottomTabNavigator = (props) => {
           tabBarLabel: 'Add Treasure',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name='treasure-chest'
+              name="treasure-chest"
               size={24}
-              color='black'
+              color="black"
             />
           ),
           // tabBarButton: handleTabPress
         }}
       />
       <Tab.Screen
-        name='Account'
+        name="Account"
         component={UserAccount}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name='skull-crossbones' size={24} color='black' />
+            <FontAwesome5 name="skull-crossbones" size={24} color="black" />
           ),
         }}
       />

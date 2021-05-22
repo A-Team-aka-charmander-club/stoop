@@ -30,13 +30,13 @@ export function HomeScreen(props) {
     return () => {
       setTags([]);
       setRegion({
-      latitude: 40.751343151025615,
-      longitude: -74.00289693630044,
-      latitudeDelta: 0.0075,
-      longitudeDelta: 0.0075,
-    })
-    }
-  }, [props.navigation])
+        latitude: 40.751343151025615,
+        longitude: -74.00289693630044,
+        latitudeDelta: 0.0075,
+        longitudeDelta: 0.0075,
+      });
+    };
+  }, [props.navigation]);
 
   function onTagPress(tagId) {
     if (!tags.includes(tagId)) {

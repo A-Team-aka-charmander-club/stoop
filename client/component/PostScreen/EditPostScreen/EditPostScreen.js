@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import styles from '../styles';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, Button } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { connect } from 'react-redux';
 import EditMapView from '../../MapView/EditMapView';
 import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
@@ -35,13 +42,13 @@ export const EditPostScreen = (props) => {
 
   const changePost = async () => {
     if (!title.length) {
-      setErrMessage('Title')
-      setVisible(true)
+      setErrMessage('Title');
+      setVisible(true);
     } else if (!description.length) {
-      setErrMessage('Description')
-      setVisible(true)
+      setErrMessage('Description');
+      setVisible(true);
     } else {
-      setVisible(false)
+      setVisible(false);
       let photo;
       if (props.photo.firebaseUrl !== props.post.photos[0].firebaseUrl) {
         photo = props.photo;
@@ -64,65 +71,69 @@ export const EditPostScreen = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
-        <Text>Update Post</Text>
-        <Image
-          source={{
-            url: props.photo.firebaseUrl,
-          }}
-          style={styles.thumbnail}
-        />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <KeyboardAwareScrollView
+          style={{ flex: 1, width: '100%' }}
+          keyboardShouldPersistTaps="always">
+          <Text>Update Post</Text>
+          <Image
+            source={{
+              url: props.photo.firebaseUrl,
+            }}
+            style={styles.thumbnail}
+          />
 
-        <View style={{ flexDirection: 'row' }}>
-          <View style={styles.buttonStyle}>
-            <Button
-              title="Open Camera"
-              onPress={async () => await openCameraAsync(props)}
-            />
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.buttonStyle}>
+              <Button
+                title="Open Camera"
+                onPress={async () => await openCameraAsync(props)}
+              />
+            </View>
+            <View style={styles.buttonStyle}>
+              <Button
+                title="Upload Photo"
+                onPress={async () => await openImagePickerAsync(props)}
+              />
+            </View>
           </View>
-          <View style={styles.buttonStyle}>
-            <Button
-              title="Upload Photo"
-              onPress={async () => await openImagePickerAsync(props)}
-            />
+          <TextInput
+            style={styles.input}
+            placeholder="Title"
+            value={title}
+            onChangeText={(text) => setTitle(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Description"
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+          <Tags setTags={setTags} tags={tags} />
+          <EditMapView
+            region={region}
+            setRegion={setRegion}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+          />
+          <View>
+            <Snackbar
+              visible={visible}
+              onDismiss={onDismissSnackBar}
+              action={{
+                label: 'Dismiss',
+                onPress: onDismissSnackBar,
+              }}>
+              <Text>{errMessage} is required</Text>
+            </Snackbar>
+            {!visible && (
+              <Button color="blue" title="Update!" onPress={changePost} />
+            )}
           </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Title"
-          value={title}
-          onChangeText={(text) => setTitle(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Description"
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-        />
-        <Tags setTags={setTags} tags={tags} />
-        <EditMapView
-          region={region}
-          setRegion={setRegion}
-          setLatitude={setLatitude}
-          setLongitude={setLongitude}
-        />
-       <View>
-          <Snackbar
-            visible={visible}
-            onDismiss={onDismissSnackBar}
-            action={{
-              label: 'Dismiss',
-              onPress: onDismissSnackBar
-            }}>
-            <Text>{errMessage} is required</Text>
-          </Snackbar>
-          {!visible && <Button color='blue' title='Update!' onPress={changePost} />}
-          </View>
-      </KeyboardAwareScrollView>
-    </View>
+        </KeyboardAwareScrollView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
