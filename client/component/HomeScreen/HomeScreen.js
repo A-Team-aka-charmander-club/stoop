@@ -54,7 +54,7 @@ export function HomeScreen(props) {
       />
       <ScrollView style={styles.scrollView} stickyHeaderIndices={[0]}>
         {<Text style={styles.input}>Nearby Treasure</Text>}
-        {props.coordinates.map((post, index) => {
+        {props.coordinates.length > 0 && props.coordinates.map((post, index) => {
           return (
             <ListItem
               key={index}

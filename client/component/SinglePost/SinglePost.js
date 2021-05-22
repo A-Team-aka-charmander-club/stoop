@@ -42,6 +42,7 @@ export const SinglePost = (props) => {
             }}
           >
             <Marker
+              image={require('../../../assets/x.png')}
               key={`marker${Date.now()}`}
               coordinate={{
                 latitude: props.post.latitude,

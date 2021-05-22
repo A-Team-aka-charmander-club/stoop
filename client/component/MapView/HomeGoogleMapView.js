@@ -62,6 +62,7 @@ export function HomeGoogleMapView(props) {
         {props.coordinates.map((post, index) => {
           return (
             <Marker
+              image={require('../../../assets/x.png')}
               key={index + ":" + post.latitude + ":" + post.longitude}
               coordinate={{
                 latitude: post.latitude,
