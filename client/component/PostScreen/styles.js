@@ -27,7 +27,6 @@ export default StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
-    height: 48,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
@@ -52,5 +51,9 @@ export default StyleSheet.create({
     justifyContent: "space-around",
     padding: 30,
     marginTop: 80
+  }, 
+  snackbar: {
+    backgroundColor: '#f03a47',
+    color: '#f8f5f2'
   }
 });

@@ -62,15 +62,15 @@ export function HomeGoogleMapView(props) {
         {props.coordinates.map((post, index) => {
           return (
             <Marker
-              key={index}
+              key={index + ":" + post.latitude + ":" + post.longitude}
               coordinate={{
                 latitude: post.latitude,
                 longitude: post.longitude,
               }}
               title={post.title}
               description={post.description}
-              // image={require('../../../assets/pin.png')}
-              // resizeMode="contain"
+              image={require('../../../assets/x.png')}
+              resizeMode="contain"
             >
               <Callout
                 onPress={() => onPressButton(post)}
