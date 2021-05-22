@@ -4,13 +4,13 @@ import {
   Image,
   TouchableWithoutFeedback,
   Keyboard,
-  // TouchableHighlight,
   TouchableOpacity,
   ScrollView,
   TextInput,
   SafeAreaView,
   FlatList,
   KeyboardAvoidingView,
+  Text
 } from 'react-native';
 import { connect } from 'react-redux';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -24,14 +24,13 @@ import {
 } from '../../store/comments';
 import {
   Divider,
-  Text,
   List,
   Paragraph,
   Card,
-  Title,
-  Button,
+  Title, Button
 } from 'react-native-paper';
 
+const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
 export function CommentView(props) {
   const [comment, setComment] = useState('');
 
@@ -66,26 +65,24 @@ export function CommentView(props) {
     );
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={{ flex: 1 }}>
-        {/* <View style={styles.commentContainer}> */}
-        <View>
-          {/* {props.comments.length > 0 && props.comments */}
-          <FlatList
-            style={{
-              padding: 20,
-              // height: 100,
-              automaticallyAdjustContentInsets: true,
-            }}
-            data={props.comments}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            ListHeaderComponent={getHeader}
-            // ListFooterComponent={getFooter}
-          />
-        </View>
-        {/* replace this block w/flat list + renderitem  */}
-        <KeyboardAvoidingView
+    <SafeAreaView >
+      <View>
+        {/* {props.comments.length > 0 && props.comments */}
+        <FlatList
+          style={{
+            padding: 20,
+            // height: 100,
+            automaticallyAdjustContentInsets: true,
+          }}
+          data={props.comments}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          ListHeaderComponent={getHeader}
+        // ListFooterComponent={getFooter}
+        />
+      </View>
+      {/* replace this block w/flat list + renderitem  */}
+      {/* <KeyboardAvoidingView
           style={styles.keyboard}
           keyboardShouldPersistTaps="always">
           <TextInput
@@ -98,9 +95,23 @@ export function CommentView(props) {
           <Button>
             <Text onPress={handleSubmit}>Submit</Text>
           </Button>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+        </KeyboardAvoidingView> */}
+      <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardShouldPersistTaps="always"
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.inner}>
+            <Text style={styles.header}>Header</Text>
+            <TextInput placeholder="Add a comment..." style={styles.textInput} value={comment} onChangeText={(text) => setComment(text)}/>
+          </View>
+        </TouchableWithoutFeedback>
+        <Button style={styles.button}>
+            <Text onPress={handleSubmit}>Submit</Text>
+        </Button>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -122,5 +133,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
-
-//onPress={() => handleDelete(comment)}
