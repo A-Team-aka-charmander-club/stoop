@@ -13,7 +13,6 @@ const DELETE_COMMENT = 'DELETE_COMMENT';
 
 // ACTION CREATORS
 export const addComment = (comment) => {
-  console.log('ACTION CREATOR COMMENT: ', comment);
   return {
     type: ADD_COMMENT,
     comment,

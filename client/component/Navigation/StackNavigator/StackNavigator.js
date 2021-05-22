@@ -3,13 +3,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../../HomeScreen/HomeScreen';
 import PostScreen from '../../PostScreen/PostScreen';
 import GoogleMapView from '../../MapView/GoogleMapView';
-import HomeGoogleMapView from '../../MapView/HomeGoogleMapView';
 import SinglePost from '../../SinglePost/SinglePost';
 import CommentView from '../../Comments/Comments';
 import EditPostScreen from '../../PostScreen/EditPostScreen/EditPostScreen';
 
 const Stack = createStackNavigator();
-const HomeStackNavigator = () => {
+
+const HomeStackNavigator = (props) => {
+  const navigation = props.navigation
+  
   return (
     <Stack.Navigator initialRouteName='Home'>
       <Stack.Screen
@@ -20,6 +22,7 @@ const HomeStackNavigator = () => {
     </Stack.Navigator>
   );
 };
+
 const PostStackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Post'>
@@ -46,6 +49,7 @@ const PostStackNavigator = () => {
     </Stack.Navigator>
   );
 };
+
 const MapStackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName='Map'>
@@ -57,6 +61,7 @@ const MapStackNavigator = () => {
     </Stack.Navigator>
   );
 };
+
 export {
   HomeStackNavigator,
   PostStackNavigator,
