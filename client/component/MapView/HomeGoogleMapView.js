@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
+  Dimensions,
 } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
@@ -13,6 +14,7 @@ import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
+//import Image from 'react-native-scalable-image';
 
 export function HomeGoogleMapView(props) {
   installWebGeolocationPolyfill();
@@ -40,7 +42,6 @@ export function HomeGoogleMapView(props) {
     if (props.region.latitudeDelta !== newRegion.latitudeDelta) {
       props.setRegion(newRegion);
       props.getCoordinates(newRegion, props.tags);
-
     }
   };
 
@@ -57,8 +58,8 @@ export function HomeGoogleMapView(props) {
         region={props.region}
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
-        zoomEnabled={true}>
-
+        zoomEnabled={true}
+      >
         {props.coordinates.map((post, index) => {
           return (
             <Marker
@@ -74,8 +75,8 @@ export function HomeGoogleMapView(props) {
             >
               <Callout
                 onPress={() => onPressButton(post)}
-                style={styles.calloutButton}>
-
+                style={styles.calloutButton}
+              >
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image
