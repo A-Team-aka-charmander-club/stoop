@@ -20,6 +20,7 @@ const firebaseConfig = {
   storageBucket: REACT_APP_STORAGE_BUCKET,
   messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
   appId: REACT_APP_ID,
+  
 };
 
 firebase.initializeApp(firebaseConfig);

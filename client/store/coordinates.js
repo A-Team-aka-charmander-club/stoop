@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { SECRET } from '@env';
 const GET_COORDINATES = 'GET_COORDINATES';
 
 const REMOVE_COORDINATE = 'REMOVE_COORDINATE';
@@ -19,8 +19,9 @@ export const removeCoordinate = (coordinate) => {
   };
 };
 
-export const getCoordinatesThunk = (region) => {
+export const getCoordinatesThunk = (region, tags) => {
   return async (dispatch) => {
+    console.log(tags);
     try {
       const { data } = await axios.get(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
@@ -30,8 +31,12 @@ export const getCoordinatesThunk = (region) => {
         `http://192.168.1.6:8080/api/maps/coordinates`,
         {
           params: {
-            region,
+            coordinates: {
+              region,
+              tags,
+            },
           },
+          headers: { authorization: SECRET },
         }
       );
       dispatch(getCoordinates(data));

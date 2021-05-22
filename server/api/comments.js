@@ -2,10 +2,10 @@ const router = require('express').Router();
 const {
   models: { User, Post, Comment },
 } = require('../db');
-const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
+const { verifyUser, verifySite } = require('./gatekeepingMiddleware');
 
 module.exports = router;
-// why is this verifyuser and not isloggedin?
+
 router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
   try {
     const comment = await Comment.create({
@@ -26,15 +26,14 @@ router.post('/:postId/:userId', verifyUser, async (req, res, next) => {
         },
       ],
     });
-    console.log('FULL COMMENT: ', fullComment);
-    //here - do i need to do combined post?
+
     res.send(fullComment);
   } catch (err) {
     next(err);
   }
 });
 
-router.get('/:postId', async (req, res, next) => {
+router.get('/:postId', verifySite, async (req, res, next) => {
   try {
     const comments = await Comment.findAll({
       where: { postId: req.params.postId },
