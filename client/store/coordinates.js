@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { SECRET } from '@env';
 const GET_COORDINATES = 'GET_COORDINATES';
 
 const REMOVE_COORDINATE = 'REMOVE_COORDINATE';
@@ -36,6 +36,7 @@ export const getCoordinatesThunk = (region, tags) => {
               tags,
             },
           },
+          headers: { authorization: SECRET },
         }
       );
       dispatch(getCoordinates(data));

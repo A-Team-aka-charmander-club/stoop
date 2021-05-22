@@ -65,7 +65,7 @@ export const destroyPost = (postId, navigation, userId) => {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.delete(
-        `http://10.0.0.153:8080/api/posts/${postId}/${userId}`,
+        `http://192.168.1.152:8080/api/posts/${postId}/${userId}`,
         {
           headers: { authorization: user.uid },
         }

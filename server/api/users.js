@@ -1,10 +1,11 @@
 const router = require('express').Router();
+const { verifySite } = require('./gatekeepingMiddleware');
 const {
   models: { User },
 } = require('../db');
 module.exports = router;
 
-router.post('/user', async (req, res, next) => {
+router.post('/user', verifySite, async (req, res, next) => {
   try {
     let [newUser, isCreated] = await User.findOrCreate({
       where: { firebaseUserId: req.body.user.uid },
@@ -20,4 +21,3 @@ router.post('/user', async (req, res, next) => {
     next(err);
   }
 });
-
