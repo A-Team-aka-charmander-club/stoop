@@ -26,10 +26,6 @@ export const PostScreen = (props) => {
   const [longitude, setLongitude] = useState(null);
   const [clearMap, setClearMap] = useState(true);
 
-  useEffect(() => {
-    props.clearPhoto();
-  });
-
   const [tags, setTags] = useState({ tag: '', tagsArray: [] });
   const [region, setRegion] = useState({
     latitude: 40.751343151025615,
@@ -43,7 +39,6 @@ export const PostScreen = (props) => {
     let tags = props.tags;
     let photo = props.photo;
     await props.submitPost({ post, photo, tags });
-    props.getCoordinates();
     props.clearPhoto();
     setTitle('');
     setDescription('');
@@ -111,7 +106,7 @@ export const PostScreen = (props) => {
           clear={clearMap}
         />
         <View>
-          <Button color='#fff' title='Post!' onPress={createPost} />
+          <Button color='blue' title='Post!' onPress={createPost} />
           <View style={[styles.container, styles.horizontal]}></View>
         </View>
       </KeyboardAwareScrollView>

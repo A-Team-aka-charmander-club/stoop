@@ -66,6 +66,7 @@ export const openImagePickerAsync = async (props) => {
 
   if (!pickerResult.cancelled) {
     const photo = await uploadImage(pickerResult.uri)
+    console.log('photo', photo)
     props.takePhoto(photo);
   }
 };
