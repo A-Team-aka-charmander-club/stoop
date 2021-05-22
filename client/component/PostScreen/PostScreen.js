@@ -116,7 +116,7 @@ export const PostScreen = (props) => {
           clear={clearMap}
         />
         <View>
-          <Button color="#fff" title="Post!" onPress={createPost} />
+          <Button color='blue' title='Post!' onPress={createPost} />
           <View style={[styles.container, styles.horizontal]}></View>
         </View>
       </KeyboardAwareScrollView>
