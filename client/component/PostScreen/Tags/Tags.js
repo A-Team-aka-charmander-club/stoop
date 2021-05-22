@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Dimensions, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TagInput from 'react-native-tags-input';
@@ -7,7 +7,7 @@ import { addTags, removeTags } from '../../../store/tag';
 import { connect } from 'react-redux';
 
 export function Tags(props) {
-  // console.log(props, 'props on tags');
+
   const updateTagState = (state) => {
     props.setTags(state);
     if (state.tagsArray !== props.reduxTags) {

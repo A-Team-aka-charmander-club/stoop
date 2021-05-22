@@ -4,6 +4,7 @@ import {
   HomeStackNavigator,
   PostStackNavigator,
 } from '../StackNavigator/StackNavigator';
+import { TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
@@ -13,11 +14,8 @@ import UserAccount from '../../UserAccount/UserAccount';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = (props) => {
-  // const handleTabPress = () => {
-  //   console.log(props.navigation)
-  //   props.navigation.popToTop();
-  //   props.navigation.navigate('PostNav', { screen: '' });
-  // }
+  const navigation = props.navigation;
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -53,7 +51,12 @@ const BottomTabNavigator = (props) => {
               color="black"
             />
           ),
-          // tabBarButton: handleTabPress
+          tabBarButton: (props) => (
+            <TouchableOpacity
+              {...props}
+              onPress={() => navigation.navigate('PostNav', { screen: 'Post' })}
+            />
+          ),
         }}
       />
       <Tab.Screen

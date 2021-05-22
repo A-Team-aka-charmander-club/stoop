@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles';
-
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Text,
@@ -18,7 +17,6 @@ import { updatePost } from '../../../store/post';
 import { Snackbar, TextInput } from 'react-native-paper';
 import { removeTags } from '../../../store/tag';
 import Tags from '../Tags/Tags';
-
 export const EditPostScreen = (props) => {
   const [title, setTitle] = useState(props.post.title);
   const [description, setDescription] = useState(props.post.description);
@@ -34,12 +32,27 @@ export const EditPostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
-
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
-
+  useEffect(() => {
+    setTitle(props.post.title);
+    setRegion({
+      latitude: props.post.latitude,
+      longitude: props.post.longitude,
+      latitudeDelta: 0.0025,
+      longitudeDelta: 0.0025,
+    }),
+      setDescription(props.post.description),
+      setLatitude(props.post.latitude),
+      setLongitude(props.post.longitude),
+      setTags({
+        tag: '',
+        tagsArray: props.post.tags.map((tag) => tag.name),
+      }),
+      setErrMessage(''),
+      setVisible(false);
+  }, [props.navigation]);
   const onDismissSnackBar = () => setVisible(false);
-
   const changePost = async () => {
     if (!title.length) {
       setErrMessage('Title');
@@ -55,21 +68,14 @@ export const EditPostScreen = (props) => {
       } else {
         photo = props.post.photos[0];
       }
-
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
       await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
-
       props.clearPhoto();
-      setTitle('');
-      setDescription('');
-
       props.removeTags();
-      setTags({ tag: '', tagsArray: [] });
       props.navigation.navigate('SinglePost');
     }
   };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -83,7 +89,6 @@ export const EditPostScreen = (props) => {
             }}
             style={styles.thumbnail}
           />
-
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.buttonStyle}>
               <Button
@@ -136,7 +141,6 @@ export const EditPostScreen = (props) => {
     </TouchableWithoutFeedback>
   );
 };
-
 const mapStateToProps = (state) => {
   return {
     photo: state.photo,
@@ -145,7 +149,6 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
-
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
@@ -156,5 +159,4 @@ const mapDispatchToProps = (dispatch) => {
     removeTags: () => dispatch(removeTags()),
   };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(EditPostScreen);

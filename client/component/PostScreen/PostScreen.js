@@ -17,7 +17,6 @@ import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 import { TextInput, Snackbar } from 'react-native-paper';
-
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -33,28 +32,24 @@ export const PostScreen = (props) => {
   });
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
-
   useEffect(() => {
-    return () => {
-      setTitle('');
-      setRegion({
-        latitude: 40.751343151025615,
-        longitude: -74.00289693630044,
-        latitudeDelta: 0.0075,
-        longitudeDelta: 0.0075,
-      }),
-        setDescription(''),
-        setLatitude(null),
-        setLongitude(null),
-        setClearMap(true),
-        setTags({ tag: '', tagsArray: [] }),
-        setErrMessage(''),
-        setVisible(false);
-    };
+    setTitle('');
+    setRegion({
+      latitude: 40.751343151025615,
+      longitude: -74.00289693630044,
+      latitudeDelta: 0.0075,
+      longitudeDelta: 0.0075,
+    }),
+      setDescription(''),
+      setLatitude(null),
+      setLongitude(null),
+      setClearMap(true),
+      setTags({ tag: '', tagsArray: [] }),
+      setErrMessage(''),
+      setVisible(false);
+    props.clearPhoto();
   }, [props.navigation]);
-
   const onDismissSnackBar = () => setVisible(false);
-
   const createPost = async () => {
     if (!title.length) {
       setErrMessage('Title');
@@ -70,16 +65,16 @@ export const PostScreen = (props) => {
       let tags = props.tags;
       let photo = props.photo;
       await props.submitPost({ post, photo, tags });
-      props.clearPhoto();
-      setTitle('');
-      setDescription('');
-      setClearMap(true);
-      setTags({ tag: '', tagsArray: [] });
-      props.removeTags();
+      //props.clearPhoto();
+      //setTitle('');
+      //setDescription('');
+      //setClearMap(true);
+      //setTags({ tag: '', tagsArray: [] });
+      //props.clearPhoto()
+      //props.removeTags();
       props.navigation.navigate('SinglePost');
     }
   };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container} style={styles.horizontal}>
@@ -109,7 +104,6 @@ export const PostScreen = (props) => {
               />
             </View>
           </View>
-
           <TextInput
             style={styles.input}
             placeholder="Title"
@@ -154,7 +148,6 @@ export const PostScreen = (props) => {
     </TouchableWithoutFeedback>
   );
 };
-
 const mapStateToProps = (state) => {
   return {
     photo: state.photo,
@@ -169,5 +162,4 @@ const mapDispatchToProps = (dispatch) => {
     removeTags: () => dispatch(removeTags()),
   };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
