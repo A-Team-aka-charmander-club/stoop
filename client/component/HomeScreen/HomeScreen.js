@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import theme from '../../../CustomProps/Theme';
 import {
   View,
   Animated,
@@ -38,7 +38,9 @@ export function HomeScreen(props) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+    // style={styles.container}
+    >
       <HomeGoogleMapView
         navigation={props.navigation}
         region={region}
@@ -46,12 +48,12 @@ export function HomeScreen(props) {
         tags={tags}
       />
       <ScrollView style={styles.scrollView} stickyHeaderIndices={[0]}>
-        {<Text style={styles.input}>Nearby Treasure</Text>}
+        {<Text style={styles.midScreenHeader}>Nearby Treasure</Text>}
         {props.coordinates.map((post, index) => {
           return (
             <ListItem
               key={index}
-              style={styles.itemText}
+              // style={styles.itemText}
               bottomDivider
               onPress={() => {
                 props.getPost(post);
@@ -59,7 +61,8 @@ export function HomeScreen(props) {
                 props.navigation.navigate('PostNav', {
                   screen: 'SinglePost',
                 });
-              }}>
+              }}
+            >
               <Avatar source={{ url: post.photos[0].firebaseUrl }} />
               <ListItem.Content>
                 <ListItem.Title>{post.title}</ListItem.Title>
@@ -72,15 +75,16 @@ export function HomeScreen(props) {
                     }
                     return (
                       <Chip
-                        selectedColor="#3ca897"
+                        selectedColor='#3ca897'
                         selected={selected}
-                        icon="tag"
+                        icon='tag'
                         key={index}
-                        onPress={() => onTagPress(tagId)}>
+                        onPress={() => onTagPress(tagId)}
+                      >
                         {tag.name}
                       </Chip>
                     );
-                  })}{' '}
+                  })}
                 </ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>

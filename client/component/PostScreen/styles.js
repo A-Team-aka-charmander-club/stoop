@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
-
+import theme from '../../../CustomProps/Theme';
 export default StyleSheet.create({
   container: {
     marginTop: 50,
     flex: 1,
     alignItems: 'center',
+    backgroundColor: theme.backgroundColor,
   },
   thumbnail: {
     height: 300,
@@ -42,15 +43,15 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 18,
-    color: "#fff",
-    fontWeight: "bold",
-    alignSelf: "center",
-    textTransform: "uppercase"
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
   },
   horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     padding: 30,
-    marginTop: 80
-  }
+    marginTop: 80,
+  },
 });

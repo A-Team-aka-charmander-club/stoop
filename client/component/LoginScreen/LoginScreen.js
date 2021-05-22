@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import theme from '../../../CustomProps/Theme';
 import { firebase } from '../../../src/firebase/config';
 import { createOrFindUserThunk } from '../../store/user';
 import { connect } from 'react-redux';
@@ -45,7 +46,7 @@ export function LoginScreen({ navigation, fetchUser }) {
         keyboardShouldPersistTaps='always'
       >
         <Image
-          style={styles.logo}
+          style={theme.logoLarge}
           source={require('../../../assets/trashPanda.png')}
         />
         <TextInput
@@ -68,8 +69,11 @@ export function LoginScreen({ navigation, fetchUser }) {
           autoCapitalize='none'
         />
         {/* this is log-in button */}
-        <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Log in</Text>
+        <TouchableOpacity
+          style={theme.buttonLarge}
+          onPress={() => onLoginPress()}
+        >
+          <Text style={theme.buttonTitleLarge}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>

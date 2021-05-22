@@ -68,14 +68,14 @@ export const grabComment = (postId) => {
   };
 };
 
-export const destroyComment = (commentId) => {
+export const destroyComment = (userId, commentId) => {
   return async (dispatch) => {
     try {
-      const user = firebase.auth().currentUser.uid;
+      const user = firebase.auth().currentUser;
       const { data } = await axios.delete(
-        `http://localhost:8080/api/comments/${commentId}`,
+        `http://localhost:8080/api/comments/${userId}/${commentId}`,
         {
-          headers: { authorization: user },
+          headers: { authorization: user.uid },
         }
       );
       if (data) {

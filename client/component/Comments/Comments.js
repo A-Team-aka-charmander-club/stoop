@@ -38,7 +38,7 @@ export function CommentView(props) {
     setComment('');
   };
   const handleDelete = (comment) => {
-    props.deleteComment(comment.id);
+    props.deleteComment(comment.userId, comment.id);
   };
   useEffect(() => {
     props.getComment(props.post.id);
@@ -50,7 +50,9 @@ export function CommentView(props) {
 
   const renderItem = ({ item }) => {
     return (
-      <Card style={styles.commentCard}>
+      <Card
+      // style={styles.commentCard}
+      >
         <Card.Content>
           <Text>{item.content}</Text>
           <Divider />
@@ -64,10 +66,10 @@ export function CommentView(props) {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {/* <View style={styles.commentContainer}> */}
+    <SafeAreaView
+    // style={{ flex: 1 }}
+    >
       <View>
-        {/* {props.comments.length > 0 && props.comments */}
         <FlatList
           style={{
             padding: 20,
@@ -114,7 +116,8 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
-    deleteComment: (commentId) => dispatch(destroyComment(commentId)),
+    deleteComment: (userId, commentId) =>
+      dispatch(destroyComment(userId, commentId)),
   };
 };
 

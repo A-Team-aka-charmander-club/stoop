@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
-
+import theme from '../../../CustomProps/Theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
@@ -53,21 +53,20 @@ export const PostScreen = (props) => {
   };
 
   return (
-    <View style={styles.container} style={styles.horizontal}>
+    <View style={theme.backgroundColor} style={styles.horizontal}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps='always'
       >
         <Text>Create Post</Text>
-        {props.photo.firebaseUrl ? (
+        {/* {props.photo.firebaseUrl ? (
           <Image
             source={{ url: props.photo.firebaseUrl }}
             style={styles.thumbnail}
           />
         ) : (
-          <ActivityIndicator size="large" color="#00ff00" />
-
-        )}
+          <ActivityIndicator size='large' color='#00ff00' />
+        )} */}
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.buttonStyle}>
             <Button
@@ -86,23 +85,23 @@ export const PostScreen = (props) => {
         </View>
 
         <TextInput
-          style={styles.input}
+          style={theme.input}
           placeholder='Title'
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
-        <HelperText type="error" visible={titleErrors()}>
+        <HelperText type='error' visible={titleErrors()}>
           Title is required
         </HelperText>
 
         <TextInput
           required
-          style={styles.input}
+          style={theme.input}
           placeholder='Description'
           value={description}
           onChangeText={(text) => setDescription(text)}
         />
-        <HelperText type="error" visible={descriptionErrors()}>
+        <HelperText type='error' visible={descriptionErrors()}>
           Description is required
         </HelperText>
         <Tags setTags={setTags} tags={tags} />
@@ -116,8 +115,7 @@ export const PostScreen = (props) => {
           clear={clearMap}
         />
         <View>
-          <Button color="#fff" title="Post!" onPress={createPost} />
-          <View style={[styles.container, styles.horizontal]}></View>
+          <Button title='Post!' onPress={createPost} />
         </View>
       </KeyboardAwareScrollView>
     </View>

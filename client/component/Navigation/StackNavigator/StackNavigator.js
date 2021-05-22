@@ -7,11 +7,17 @@ import HomeGoogleMapView from '../../MapView/HomeGoogleMapView';
 import SinglePost from '../../SinglePost/SinglePost';
 import CommentView from '../../Comments/Comments';
 import EditPostScreen from '../../PostScreen/EditPostScreen/EditPostScreen';
+import theme from '../../../../CustomProps/Theme';
 
 const Stack = createStackNavigator();
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName='Home'>
+    <Stack.Navigator
+      initialRouteName='Home'
+      screenOptions={{
+        cardStyle: { backgroundColor: theme.backgroundColor },
+      }}
+    >
       <Stack.Screen
         name='Home'
         component={HomeScreen}
@@ -22,7 +28,12 @@ const HomeStackNavigator = () => {
 };
 const PostStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName='Post'>
+    <Stack.Navigator
+      initialRouteName='Post'
+      screenOptions={{
+        backgroundColor: theme.backgroundColor,
+      }}
+    >
       <Stack.Screen
         name='Post'
         component={PostScreen}
