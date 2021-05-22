@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './styles';
+import styles, { BadgedIcon } from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Text,
