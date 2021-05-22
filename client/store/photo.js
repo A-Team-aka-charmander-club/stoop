@@ -16,7 +16,7 @@ export const takePhoto = (photo) => {
 export const clearPhoto = () => {
   return {
     type: CLEAR_PHOTO,
-    photo: '',
+    photo: {},
   };
 };
 

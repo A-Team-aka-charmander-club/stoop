@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Callout,
-} from 'react-native-maps';
-import { View, Image, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
@@ -13,19 +15,12 @@ import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 
 export function HomeGoogleMapView(props) {
-  const [region, setRegion] = useState({
-    latitude: 40.751343151025615,
-    longitude: -74.00289693630044,
-    latitudeDelta: 0.0075,
-    longitudeDelta: 0.0075,
-  });
-
   installWebGeolocationPolyfill();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setRegion({
+        props.setRegion({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           latitudeDelta: 0.0075,
@@ -35,65 +30,68 @@ export function HomeGoogleMapView(props) {
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
-    props.navigation.addListener('focus', () => {
-      props.getCoordinates(region);
-    })
-
+    const mapFocus = props.navigation.addListener('focus', () => {
+      props.getCoordinates(props.region, props.tags);
+    });
+    mapFocus();
   }, [props.navigation]);
 
   const setNewRegion = (newRegion) => {
-    if (region.latitudeDelta !== newRegion.latitudeDelta) {
-      setRegion(newRegion)
-      props.getCoordinates(newRegion);
-    }
-  }
+    if (props.region.latitudeDelta !== newRegion.latitudeDelta) {
+      props.setRegion(newRegion);
+      props.getCoordinates(newRegion, props.tags);
 
-const onPressButton = (post) => {
-  props.getPost(post);
-  props.getPhoto(post.photos[0])
-  props.navigation.navigate('PostNav', { screen: 'SinglePost' });
-};
-return (
-  <SafeAreaView style={styles.container}>
-    <MapView
-      style={styles.map}
-      provider={PROVIDER_GOOGLE}
-      region={region}
-      showsUserLocation={true}
-      onRegionChangeComplete={setNewRegion}
-      zoomEnabled={true}>
-      {props.coordinates.map((post, index) => {
-        return (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: post.latitude,
-              longitude: post.longitude,
-            }}
-            title={post.title}
-            description={post.description}
-          // image={require('../../../assets/pin.png')}
-          // resizeMode="contain"
-          >
-            <Callout
-              onPress={() => onPressButton(post)}
-              style={styles.calloutButton}>
-              <Text>{post.title}</Text>
-              {post.photos[0] ? (
-                <Image
-                  source={{ url: post.photos[0].firebaseUrl }}
-                  style={styles.image}
-                />
-              ) : (
+    }
+  };
+
+  const onPressButton = (post) => {
+    props.getPost(post);
+    props.getPhoto(post.photos[0]);
+    props.navigation.navigate('PostNav', { screen: 'SinglePost' });
+  };
+  return (
+    <SafeAreaView style={styles.container}>
+      <MapView
+        style={styles.map}
+        provider={PROVIDER_GOOGLE}
+        region={props.region}
+        showsUserLocation={true}
+        onRegionChangeComplete={setNewRegion}
+        zoomEnabled={true}>
+
+        {props.coordinates.map((post, index) => {
+          return (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: post.latitude,
+                longitude: post.longitude,
+              }}
+              title={post.title}
+              description={post.description}
+              // image={require('../../../assets/pin.png')}
+              // resizeMode="contain"
+            >
+              <Callout
+                onPress={() => onPressButton(post)}
+                style={styles.calloutButton}>
+
+                <Text>{post.title}</Text>
+                {post.photos[0] ? (
+                  <Image
+                    source={{ url: post.photos[0].firebaseUrl }}
+                    style={styles.image}
+                  />
+                ) : (
                   <Text>''</Text>
                 )}
-            </Callout>
-          </Marker>
-        );
-      })}
-    </MapView>
-  </SafeAreaView>
-);
+              </Callout>
+            </Marker>
+          );
+        })}
+      </MapView>
+    </SafeAreaView>
+  );
 }
 const mapStateToProps = (state) => {
   return {
@@ -102,9 +100,10 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCoordinates: (region) => dispatch(getCoordinatesThunk(region)),
+    getCoordinates: (region, tags) =>
+      dispatch(getCoordinatesThunk(region, tags)),
     getPost: (post) => dispatch(getPost(post)),
-    getPhoto: (photo) => dispatch(takePhoto(photo))
+    getPhoto: (photo) => dispatch(takePhoto(photo)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeGoogleMapView);

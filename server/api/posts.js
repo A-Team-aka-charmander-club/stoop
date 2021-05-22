@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const {
-  models: { Photo, User, Post, Tag },
+  models: { Photo, User, Post, Tag, Comment },
 } = require('../db');
-const { isLoggedIn, isAdmin, verifyUser } = require('./gatekeepingMiddleware');
+const { isLoggedIn, verifyUser } = require('./gatekeepingMiddleware');
 
 module.exports = router;
 
@@ -51,6 +51,9 @@ router.post('/post', isLoggedIn, async (req, res, next) => {
           model: User,
           attributes: ['id'],
         },
+        {
+          model: Comment,
+        },
       ],
     });
 
@@ -80,11 +83,10 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
       where: {
         id: req.params.id,
       },
-      include: [{ model: Tag }, {model: Photo}],
+      include: [{ model: Tag }, { model: Photo }],
     });
 
     if (post) {
-
       const oldPhoto = post.photos[0];
 
       if (req.body.photo.firebaseUrl !== oldPhoto.firebaseUrl) {
@@ -127,6 +129,9 @@ router.put('/:id/:userId', verifyUser, async (req, res, next) => {
           {
             model: User,
             attributes: ['id'],
+          },
+          {
+            model: Comment,
           },
         ],
       });
