@@ -4,7 +4,6 @@ import {
   HomeStackNavigator,
   PostStackNavigator,
 } from '../StackNavigator/StackNavigator';
-import CameraModal from '../../CameraModal/CameraModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
@@ -13,7 +12,13 @@ import UserAccount from '../../UserAccount/UserAccount';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = (props) => {
+
+  // const handleTabPress = () => {
+  //   console.log(props.navigation)
+  //   props.navigation.popToTop();
+  //   props.navigation.navigate('PostNav', { screen: '' });
+  // }
   return (
     <Tab.Navigator
       initialRouteName='Home'
@@ -34,16 +39,6 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name='CameraModal'
-        component={CameraModal}
-        options={{
-          tabBarLabel: 'Search',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='telescope' size={24} color='black' />
-          ),
-        }}
-      />
-      <Tab.Screen
         name='PostNav'
         component={PostStackNavigator}
         unmountOnBlur={true}
@@ -60,6 +55,7 @@ const BottomTabNavigator = () => {
               color='black'
             />
           ),
+          // tabBarButton: handleTabPress
         }}
       />
       <Tab.Screen

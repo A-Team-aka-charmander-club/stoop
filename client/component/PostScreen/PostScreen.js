@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
-
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, Button } from 'react-native';
 import { connect } from 'react-redux';
@@ -25,9 +24,27 @@ export const PostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
-
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setTitle('');
+      setRegion({
+      latitude: 40.751343151025615,
+      longitude: -74.00289693630044,
+      latitudeDelta: 0.0075,
+      longitudeDelta: 0.0075,
+    }),
+    setDescription(''),
+    setLatitude(null),
+    setLongitude(null),
+    setClearMap(true),
+    setTags({ tag: '', tagsArray: [] }),
+    setErrMessage(''),
+    setVisible(false)
+    }
+  }, [props.navigation])
 
   const onDismissSnackBar = () => setVisible(false);
 
@@ -42,19 +59,16 @@ export const PostScreen = (props) => {
       setErrMessage('Photo')
       setVisible(true)
     } else {
-      setVisible(false)
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
       let photo = props.photo;
-      console.log(photo, 'photo')
       await props.submitPost({ post, photo, tags });
       props.clearPhoto();
       setTitle('');
       setDescription('');
       setClearMap(true);
-      props.removeTags();
       setTags({ tag: '', tagsArray: [] });
-
+      props.removeTags();
       props.navigation.navigate('SinglePost');
     }
   };
