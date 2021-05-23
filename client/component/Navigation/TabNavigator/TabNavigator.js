@@ -36,7 +36,7 @@ const BottomTabNavigator = (props) => {
         name='Home'
         component={HomeStackNavigator}
         options={{
-          // unmountOnBlur: true,
+          //unmountOnBlur: true,
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <Fontisto name='ship' size={24} color='black' />
@@ -46,12 +46,12 @@ const BottomTabNavigator = (props) => {
       <Tab.Screen
         name='PostNav'
         component={PostStackNavigator}
-        // unmountOnBlur={true}
+        unmountOnBlur={true}
         listeners={({ navigation }) => ({
           blur: () => navigation.setParams({ screen: undefined }),
         })}
         options={{
-          // unmountOnBlur: true,
+          unmountOnBlur: true,
           tabBarLabel: 'Add Treasure',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
