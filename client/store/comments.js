@@ -13,7 +13,6 @@ const DELETE_COMMENT = 'DELETE_COMMENT';
 
 // ACTION CREATORS
 export const addComment = (comment) => {
-  console.log('ACTION CREATOR COMMENT: ', comment);
   return {
     type: ADD_COMMENT,
     comment,
@@ -42,7 +41,7 @@ export const createComment = (comment, postId, userId) => {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.post(
-        `http://192.168.1.6:8080/api/comments/${postId}/${userId}`,
+        `http://localhost:8080/api/comments/${postId}/${userId}`,
         { comment },
         {
           headers: { authorization: user.uid },
@@ -59,7 +58,7 @@ export const grabComment = (postId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://192.168.1.152:8080/api/comments/${postId}`,
+        `http://localhost:8080/api/comments/${postId}`,
         {
           headers: { authorization: SECRET },
         }
@@ -71,14 +70,14 @@ export const grabComment = (postId) => {
   };
 };
 
-export const destroyComment = (commentId) => {
+export const destroyComment = (userId, commentId) => {
   return async (dispatch) => {
     try {
-      const user = firebase.auth().currentUser.uid;
+      const user = firebase.auth().currentUser;
       const { data } = await axios.delete(
-        `http://192.168.1.152:8080/api/comments/${commentId}`,
+        `http://localhost:8080/api/comments/${userId}/${commentId}`,
         {
-          headers: { authorization: user },
+          headers: { authorization: user.uid },
         }
       );
       if (data) {

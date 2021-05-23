@@ -88,7 +88,9 @@ export const SinglePost = (props) => {
                   flexWrap: 'wrap',
                 }}>
                 {CommentIcon}{' '}
-                <Text style={{ flex: 1, fontSize: 22 }}>Comments</Text>
+                <Text style={{ flex: 1, fontSize: 22, marginBottom: 10 }}>
+                  Comments
+                </Text>
               </Title>
             </ListItem>
             {/* <TouchableOpacity

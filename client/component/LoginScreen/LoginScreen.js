@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import theme from '../../../CustomProps/Theme';
 import { firebase } from '../../../src/firebase/config';
 import { createOrFindUserThunk } from '../../store/user';
 import { connect } from 'react-redux';
@@ -14,12 +22,12 @@ export function LoginScreen({ navigation, fetchUser }) {
   useEffect(() => {
     setEmail('');
     setPassword('');
-  }, [])
+  }, []);
 
   const onFooterLinkPress = () => {
     navigation.navigate('Registration');
   };
-  
+
   const onLoginPress = () => {
     firebase
       .auth()
@@ -45,13 +53,13 @@ export function LoginScreen({ navigation, fetchUser }) {
       });
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={theme.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps='always'
       >
         <Image
-          style={styles.logo}
+          style={theme.logoLarge}
           source={require('../../../assets/trashPanda.png')}
         />
         <TextInput
@@ -73,8 +81,12 @@ export function LoginScreen({ navigation, fetchUser }) {
           underlineColorAndroid='transparent'
           autoCapitalize='none'
         />
-        <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Log in</Text>
+        {/* this is log-in button */}
+        <TouchableOpacity
+          style={theme.buttonLarge}
+          onPress={() => onLoginPress()}
+        >
+          <Text style={theme.buttonTitleLarge}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
@@ -85,7 +97,7 @@ export function LoginScreen({ navigation, fetchUser }) {
           </Text>
         </View>
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -40,7 +40,7 @@ export function CommentView(props) {
     setComment('');
   };
   const handleDelete = (comment) => {
-    props.deleteComment(comment.id);
+    props.deleteComment(comment.userId, comment.id);
   };
   useEffect(() => {
     props.getComment(props.post.id);
@@ -52,7 +52,9 @@ export function CommentView(props) {
 
   const renderItem = ({ item }) => {
     return (
-      <Card style={styles.commentCard}>
+      <Card
+      // style={styles.commentCard}
+      >
         <Card.Content>
           <Text>{item.content}</Text>
           <Divider />
@@ -87,9 +89,10 @@ export function CommentView(props) {
         {/* replace this block w/flat list + renderitem  */}
         <KeyboardAvoidingView
           style={styles.keyboard}
-          keyboardShouldPersistTaps="always">
+          keyboardShouldPersistTaps='always'
+        >
           <TextInput
-            placeholder="Add a comment..."
+            placeholder='Add a comment...'
             style={styles.input}
             value={comment}
             onChangeText={(text) => setComment(text)} // handle input changes
@@ -117,7 +120,8 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
-    deleteComment: (commentId) => dispatch(destroyComment(commentId)),
+    deleteComment: (userId, commentId) =>
+      dispatch(destroyComment(userId, commentId)),
   };
 };
 
