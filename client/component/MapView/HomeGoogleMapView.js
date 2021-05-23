@@ -25,11 +25,10 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
 
-    const mapFocus = props.navigation.addListener('focus', () => {
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
       props.getCoordinates(props.region, props.tags);
     });
-
-    mapFocus();
+    unsubscribe()
   }, [props.navigation]);
 
   const setNewRegion = (newRegion) => {
@@ -66,7 +65,6 @@ export function HomeGoogleMapView(props) {
               }}
               title={post.title}
               description={post.description}
-              image={require('../../../assets/x.png')}
               resizeMode='contain'
             >
               <Callout

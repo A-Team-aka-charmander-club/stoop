@@ -50,6 +50,7 @@ export default function GoogleMapView(props) {
         zoomEnabled={true}
       >
         <Marker
+          image={require('../../../assets/x.png')}
           draggable={true}
           coordinate={{
             latitude: props.region.latitude,
