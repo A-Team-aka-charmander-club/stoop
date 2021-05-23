@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
-  // TouchableHighlight,
-  TouchableOpacity,
-  ScrollView,
   TextInput,
   SafeAreaView,
   FlatList,
-  KeyboardAvoidingView,
+  Text,
+  LogBox
 } from 'react-native';
 import { Snackbar } from 'react-native-paper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TimeAgo from 'react-native-timeago';
-//import Icon from 'react-native-vector-icons';
 import styles from './styles';
 import {
   createComment,
@@ -25,12 +21,8 @@ import {
 } from '../../store/comments';
 import {
   Divider,
-  Text,
-  List,
-  Paragraph,
   Card,
-  Title,
-  Button,
+  Button
 } from 'react-native-paper';
 
 export function CommentView(props) {
@@ -38,6 +30,12 @@ export function CommentView(props) {
   const [visible, setVisible] = useState(false);
 
   const onDismissSnackBar = () => setVisible(false);
+
+  useEffect(() => {
+    setComment('')
+    props.getComment(props.post.id);
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, [props.comments.length])
 
   const handleSubmit = () => {
     if (!comment.length) {
@@ -47,9 +45,11 @@ export function CommentView(props) {
       setComment('');
     }
   };
+
   const handleDelete = (comment) => {
-    props.deleteComment(comment.userId, comment.id);
+    props.deleteComment(comment.id);
   };
+
   useEffect(() => {
     props.getComment(props.post.id);
     setVisible(false);
@@ -61,9 +61,7 @@ export function CommentView(props) {
 
   const renderItem = ({ item }) => {
     return (
-      <Card
-      // style={styles.commentCard}
-      >
+      <Card style={styles.commentCard}>
         <Card.Content>
           <Text>{item.content}</Text>
           <Divider />
@@ -76,35 +74,27 @@ export function CommentView(props) {
       </Card>
     );
   };
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={{ flex: 1 }}>
-        {/* <View style={styles.commentContainer}> */}
-        <View>
-          {/* {props.comments.length > 0 && props.comments */}
-          <FlatList
-            style={{
-              padding: 20,
-              // height: 100,
-              automaticallyAdjustContentInsets: true,
-            }}
-            data={props.comments}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            ListHeaderComponent={getHeader}
-            // ListFooterComponent={getFooter}
-          />
-        </View>
-        {/* replace this block w/flat list + renderitem  */}
-        <KeyboardAvoidingView
-          style={styles.keyboard}
-          keyboardShouldPersistTaps="always">
-          <TextInput
-            placeholder="Add a comment..."
-            style={styles.input}
-            value={comment}
-            onChangeText={(text) => setComment(text)} // handle input changes
-          />
+    <SafeAreaView >
+      <KeyboardAwareScrollView>
+        <SafeAreaView style={styles.inner}>
+            <FlatList horizontal={false}
+              style={{
+                padding: 20,
+                automaticallyAdjustContentInsets: true,
+              }}
+              data={props.comments}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+              ListHeaderComponent={getHeader}
+            />
+
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.inner}>
+              <TextInput placeholder="Add a comment..." style={styles.textInput} value={comment} onChangeText={(text) => setComment(text)} />
+            </View>
+          </TouchableWithoutFeedback>
           <View>
             <Snackbar
               style={styles.snackbar}
@@ -123,9 +113,9 @@ export function CommentView(props) {
               </Button>
             )}
           </View>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+        </SafeAreaView>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -142,11 +132,8 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
-    deleteComment: (userId, commentId) =>
-      dispatch(destroyComment(userId, commentId)),
+    deleteComment: (commentId) => dispatch(destroyComment(commentId)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
-
-//onPress={() => handleDelete(comment)}

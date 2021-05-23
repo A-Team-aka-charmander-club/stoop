@@ -1,18 +1,8 @@
 import { StyleSheet, PixelRatio } from 'react-native';
 
 const styles = StyleSheet.create({
-  commentContainer: {
-    paddingRight: 10,
-    marginBottom: 30,
-    paddingBottom: 50,
-    paddingTop: 30,
+  container: {
     flex: 1,
-    alignItems: 'center',
-    flexDirection: 'column',
-    //flexDirection: 'row',
-  },
-  singleComment: {
-    padding: 10,
   },
   commentCard: {
     margin: 5,
@@ -184,23 +174,8 @@ const styles = StyleSheet.create({
     color: '#424242',
     //position: 'absolute',
     //bottom: 0,
+    margin: 2,
   },
-  keyboard: {
-    flex: 1,
-    width: '100%',
-    position: 'absolute',
-    bottom: 0,
-    zIndex: 2,
-    backgroundColor: '#FFFFFF',
-  },
-  scrollView: {
-    backgroundColor: '#788eec',
-    paddingBottom: 20,
-  },
-  // stickyInput: {
-  //   position: 'absolute',
-  //   bottom: 0,
-  // },
   buttonStyle: {
     backgroundColor: '#788eec',
     marginLeft: 15,
@@ -216,6 +191,36 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textTransform: 'uppercase',
   },
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: "space-around"
+  },
+  header: {
+    fontSize: 36,
+    marginBottom: 48
+  },
+  textInput: {
+    height: 20,
+    borderColor: "#000000",
+    borderBottomWidth: 1
+  },
+  btnContainer: {
+    backgroundColor: "white",
+    marginTop: 12
+  },
+  button: {
+    backgroundColor: '#788eec',
+    marginTop: 0,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  }
 });
 
 export default styles;
