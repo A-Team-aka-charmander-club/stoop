@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-<<<<<<< HEAD
 import {
   Text,
   View,
@@ -9,10 +8,8 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
-=======
-import { Text, View, Image, Button, TouchableWithoutFeedback, Keyboard, TouchableOpacity} from 'react-native';
->>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -164,7 +161,8 @@ export const PostScreen = (props) => {
               {!visible && (
                 <TouchableOpacity
                   style={theme.buttonLarge}
-                  onPress={() => createPost()}>
+                  onPress={() => createPost()}
+                >
                   <Text style={theme.buttonTitleLarge}>Post</Text>
                 </TouchableOpacity>
               )}
