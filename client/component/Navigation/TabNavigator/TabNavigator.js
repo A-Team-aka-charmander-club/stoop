@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-
+import theme from '../../../../CustomProps/Theme';
 import UserAccount from '../../UserAccount/UserAccount';
 
 const Tab = createBottomTabNavigator();
@@ -18,24 +18,33 @@ const BottomTabNavigator = (props) => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName='Home'
       tabBarOptions={{
         activeTintColor: '#e91e63',
         showLabel: true,
-      }}>
+      }}
+      screenOptions={{
+        mode: 'card',
+        headerMode: 'float',
+        cardStyle: {
+          backgroundColor: theme.backgroundColor,
+          footerView: theme.footerView,
+        },
+      }}
+    >
       <Tab.Screen
-        name="Home"
+        name='Home'
         component={HomeStackNavigator}
         options={{
           unmountOnBlur: true,
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <Fontisto name="ship" size={24} color="black" />
+            <Fontisto name='ship' size={24} color='black' />
           ),
         }}
       />
       <Tab.Screen
-        name="PostNav"
+        name='PostNav'
         component={PostStackNavigator}
         unmountOnBlur={true}
         listeners={({ navigation }) => ({
@@ -46,9 +55,9 @@ const BottomTabNavigator = (props) => {
           tabBarLabel: 'Add Treasure',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="treasure-chest"
+              name='treasure-chest'
               size={24}
-              color="black"
+              color='black'
             />
           ),
           tabBarButton: (props) => (
@@ -60,12 +69,12 @@ const BottomTabNavigator = (props) => {
         }}
       />
       <Tab.Screen
-        name="Account"
+        name='Account'
         component={UserAccount}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="skull-crossbones" size={24} color="black" />
+            <FontAwesome5 name='skull-crossbones' size={24} color='black' />
           ),
         }}
       />

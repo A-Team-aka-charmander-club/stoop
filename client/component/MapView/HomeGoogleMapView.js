@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
-import {
-  Image,
-  Text,
-  SafeAreaView,
-} from 'react-native';
+import { Image, Text, SafeAreaView, Dimensions } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
+//import Image from 'react-native-scalable-image';
 
 export function HomeGoogleMapView(props) {
-
   installWebGeolocationPolyfill();
 
   useEffect(() => {
@@ -58,11 +54,12 @@ export function HomeGoogleMapView(props) {
         region={props.region}
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
-        zoomEnabled={true}>
+        zoomEnabled={true}
+      >
         {props.coordinates.map((post, index) => {
           return (
             <Marker
-              key={index + ":" + post.latitude + ":" + post.longitude}
+              key={index + ':' + post.latitude + ':' + post.longitude}
               coordinate={{
                 latitude: post.latitude,
                 longitude: post.longitude,
@@ -70,12 +67,12 @@ export function HomeGoogleMapView(props) {
               title={post.title}
               description={post.description}
               image={require('../../../assets/x.png')}
-              resizeMode="contain"
+              resizeMode='contain'
             >
               <Callout
                 onPress={() => onPressButton(post)}
-                style={styles.calloutButton}>
-
+                style={styles.calloutButton}
+              >
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image
