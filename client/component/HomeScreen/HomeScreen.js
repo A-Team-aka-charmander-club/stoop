@@ -10,9 +10,9 @@ import {
   SafeAreaView,
   StickyHeaderComponent,
 } from 'react-native';
-
-import { ListItem, Avatar } from 'react-native-elements';
-import { Chip } from 'react-native-paper';
+import TimeAgo from 'react-native-timeago';
+import { ListItem } from 'react-native-elements';
+import { Chip, Card, Avatar, Title, Paragraph } from 'react-native-paper';
 import styles from './styles';
 import { connect } from 'react-redux';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
@@ -50,48 +50,58 @@ export function HomeScreen(props) {
     }
   }
 
-  const renderItem = (post) => {
-    console.log('POST', post);
+  const renderItem = ({ item, separators }) => {
+    // console.log('POST IN RENDER ITEM: ', item);
     return (
       <Card
-      // onPress={() => {
-      //   props.getPost(post);
-      //   props.getPhoto(post.photos[0]);
-      //   props.navigation.navigate('PostNav', {
-      //     screen: 'SinglePost',
-      //   });
-      // }}
+        style={styles.scrollCard}
+        onPress={() => {
+          props.getPost(item);
+          props.getPhoto(item.photo);
+          props.navigation.navigate('PostNav', {
+            screen: 'SinglePost',
+          });
+        }}
       >
-        <Card.Content>
-          <Card.Title
-            title='99999'
-            // subtitle={post.tags.map((tag, index) => {
-            //   const tagId = tag.id;
-            //   let selected = false;
-            //   if (tags.includes(tagId)) {
-            //     selected = true;
-            //   }
-            //   return (
-            //     <Chip
-            //       selectedColor='#3ca897'
-            //       selected={selected}
-            //       icon='tag'
-            //       key={index}
-            //       onPress={() => onTagPress(tagId)}
-            //     >
-            //       {tag.name}
-            //     </Chip>
-            //   );
-            // })}
-            // left={() => <Avatar source={{ url: post.photos[0].firebaseUrl }} />}
+        <Card.Content style={styles.cardLayout}>
+          <Avatar.Image
+            source={{ url: item.photos[0].firebaseUrl }}
+            style={styles.avatar}
           />
-          <Text>!!!!!!!!!!!!!!!!!!!!</Text>
+
+          <View>
+            <Title styles={styles.title}>{item.title}</Title>
+            <TimeAgo time={item.createdAt} style={styles.timeAgo} />
+          </View>
+          <View>
+            {item.tags.map((tag, index) => {
+              const tagId = tag.id;
+              let selected = false;
+              if (tags.includes(tagId)) {
+                selected = true;
+              }
+              return (
+                <Chip
+                  mode='flat'
+                  size={10}
+                  style={{ backgroundColor: theme.colors.accent }}
+                  // selectedColor='#4169E1'
+                  selected={selected}
+                  icon='tag'
+                  key={index}
+                  textStyle={styles.tagText}
+                  onPress={() => onTagPress(tagId)}
+                >
+                  {tag.name}
+                </Chip>
+              );
+            })}
+          </View>
         </Card.Content>
       </Card>
     );
   };
-  // console.log('PROPS.POST', props.post);
-  // console.log('PROPS.COORDINATES', props.coordinates);
+
   return (
     <SafeAreaView style={styles.container}>
       <HomeGoogleMapView
@@ -105,59 +115,11 @@ export function HomeScreen(props) {
         {<Text style={styles.titleMidScreenHeader}>Nearby Treasure</Text>}
       </View>
       <FlatList
-        // style={{
-        //   padding: 20,
-        //   // height: 100,
-        //   automaticallyAdjustContentInsets: true,
-        // }}
         data={props.coordinates}
         renderItem={renderItem}
-        // keyExtractor={(post) => post.id.toString()}
-        // stickyHeaderIndices={[0]}
-        // contentContainerStyle={styles.contenContainer}
-      >
-        {/* {props.coordinates.map((post, index) => {
-          return (
-            <ListItem
-              key={index}
-              // style={styles.itemText}
-              bottomDivider
-              onPress={() => {
-                props.getPost(post);
-                props.getPhoto(post.photos[0]);
-                props.navigation.navigate('PostNav', {
-                  screen: 'SinglePost',
-                });
-              }}
-            >
-              {/* <Avatar source={{ url: post.photos[0].firebaseUrl }} /> */}
-        {/* <ListItem.Content>
-                <ListItem.Title>{post.title}</ListItem.Title>
-                <ListItem.Subtitle>
-                  {post.tags.map((tag, index) => {
-                    const tagId = tag.id;
-                    let selected = false;
-                    if (tags.includes(tagId)) {
-                      selected = true;
-                    }
-                    return (
-                      <Chip
-                        selectedColor='#3ca897'
-                        selected={selected}
-                        icon='tag'
-                        key={index}
-                        onPress={() => onTagPress(tagId)}
-                      >
-                        {tag.name}
-                      </Chip>
-                    );
-                  })}
-                </ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem> */}
-        {/* ); */}
-        {/* })} */}
-      </FlatList>
+        keyExtractor={(post) => post.id.toString()}
+        contentContainerStyle={styles.contenContainer}
+      ></FlatList>
     </SafeAreaView>
   );
 }
