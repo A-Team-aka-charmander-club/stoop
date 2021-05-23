@@ -46,15 +46,7 @@ export const createPostThunk = (post) => {
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
-<<<<<<< HEAD
-        `http://localhost:8080/api/posts/post`,
-=======
-<<<<<<< HEAD
-        `http://localhost:8080/api/posts/post`,
-=======
-        `http://192.168.1.152:8080/api/posts/post`,
->>>>>>> 9cd67d795a3f274e435aea50baa2a7acc7eab64f
->>>>>>> main
+        `http://192.168.1.6:8080/api/posts/post`,
         post,
         {
           headers: { authorization: user.uid },
@@ -73,15 +65,7 @@ export const destroyPost = (postId, navigation, userId) => {
       const user = firebase.auth().currentUser;
 
       const { data } = await axios.delete(
-<<<<<<< HEAD
-        `http://localhost:8080/api/posts/${postId}/${userId}`,
-=======
-<<<<<<< HEAD
-        `http://localhost:8080/api/posts/${postId}/${userId}`,
-=======
-        `http://192.168.1.152:8080/api/posts/${postId}/${userId}`,
->>>>>>> 9cd67d795a3f274e435aea50baa2a7acc7eab64f
->>>>>>> main
+        `http://192.168.1.6:8080/api/posts/${postId}/${userId}`,
         {
           headers: { authorization: user.uid },
         }
@@ -103,15 +87,7 @@ export const updatePost = (post, userId, postId) => {
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.put(
-<<<<<<< HEAD
-        `http://localhost:8080/api/posts/${postId}/${userId}`,
-=======
-<<<<<<< HEAD
-        `http://localhost:8080/api/posts/${postId}/${userId}`,
-=======
-        `http://192.168.1.152:8080/api/posts/${postId}/${userId}`,
->>>>>>> 9cd67d795a3f274e435aea50baa2a7acc7eab64f
->>>>>>> main
+        `http://192.168.1.6:8080/api/posts/${postId}/${userId}`,
         post,
         {
           headers: { authorization: user.uid },
@@ -135,7 +111,7 @@ export default function postReducer(state = initState, action) {
     case EDIT_POST:
       return action.post;
     case DELETE_POST:
-      return initState;
+      return state;
     default:
       return state;
   }

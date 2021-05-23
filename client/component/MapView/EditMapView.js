@@ -30,6 +30,7 @@ export default function EditMapView(props) {
         zoomEnabled={true}>
         <Marker
           draggable={true}
+          image={require('../../../assets/x.png')}
           coordinate={{
             latitude: props.region.latitude,
             longitude: props.region.longitude,

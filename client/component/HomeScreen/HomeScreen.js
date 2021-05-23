@@ -3,23 +3,18 @@ import theme from '../../../CustomProps/Theme';
 import 'react-native-get-random-values';
 import {
   View,
-  Animated,
-  TouchableOpacity,
   Text,
   ScrollView,
   SafeAreaView,
-  StickyHeaderComponent,
 } from 'react-native';
-import { AppLoading } from 'expo-app-loading';
 import { ListItem, Avatar } from 'react-native-elements';
-import { Chip, Banner } from 'react-native-paper';
+import { Chip } from 'react-native-paper';
 import styles from './styles';
 import { connect } from 'react-redux';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 import { getCoordinatesThunk } from '../../store/coordinates';
-import { useFonts, Bangers_400Regular } from '@expo-google-fonts/bangers';
 
 export function HomeScreen(props) {
   const [tags, setTags] = useState([]);
