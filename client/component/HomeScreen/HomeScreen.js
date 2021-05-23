@@ -6,11 +6,11 @@ import {
   Animated,
   TouchableOpacity,
   Text,
-  ScrollView,
+  FlatList,
   SafeAreaView,
   StickyHeaderComponent,
 } from 'react-native';
-import { AppLoading } from 'expo-app-loading';
+
 import { ListItem, Avatar } from 'react-native-elements';
 import { Chip, Banner } from 'react-native-paper';
 import styles from './styles';
@@ -19,7 +19,6 @@ import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 import { getCoordinatesThunk } from '../../store/coordinates';
-import { useFonts, Bangers_400Regular } from '@expo-google-fonts/bangers';
 
 export function HomeScreen(props) {
   const [tags, setTags] = useState([]);
@@ -50,66 +49,117 @@ export function HomeScreen(props) {
       props.getCoordinates(region, newArray);
     }
   }
-  {
-    return (
-      <SafeAreaView style={styles.container}>
-        <HomeGoogleMapView
-          navigation={props.navigation}
-          region={region}
-          setRegion={setRegion}
-          tags={tags}
-          style={{ margin: 0 }}
-        />
-        <ScrollView style={styles.scrollView} stickyHeaderIndices={[0]}>
-          <View style={styles.midScreenHeader}>
-            {<Text style={styles.titleMidScreenHeader}>Nearby Treasure</Text>}
-          </View>
 
-          {props.coordinates.map((post, index) => {
-            return (
-              <ListItem
-                key={index}
-                // style={styles.itemText}
-                bottomDivider
-                onPress={() => {
-                  props.getPost(post);
-                  props.getPhoto(post.photos[0]);
-                  props.navigation.navigate('PostNav', {
-                    screen: 'SinglePost',
-                  });
-                }}
-              >
-                <Avatar source={{ url: post.photos[0].firebaseUrl }} />
-                <ListItem.Content>
-                  <ListItem.Title>{post.title}</ListItem.Title>
-                  <ListItem.Subtitle>
-                    {post.tags.map((tag, index) => {
-                      const tagId = tag.id;
-                      let selected = false;
-                      if (tags.includes(tagId)) {
-                        selected = true;
-                      }
-                      return (
-                        <Chip
-                          selectedColor='#3ca897'
-                          selected={selected}
-                          icon='tag'
-                          key={index}
-                          onPress={() => onTagPress(tagId)}
-                        >
-                          {tag.name}
-                        </Chip>
-                      );
-                    })}
-                  </ListItem.Subtitle>
-                </ListItem.Content>
-              </ListItem>
-            );
-          })}
-        </ScrollView>
-      </SafeAreaView>
+  const renderItem = (post) => {
+    console.log('POST', post);
+    return (
+      <Card
+      // onPress={() => {
+      //   props.getPost(post);
+      //   props.getPhoto(post.photos[0]);
+      //   props.navigation.navigate('PostNav', {
+      //     screen: 'SinglePost',
+      //   });
+      // }}
+      >
+        <Card.Content>
+          <Card.Title
+            title='99999'
+            // subtitle={post.tags.map((tag, index) => {
+            //   const tagId = tag.id;
+            //   let selected = false;
+            //   if (tags.includes(tagId)) {
+            //     selected = true;
+            //   }
+            //   return (
+            //     <Chip
+            //       selectedColor='#3ca897'
+            //       selected={selected}
+            //       icon='tag'
+            //       key={index}
+            //       onPress={() => onTagPress(tagId)}
+            //     >
+            //       {tag.name}
+            //     </Chip>
+            //   );
+            // })}
+            // left={() => <Avatar source={{ url: post.photos[0].firebaseUrl }} />}
+          />
+          <Text>!!!!!!!!!!!!!!!!!!!!</Text>
+        </Card.Content>
+      </Card>
     );
-  }
+  };
+  // console.log('PROPS.POST', props.post);
+  // console.log('PROPS.COORDINATES', props.coordinates);
+  return (
+    <SafeAreaView style={styles.container}>
+      <HomeGoogleMapView
+        navigation={props.navigation}
+        region={region}
+        setRegion={setRegion}
+        tags={tags}
+        style={{ margin: 0 }}
+      />
+      <View style={styles.midScreenHeader}>
+        {<Text style={styles.titleMidScreenHeader}>Nearby Treasure</Text>}
+      </View>
+      <FlatList
+        // style={{
+        //   padding: 20,
+        //   // height: 100,
+        //   automaticallyAdjustContentInsets: true,
+        // }}
+        data={props.coordinates}
+        renderItme={renderItem}
+        // keyExtractor={(post) => post.id.toString()}
+        // stickyHeaderIndices={[0]}
+        // contentContainerStyle={styles.contenContainer}
+      >
+        {/* {props.coordinates.map((post, index) => {
+          return (
+            <ListItem
+              key={index}
+              // style={styles.itemText}
+              bottomDivider
+              onPress={() => {
+                props.getPost(post);
+                props.getPhoto(post.photos[0]);
+                props.navigation.navigate('PostNav', {
+                  screen: 'SinglePost',
+                });
+              }}
+            >
+              {/* <Avatar source={{ url: post.photos[0].firebaseUrl }} /> */}
+        {/* <ListItem.Content>
+                <ListItem.Title>{post.title}</ListItem.Title>
+                <ListItem.Subtitle>
+                  {post.tags.map((tag, index) => {
+                    const tagId = tag.id;
+                    let selected = false;
+                    if (tags.includes(tagId)) {
+                      selected = true;
+                    }
+                    return (
+                      <Chip
+                        selectedColor='#3ca897'
+                        selected={selected}
+                        icon='tag'
+                        key={index}
+                        onPress={() => onTagPress(tagId)}
+                      >
+                        {tag.name}
+                      </Chip>
+                    );
+                  })}
+                </ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem> */}
+        {/* ); */}
+        {/* })} */} */}
+      </FlatList>
+    </SafeAreaView>
+  );
 }
 
 const mapStateToProps = (state) => {

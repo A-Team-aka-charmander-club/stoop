@@ -11,6 +11,10 @@ export default StyleSheet.create({
     height: 48,
     backgroundColor: theme.colors.accent,
   },
+  contenContainer: {
+    backgroundColor: theme.colors.accent,
+    borderColor: theme.colors.iconColor,
+  },
   titleMidScreenHeader: {
     height: 48,
     overflow: 'hidden',
