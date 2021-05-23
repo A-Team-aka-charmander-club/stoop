@@ -77,67 +77,45 @@ export const PostScreen = (props) => {
     }
   };
   return (
-<<<<<<< HEAD
-    <View style={styles.container} style={styles.horizontal}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-      >
-        <Text>Create Post</Text>
-        {/* {props.photo.firebaseUrl ? (
-          <Image
-            source={{ url: props.photo.firebaseUrl }}
-            style={styles.thumbnail}
-          />
-        ) : (
-          <ActivityIndicator size='large' color='#00ff00' />
-        )} */}
-        <View style={{ flexDirection: 'row' }}>
-          <View style={styles.buttonStyle}>
-            <Button
-              color='#fff'
-              title='Open Camera'
-              onPress={async () => await openCameraAsync(props)}
-=======
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container} style={styles.horizontal}>
         <KeyboardAwareScrollView
           style={{ flex: 1, width: '100%' }}
-          keyboardShouldPersistTaps="always">
+          keyboardShouldPersistTaps='always'
+        >
           <Text>Create Post</Text>
           {props.photo.firebaseUrl && (
             <Image
               source={{ url: props.photo.firebaseUrl }}
               style={styles.thumbnail}
->>>>>>> main
             />
           )}
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.buttonStyle}>
               <Button
-                color="#fff"
-                title="Open Camera"
+                color='#fff'
+                title='Open Camera'
                 onPress={async () => await openCameraAsync(props)}
               />
             </View>
             <View style={styles.buttonStyle}>
               <Button
-                color="#fff"
-                title="Upload Photo"
+                color='#fff'
+                title='Upload Photo'
                 onPress={async () => await openImagePickerAsync(props)}
               />
             </View>
           </View>
           <TextInput
             style={styles.input}
-            placeholder="Title"
+            placeholder='Title'
             value={title}
             onChangeText={(text) => setTitle(text)}
           />
           <TextInput
             required
             style={styles.input}
-            placeholder="Description"
+            placeholder='Description'
             value={description}
             onChangeText={(text) => setDescription(text)}
           />
@@ -160,56 +138,17 @@ export const PostScreen = (props) => {
                 color: '#f8f5f2',
                 label: 'Dismiss',
                 onPress: onDismissSnackBar,
-              }}>
+              }}
+            >
               <Text>{errMessage} is required</Text>
             </Snackbar>
             {!visible && (
-              <Button color="blue" title="Post!" onPress={createPost} />
+              <Button color='blue' title='Post!' onPress={createPost} />
             )}
           </View>
-<<<<<<< HEAD
-        </View>
-
-        <TextInput
-          style={theme.input}
-          placeholder='Title'
-          value={title}
-          onChangeText={(text) => setTitle(text)}
-        />
-        <HelperText type='error' visible={titleErrors()}>
-          Title is required
-        </HelperText>
-
-        <TextInput
-          required
-          style={theme.input}
-          placeholder='Description'
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-        />
-        <HelperText type='error' visible={descriptionErrors()}>
-          Description is required
-        </HelperText>
-        <Tags setTags={setTags} tags={tags} />
-        <GoogleMapView
-          region={region}
-          clear={clearMap}
-          setRegion={setRegion}
-          setLatitude={setLatitude}
-          setLongitude={setLongitude}
-          setClearMap={setClearMap}
-          clear={clearMap}
-        />
-        <View>
-          <Button title='Post!' onPress={createPost} />
-        </View>
-      </KeyboardAwareScrollView>
-    </View>
-=======
         </KeyboardAwareScrollView>
       </View>
     </TouchableWithoutFeedback>
->>>>>>> main
   );
 };
 const mapStateToProps = (state) => {
