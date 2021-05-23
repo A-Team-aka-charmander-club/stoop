@@ -20,7 +20,6 @@ export const clearPhoto = () => {
   };
 };
 
-// thunks
 export const addPhotoThunk = (firebasePhotoId, photoUrl) => {
   return async (dispatch) => {
     try {

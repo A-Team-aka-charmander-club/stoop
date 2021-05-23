@@ -7,16 +7,19 @@ import {
   Image,
   Button,
   TouchableWithoutFeedback,
-  Keyboard,
+  Keyboard, 
+  TouchableOpacity
 } from 'react-native';
+import theme from '../../../../CustomProps/Theme';
 import { connect } from 'react-redux';
 import EditMapView from '../../MapView/EditMapView';
 import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
 import { takePhoto, clearPhoto } from '../../../store/photo';
 import { updatePost } from '../../../store/post';
 import { Snackbar, TextInput } from 'react-native-paper';
-import { removeTags } from '../../../store/tag';
+import { removeTags, addTags } from '../../../store/tag';
 import Tags from '../Tags/Tags';
+
 export const EditPostScreen = (props) => {
   const [title, setTitle] = useState(props.post.title);
   const [description, setDescription] = useState(props.post.description);
@@ -34,6 +37,7 @@ export const EditPostScreen = (props) => {
   });
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     setTitle(props.post.title);
     setRegion({
@@ -45,14 +49,19 @@ export const EditPostScreen = (props) => {
       setDescription(props.post.description),
       setLatitude(props.post.latitude),
       setLongitude(props.post.longitude),
+
       setTags({
         tag: '',
         tagsArray: props.post.tags.map((tag) => tag.name),
       }),
-      setErrMessage(''),
+      props.addTags(props.post.tags.map((tag) => tag.name),);
+
+    setErrMessage(''),
       setVisible(false);
   }, [props.navigation]);
+
   const onDismissSnackBar = () => setVisible(false);
+
   const changePost = async () => {
     if (!title.length) {
       setErrMessage('Title');
@@ -70,6 +79,7 @@ export const EditPostScreen = (props) => {
       }
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
+
       await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
       props.clearPhoto();
       props.removeTags();
@@ -82,59 +92,65 @@ export const EditPostScreen = (props) => {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Text>Update Post</Text>
-          <Image
-            source={{
-              url: props.photo.firebaseUrl,
-            }}
-            style={styles.thumbnail}
-          />
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.buttonStyle}>
-              <Button
-                title="Open Camera"
-                onPress={async () => await openCameraAsync(props)}
-              />
-            </View>
-            <View style={styles.buttonStyle}>
-              <Button
-                title="Upload Photo"
-                onPress={async () => await openImagePickerAsync(props)}
-              />
-            </View>
-          </View>
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Description"
-            value={description}
-            onChangeText={(text) => setDescription(text)}
-          />
-          <Tags setTags={setTags} tags={tags} />
-          <EditMapView
-            region={region}
-            setRegion={setRegion}
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-          />
           <View>
-            <Snackbar
-              visible={visible}
-              onDismiss={onDismissSnackBar}
-              action={{
-                label: 'Dismiss',
-                onPress: onDismissSnackBar,
-              }}>
-              <Text>{errMessage} is required</Text>
-            </Snackbar>
-            {!visible && (
-              <Button color="blue" title="Update!" onPress={changePost} />
-            )}
+            <Text>Update Post</Text>
+            <Image
+              source={{
+                url: props.photo.firebaseUrl,
+              }}
+              style={styles.thumbnail}
+            />
+            <View style={{ flexDirection: 'row' }}>
+              <View style={styles.buttonStyle}>
+                <Button
+                  title="Open Camera"
+                  onPress={async () => await openCameraAsync(props)}
+                />
+              </View>
+              <View style={styles.buttonStyle}>
+                <Button
+                  title="Upload Photo"
+                  onPress={async () => await openImagePickerAsync(props)}
+                />
+              </View>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Title"
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Description"
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+            <Tags setTags={setTags} tags={tags} />
+            <EditMapView
+              region={region}
+              setRegion={setRegion}
+              setLatitude={setLatitude}
+              setLongitude={setLongitude}
+            />
+            <View>
+              <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                  label: 'Dismiss',
+                  onPress: onDismissSnackBar,
+                }}>
+                <Text>{errMessage} is required</Text>
+              </Snackbar>
+              {!visible && (
+                <TouchableOpacity
+                  style={theme.buttonLarge}
+                  onPress={() => changePost()}>
+                  <Text style={theme.buttonTitleLarge}>Update!</Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
@@ -157,6 +173,7 @@ const mapDispatchToProps = (dispatch) => {
     editPost: (post, userId, postId) =>
       dispatch(updatePost(post, userId, postId)),
     removeTags: () => dispatch(removeTags()),
+    addTags: (tags) => dispatch(addTags(tags)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditPostScreen);

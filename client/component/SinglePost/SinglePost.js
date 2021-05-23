@@ -14,11 +14,13 @@ export const SinglePost = (props) => {
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
+  console.log(props.post)
 
   function handleEdit() {
     props.takePhoto(props.post.photos[0]);
     props.navigation.navigate('Edit');
   }
+
   const CommentIcon = BadgedIcon(props.post.comments.length);
 
   if (props.post.id) {

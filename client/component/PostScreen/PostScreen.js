@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
-import theme from '../../../CustomProps/Theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Text,
@@ -19,6 +18,8 @@ import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 import { TextInput, Snackbar } from 'react-native-paper';
+import theme from '../../../CustomProps/Theme';
+
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -32,8 +33,10 @@ export const PostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
+
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     setTitle('');
     setRegion({
@@ -43,14 +46,17 @@ export const PostScreen = (props) => {
       longitudeDelta: 0.0075,
     }),
       setDescription(''),
-      setLatitude(null),
-      setLongitude(null),
       setClearMap(true),
       setTags({ tag: '', tagsArray: [] }),
       setErrMessage(''),
       setVisible(false);
     props.clearPhoto();
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log('focussed');
+    });
+    unsubscribe();
   }, [props.navigation]);
+
   const onDismissSnackBar = () => setVisible(false);
   const createPost = async () => {
     if (!title.length) {
@@ -67,13 +73,6 @@ export const PostScreen = (props) => {
       let tags = props.tags;
       let photo = props.photo;
       await props.submitPost({ post, photo, tags });
-      //props.clearPhoto();
-      //setTitle('');
-      //setDescription('');
-      //setClearMap(true);
-      //setTags({ tag: '', tagsArray: [] });
-      //props.clearPhoto()
-      //props.removeTags();
       props.navigation.navigate('SinglePost');
     }
   };
@@ -166,12 +165,14 @@ export const PostScreen = (props) => {
     </TouchableWithoutFeedback>
   );
 };
+
 const mapStateToProps = (state) => {
   return {
     photo: state.photo,
     tags: state.tags,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
@@ -181,3 +182,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
+
+//const unsubscribe = props.navigation.addListener('didFocus', () => {
+//   console.log('focussed');
+// });
+// un

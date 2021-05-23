@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
-  // TouchableHighlight,
-  TouchableOpacity,
-  ScrollView,
   TextInput,
   SafeAreaView,
   FlatList,
-  KeyboardAvoidingView,
+  SectionList,
+  Text,
+  LogBox
 } from 'react-native';
+import { Snackbar } from 'react-native-paper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TimeAgo from 'react-native-timeago';
-//import Icon from 'react-native-vector-icons';
 import styles from './styles';
 import {
   createComment,
@@ -24,27 +22,38 @@ import {
 } from '../../store/comments';
 import {
   Divider,
-  Text,
-  List,
-  Paragraph,
   Card,
-  Title,
-  Button,
+  Button
 } from 'react-native-paper';
 
 export function CommentView(props) {
   const [comment, setComment] = useState('');
+  const [visible, setVisible] = useState(false);
 
-  const handleSubmit = () => {
-    props.addComment(comment, props.post.id, props.user.id);
-    setComment('');
-  };
-  const handleDelete = (comment) => {
-    props.deleteComment(comment.userId, comment.id);
-  };
+  const onDismissSnackBar = () => setVisible(false);
+
   useEffect(() => {
     props.getComment(props.post.id);
-  }, [props.comments.length]);
+    setVisible(false);
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log()
+    });
+    unsubscribe()
+  }, [props.comments.length])
+
+  const handleSubmit = () => {
+    if (!comment.length) {
+      setVisible(true);
+    } else {
+      props.addComment(comment, props.post.id, props.user.id);
+      setComment('');
+    }
+  };
+
+  const handleDelete = (comment) => {
+    props.deleteComment(props.user.id, comment.id);
+  };
 
   const getHeader = () => {
     return <Text>{props.post.Title}</Text>;
@@ -52,9 +61,7 @@ export function CommentView(props) {
 
   const renderItem = ({ item }) => {
     return (
-      <Card
-      // style={styles.commentCard}
-      >
+      <Card style={styles.commentCard}>
         <Card.Content>
           <Text>{item.content}</Text>
           <Divider />
@@ -67,43 +74,59 @@ export function CommentView(props) {
       </Card>
     );
   };
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={{ flex: 1 }}>
-        {/* <View style={styles.commentContainer}> */}
-        <View>
-          {/* {props.comments.length > 0 && props.comments */}
-          <FlatList
-            style={{
-              padding: 20,
-              // height: 100,
-              automaticallyAdjustContentInsets: true,
-            }}
-            data={props.comments}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            ListHeaderComponent={getHeader}
-            // ListFooterComponent={getFooter}
-          />
-        </View>
-        {/* replace this block w/flat list + renderitem  */}
-        <KeyboardAvoidingView
-          style={styles.keyboard}
-          keyboardShouldPersistTaps='always'
-        >
-          <TextInput
-            placeholder='Add a comment...'
-            style={styles.input}
-            value={comment}
-            onChangeText={(text) => setComment(text)} // handle input changes
-          />
 
-          <Button>
-            <Text onPress={handleSubmit}>Submit</Text>
-          </Button>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+  return (
+      <KeyboardAwareScrollView>
+        <View style={styles.inner}>
+            <FlatList
+              style={{
+                padding: 20,
+                automaticallyAdjustContentInsets: false,
+              }}
+              inverted={false}
+              data={props.comments.sort((c1, c2) => {
+                let order;
+                if(c1.updatedAt > c2.updatedAt) {
+                  order = 1;
+                } else if(c1.updatedAt < c2.updatedAt) {
+                  order = -1;
+                } else {
+                  if(c1.id < c2.id){
+                    order = 1
+                  } else {
+                    order = -1
+                  }
+                }
+                return order;
+              })}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+              ListHeaderComponent={getHeader}
+            />
+
+            <View style={styles.inner}>
+              <TextInput placeholder="Add a comment..." style={styles.input} value={comment} onChangeText={(text) => setComment(text)} />
+            </View>
+          <View>
+            <Snackbar
+              style={styles.snackbar}
+              visible={visible}
+              onDismiss={onDismissSnackBar}
+              action={{
+                color: '#f8f5f2',
+                label: 'Dismiss',
+                onPress: onDismissSnackBar,
+              }}>
+              <Text>{`Message can't be blank!`}</Text>
+            </Snackbar>
+            {!visible && (
+              <Button>
+                <Text onPress={handleSubmit}>Submit</Text>
+              </Button>
+            )}
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
   );
 }
 
@@ -120,11 +143,8 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
-    deleteComment: (userId, commentId) =>
-      dispatch(destroyComment(userId, commentId)),
+    deleteComment: (userId, commentId) => dispatch(destroyComment(userId, commentId)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentView);
-
-//onPress={() => handleDelete(comment)}

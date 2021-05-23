@@ -76,7 +76,7 @@ export const openCameraAsync = async (props) => {
   }
   const picture = await ImagePicker.launchCameraAsync();
   if (!picture.cancelled) {
-    const photo = await uploadImage(pickerResult.uri);
+    const photo = await uploadImage(picture.uri);
     props.takePhoto(photo);
   }
 };

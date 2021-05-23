@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
-//import Image from 'react-native-scalable-image';
 
 export function HomeGoogleMapView(props) {
   installWebGeolocationPolyfill();
@@ -26,11 +25,10 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
 
-    const mapFocus = props.navigation.addListener('focus', () => {
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
       props.getCoordinates(props.region, props.tags);
     });
-
-    mapFocus();
+    unsubscribe()
   }, [props.navigation]);
 
   const setNewRegion = (newRegion) => {
@@ -54,25 +52,23 @@ export function HomeGoogleMapView(props) {
         region={props.region}
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
-        zoomEnabled={true}
-      >
+        zoomEnabled={true}>
         {props.coordinates.map((post, index) => {
           return (
             <Marker
-              key={index + ':' + post.latitude + ':' + post.longitude}
+              image={require('../../../assets/x.png')}
+              key={index + ":" + post.latitude + ":" + post.longitude}
               coordinate={{
                 latitude: post.latitude,
                 longitude: post.longitude,
               }}
               title={post.title}
               description={post.description}
-              image={require('../../../assets/x.png')}
               resizeMode='contain'
             >
               <Callout
                 onPress={() => onPressButton(post)}
-                style={styles.calloutButton}
-              >
+                style={styles.calloutButton}>
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image
