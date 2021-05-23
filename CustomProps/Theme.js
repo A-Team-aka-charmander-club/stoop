@@ -32,6 +32,12 @@ const theme = {
     alignSelf: 'center',
     margin: 80,
   },
+  logoMedium: {
+    flex: 1,
+    height: 150,
+    width: 150,
+    alignSelf: 'center',
+  },
   buttonLarge: {
     backgroundColor: '#F03A47',
     marginLeft: 100,

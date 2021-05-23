@@ -52,8 +52,7 @@ export function HomeGoogleMapView(props) {
         region={props.region}
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
-        zoomEnabled={true}
-      >
+        zoomEnabled={true}>
         {props.coordinates.map((post, index) => {
           return (
             <Marker
@@ -69,8 +68,7 @@ export function HomeGoogleMapView(props) {
             >
               <Callout
                 onPress={() => onPressButton(post)}
-                style={styles.calloutButton}
-              >
+                style={styles.calloutButton}>
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image
