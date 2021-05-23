@@ -13,7 +13,6 @@ const DELETE_COMMENT = 'DELETE_COMMENT';
 
 // ACTION CREATORS
 export const addComment = (comment) => {
-  console.log('ACTION CREATOR COMMENT: ', comment);
   return {
     type: ADD_COMMENT,
     comment,
@@ -71,14 +70,14 @@ export const grabComment = (postId) => {
   };
 };
 
-export const destroyComment = (commentId) => {
+export const destroyComment = (userId, commentId) => {
   return async (dispatch) => {
     try {
-      const user = firebase.auth().currentUser.uid;
+      const user = firebase.auth().currentUser;
       const { data } = await axios.delete(
         `http://10.0.0.153:8080/api/comments/${commentId}`,
         {
-          headers: { authorization: user },
+          headers: { authorization: user.uid },
         }
       );
       if (data) {

@@ -111,7 +111,7 @@ export default function postReducer(state = initState, action) {
     case EDIT_POST:
       return action.post;
     case DELETE_POST:
-      return initState;
+      return state;
     default:
       return state;
   }

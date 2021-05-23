@@ -1,14 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  Text,
-  View,
-  Image,
-  Button,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import { Text, View, Image, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -17,6 +11,7 @@ import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 import { TextInput, Snackbar } from 'react-native-paper';
+
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -30,8 +25,10 @@ export const PostScreen = (props) => {
     latitudeDelta: 0.0025,
     longitudeDelta: 0.0025,
   });
+
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     setTitle('');
     setRegion({
@@ -41,14 +38,17 @@ export const PostScreen = (props) => {
       longitudeDelta: 0.0075,
     }),
       setDescription(''),
-      setLatitude(null),
-      setLongitude(null),
       setClearMap(true),
       setTags({ tag: '', tagsArray: [] }),
       setErrMessage(''),
-      setVisible(false);
+      setVisible(false)
     props.clearPhoto();
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log('focussed');
+    });
+    unsubscribe()
   }, [props.navigation]);
+
   const onDismissSnackBar = () => setVisible(false);
   const createPost = async () => {
     if (!title.length) {
@@ -65,95 +65,92 @@ export const PostScreen = (props) => {
       let tags = props.tags;
       let photo = props.photo;
       await props.submitPost({ post, photo, tags });
-      //props.clearPhoto();
-      //setTitle('');
-      //setDescription('');
-      //setClearMap(true);
-      //setTags({ tag: '', tagsArray: [] });
-      //props.clearPhoto()
-      //props.removeTags();
       props.navigation.navigate('SinglePost');
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container} style={styles.horizontal}>
-        <KeyboardAwareScrollView
-          style={{ flex: 1, width: '100%' }}
-          keyboardShouldPersistTaps="always">
-          <Text>Create Post</Text>
-          {props.photo.firebaseUrl && (
-            <Image
-              source={{ url: props.photo.firebaseUrl }}
-              style={styles.thumbnail}
-            />
-          )}
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.buttonStyle}>
-              <Button
-                color="#fff"
-                title="Open Camera"
-                onPress={async () => await openCameraAsync(props)}
-              />
-            </View>
-            <View style={styles.buttonStyle}>
-              <Button
-                color="#fff"
-                title="Upload Photo"
-                onPress={async () => await openImagePickerAsync(props)}
-              />
-            </View>
-          </View>
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-          />
-          <TextInput
-            required
-            style={styles.input}
-            placeholder="Description"
-            value={description}
-            onChangeText={(text) => setDescription(text)}
-          />
-          <Tags setTags={setTags} tags={tags} />
-          <GoogleMapView
-            region={region}
-            clear={clearMap}
-            setRegion={setRegion}
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-            setClearMap={setClearMap}
-            clear={clearMap}
-          />
+    <View style={styles.container}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: '100%' }}
+        keyboardShouldPersistTaps="always">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
-            <Snackbar
-              style={styles.snackbar}
-              visible={visible}
-              onDismiss={onDismissSnackBar}
-              action={{
-                color: '#f8f5f2',
-                label: 'Dismiss',
-                onPress: onDismissSnackBar,
-              }}>
-              <Text>{errMessage} is required</Text>
-            </Snackbar>
-            {!visible && (
-              <Button color="blue" title="Post!" onPress={createPost} />
+            <Text>Create Post</Text>
+            {props.photo.firebaseUrl && (
+              <Image
+                source={{ url: props.photo.firebaseUrl }}
+                style={styles.thumbnail}
+              />
             )}
+            <View style={{ flexDirection: 'row' }}>
+              <View style={styles.buttonStyle}>
+                <Button
+                  color="#fff"
+                  title="Open Camera"
+                  onPress={async () => await openCameraAsync(props)}
+                />
+              </View>
+              <View style={styles.buttonStyle}>
+                <Button
+                  color="#fff"
+                  title="Upload Photo"
+                  onPress={async () => await openImagePickerAsync(props)}
+                />
+              </View>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Title"
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+            />
+            <TextInput
+              required
+              style={styles.input}
+              placeholder="Description"
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+            <Tags setTags={setTags} tags={tags} />
+            <GoogleMapView
+              region={region}
+              clear={clearMap}
+              setRegion={setRegion}
+              setLatitude={setLatitude}
+              setLongitude={setLongitude}
+              setClearMap={setClearMap}
+              clear={clearMap}
+            />
+            <View>
+              <Snackbar
+                style={styles.snackbar}
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                  color: '#f8f5f2',
+                  label: 'Dismiss',
+                  onPress: onDismissSnackBar,
+                }}>
+                <Text>{errMessage} is required</Text>
+              </Snackbar>
+              {!visible && (
+                <Button color="blue" title="Post!" onPress={createPost} />
+              )}
+            </View>
           </View>
-        </KeyboardAwareScrollView>
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
+
 const mapStateToProps = (state) => {
   return {
     photo: state.photo,
     tags: state.tags,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     submitPost: (post) => dispatch(createPostThunk(post)),
@@ -163,3 +160,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
+
+
+
+
+//const unsubscribe = props.navigation.addListener('didFocus', () => {
+//   console.log('focussed');
+// });
+// un

@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
-import {
-  Image,
-  Text,
-  SafeAreaView,
-} from 'react-native';
+import { Image, Text, SafeAreaView, Dimensions } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
@@ -13,7 +9,6 @@ import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 
 export function HomeGoogleMapView(props) {
-
   installWebGeolocationPolyfill();
 
   useEffect(() => {
@@ -30,11 +25,10 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
 
-    const mapFocus = props.navigation.addListener('focus', () => {
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
       props.getCoordinates(props.region, props.tags);
     });
-
-    mapFocus();
+    unsubscribe()
   }, [props.navigation]);
 
   const setNewRegion = (newRegion) => {
@@ -58,10 +52,12 @@ export function HomeGoogleMapView(props) {
         region={props.region}
         showsUserLocation={true}
         onRegionChangeComplete={setNewRegion}
-        zoomEnabled={true}>
+        zoomEnabled={true}
+      >
         {props.coordinates.map((post, index) => {
           return (
             <Marker
+              image={require('../../../assets/x.png')}
               key={index + ":" + post.latitude + ":" + post.longitude}
               coordinate={{
                 latitude: post.latitude,
@@ -69,13 +65,12 @@ export function HomeGoogleMapView(props) {
               }}
               title={post.title}
               description={post.description}
-              image={require('../../../assets/x.png')}
-              resizeMode="contain"
+              resizeMode='contain'
             >
               <Callout
                 onPress={() => onPressButton(post)}
-                style={styles.calloutButton}>
-
+                style={styles.calloutButton}
+              >
                 <Text>{post.title}</Text>
                 {post.photos[0] ? (
                   <Image

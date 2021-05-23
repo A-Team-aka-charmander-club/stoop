@@ -4,14 +4,15 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#EFE6DD',
   },
   title: {},
-  logo: {
+  logoLarge: {
     flex: 1,
-    height: 120,
-    width: 90,
+    height: 300,
+    width: 300,
     alignSelf: 'center',
-    margin: 30,
+    margin: 100,
   },
   input: {
     height: 48,
@@ -46,10 +47,10 @@ export default StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: '#2e2e2d',
+    color: '#070707',
   },
   footerLink: {
-    color: '#788eec',
+    color: '#1282A2',
     fontWeight: 'bold',
     fontSize: 16,
   },
