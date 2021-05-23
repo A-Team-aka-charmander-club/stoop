@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+<<<<<<< HEAD
 import {
   Text,
   View,
@@ -9,6 +10,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
+=======
+import { Text, View, Image, Button, TouchableWithoutFeedback, Keyboard, TouchableOpacity} from 'react-native';
+>>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -17,6 +21,7 @@ import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
 import { TextInput, Snackbar } from 'react-native-paper';
+import theme from '../../../CustomProps/Theme';
 
 export const PostScreen = (props) => {
   const [title, setTitle] = useState('');
@@ -157,7 +162,11 @@ export const PostScreen = (props) => {
                 <Text>{errMessage} is required</Text>
               </Snackbar>
               {!visible && (
-                <Button color='blue' title='Post!' onPress={createPost} />
+                <TouchableOpacity
+                  style={theme.buttonLarge}
+                  onPress={() => createPost()}>
+                  <Text style={theme.buttonTitleLarge}>Post</Text>
+                </TouchableOpacity>
               )}
             </View>
           </View>

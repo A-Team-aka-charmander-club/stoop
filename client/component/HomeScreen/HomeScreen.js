@@ -67,8 +67,7 @@ export function HomeScreen(props) {
                   props.navigation.navigate('PostNav', {
                     screen: 'SinglePost',
                   });
-                }}
-              >
+                }}>
                 <Avatar source={{ url: post.photos[0].firebaseUrl }} />
                 <ListItem.Content>
                   <ListItem.Title>{post.title}</ListItem.Title>
@@ -81,12 +80,11 @@ export function HomeScreen(props) {
                       }
                       return (
                         <Chip
-                          selectedColor='#3ca897'
+                          selectedColor={theme.colors.accent}
                           selected={selected}
-                          icon='tag'
+                          icon="tag"
                           key={index}
-                          onPress={() => onTagPress(tagId)}
-                        >
+                          onPress={() => onTagPress(tagId)}>
                           {tag.name}
                         </Chip>
                       );

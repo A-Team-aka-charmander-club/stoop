@@ -1,10 +1,29 @@
 import { StyleSheet, PixelRatio } from 'react-native';
 
 const styles = StyleSheet.create({
+  singleComment: {
+    padding: 10,
+  },
+  commentCard: {
+    margin: 5,
+  },
   container: {
     flex: 1,
   },
-  commentCard: {
+  snackbar: {
+    backgroundColor: '#f03a47',
+    color: '#f8f5f2',
+  },
+  name: {
+    fontWeight: 'bold',
+    paddingBottom: 5,
+    paddingTop: 50,
+  },
+  input: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#fff',
+    color: '#424242',
     margin: 2,
   },
   buttonStyle: {
@@ -24,7 +43,6 @@ const styles = StyleSheet.create({
   },
   inner: {
     padding: 24,
-    flex: 1,
     justifyContent: "space-around"
   },
   header: {
