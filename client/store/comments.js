@@ -58,7 +58,7 @@ export const grabComment = (postId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/comments/${postId}`,
+        `http://192.168.1.152:8080/api/comments/${postId}`,
         {
           headers: { authorization: SECRET },
         }
