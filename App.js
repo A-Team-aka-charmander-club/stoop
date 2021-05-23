@@ -23,6 +23,22 @@ if (!global.atob) {
   global.atob = decode;
 }
 
+// const theme = {
+//   dark: false,
+//   roundness: 2,
+//   colors: {
+//     primary: '#64FFDA',
+//     accent: '#004D40',
+//     background: '#A7FFEB',
+//     surface: 'E0F2F1',
+//     text: '004d40',
+//     disabled: '#26A9A',
+//     placholder: '#26A69A',
+//     backdrop: '#A7FFEB',
+//     onSurface: '#1DE9B6',
+//   },
+//   font: 'regular',
+// };
 const Stack = createStackNavigator();
 
 export default function App() {
