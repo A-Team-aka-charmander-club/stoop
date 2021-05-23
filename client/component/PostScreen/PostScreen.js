@@ -77,76 +77,78 @@ export const PostScreen = (props) => {
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container} style={styles.horizontal}>
-        <KeyboardAwareScrollView
-          style={{ flex: 1, width: '100%' }}
-          keyboardShouldPersistTaps="always">
-          <Text>Create Post</Text>
-          {props.photo.firebaseUrl && (
-            <Image
-              source={{ url: props.photo.firebaseUrl }}
-              style={styles.thumbnail}
-            />
-          )}
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.buttonStyle}>
-              <Button
-                color="#fff"
-                title="Open Camera"
-                onPress={async () => await openCameraAsync(props)}
-              />
-            </View>
-            <View style={styles.buttonStyle}>
-              <Button
-                color="#fff"
-                title="Upload Photo"
-                onPress={async () => await openImagePickerAsync(props)}
-              />
-            </View>
-          </View>
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-          />
-          <TextInput
-            required
-            style={styles.input}
-            placeholder="Description"
-            value={description}
-            onChangeText={(text) => setDescription(text)}
-          />
-          <Tags setTags={setTags} tags={tags} />
-          <GoogleMapView
-            region={region}
-            clear={clearMap}
-            setRegion={setRegion}
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-            setClearMap={setClearMap}
-            clear={clearMap}
-          />
+    <View style={styles.container}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: '100%' }}
+        keyboardShouldPersistTaps="always">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
-            <Snackbar
-              style={styles.snackbar}
-              visible={visible}
-              onDismiss={onDismissSnackBar}
-              action={{
-                color: '#f8f5f2',
-                label: 'Dismiss',
-                onPress: onDismissSnackBar,
-              }}>
-              <Text>{errMessage} is required</Text>
-            </Snackbar>
-            {!visible && (
-              <Button color="blue" title="Post!" onPress={createPost} />
+            <Text>Create Post</Text>
+            {props.photo.firebaseUrl && (
+              <Image
+                source={{ url: props.photo.firebaseUrl }}
+                style={styles.thumbnail}
+              />
             )}
+            <View style={{ flexDirection: 'row' }}>
+              <View style={styles.buttonStyle}>
+                <Button
+                  color="#fff"
+                  title="Open Camera"
+                  onPress={async () => await openCameraAsync(props)}
+                />
+              </View>
+              <View style={styles.buttonStyle}>
+                <Button
+                  color="#fff"
+                  title="Upload Photo"
+                  onPress={async () => await openImagePickerAsync(props)}
+                />
+              </View>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Title"
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+            />
+            <TextInput
+              required
+              style={styles.input}
+              placeholder="Description"
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+            <Tags setTags={setTags} tags={tags} />
+            <GoogleMapView
+              region={region}
+              clear={clearMap}
+              setRegion={setRegion}
+              setLatitude={setLatitude}
+              setLongitude={setLongitude}
+              setClearMap={setClearMap}
+              clear={clearMap}
+            />
+            <View>
+              <Snackbar
+                style={styles.snackbar}
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                  color: '#f8f5f2',
+                  label: 'Dismiss',
+                  onPress: onDismissSnackBar,
+                }}>
+                <Text>{errMessage} is required</Text>
+              </Snackbar>
+              {!visible && (
+                <Button color="blue" title="Post!" onPress={createPost} />
+              )}
+            </View>
           </View>
-        </KeyboardAwareScrollView>
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
 const mapStateToProps = (state) => {
