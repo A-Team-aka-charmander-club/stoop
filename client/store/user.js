@@ -55,7 +55,6 @@ export function getUserPostsThunk(userId) {
           headers: { authorization: user.uid },
         }
       );
-      console.log(data, 'data in thunk');
       dispatch(createUser(data));
     } catch (error) {
       console.log(error);
