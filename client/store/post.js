@@ -47,6 +47,7 @@ export const createPostThunk = (post) => {
       const user = firebase.auth().currentUser;
       const { data } = await axios.post(
         `http://192.168.1.152:8080/api/posts/post`,
+
         post,
         {
           headers: { authorization: user.uid },
@@ -66,6 +67,7 @@ export const destroyPost = (postId, navigation, userId) => {
 
       const { data } = await axios.delete(
         `http://192.168.1.152:8080/api/posts/${postId}/${userId}`,
+
         {
           headers: { authorization: user.uid },
         }
@@ -88,6 +90,7 @@ export const updatePost = (post, userId, postId) => {
       const user = firebase.auth().currentUser;
       const { data } = await axios.put(
         `http://192.168.1.152:8080/api/posts/${postId}/${userId}`,
+
         post,
         {
           headers: { authorization: user.uid },

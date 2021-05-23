@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import theme from '../../../CustomProps/Theme';
+
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import { createOrFindUserThunk } from '../../store/user';
@@ -63,11 +65,11 @@ export function RegistrationScreen({ navigation, createUser }) {
         keyboardShouldPersistTaps='always'
       >
         <Image
-          style={styles.logo}
+          style={theme.logoLarge}
           source={require('../../../assets/trashPanda.png')}
         />
         <TextInput
-          style={styles.input}
+          style={theme.input}
           placeholder='Full Name'
           placeholderTextColor='#aaaaaa'
           onChangeText={(text) => setFullName(text)}
@@ -76,7 +78,7 @@ export function RegistrationScreen({ navigation, createUser }) {
           autoCapitalize='none'
         />
         <TextInput
-          style={styles.input}
+          style={theme.input}
           placeholder='E-mail'
           placeholderTextColor='#aaaaaa'
           onChangeText={(text) => setEmail(text)}
@@ -85,7 +87,7 @@ export function RegistrationScreen({ navigation, createUser }) {
           autoCapitalize='none'
         />
         <TextInput
-          style={styles.input}
+          style={theme.input}
           placeholderTextColor='#aaaaaa'
           secureTextEntry
           placeholder='Password'
@@ -95,7 +97,7 @@ export function RegistrationScreen({ navigation, createUser }) {
           autoCapitalize='none'
         />
         <TextInput
-          style={styles.input}
+          style={theme.input}
           placeholderTextColor='#aaaaaa'
           secureTextEntry
           placeholder='Confirm Password'
@@ -105,10 +107,10 @@ export function RegistrationScreen({ navigation, createUser }) {
           autoCapitalize='none'
         />
         <TouchableOpacity
-          style={styles.button}
+          style={theme.buttonLarge}
           onPress={() => onRegisterPress()}
         >
-          <Text style={styles.buttonTitle}>Create account</Text>
+          <Text style={theme.buttonTitleLarge}>Create account</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>

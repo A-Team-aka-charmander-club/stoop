@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import styles from './styles';
-import { View, Button, Text, ScrollView, SafeAreaView } from 'react-native';
+import {
+  View,
+  Button,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { Title, Chip } from 'react-native-paper';
 import { ListItem, Avatar } from 'react-native-elements';
 import { logoutUser, getUserPostsThunk } from '../../store/user';
@@ -8,6 +16,7 @@ import { connect } from 'react-redux';
 import { onLogoutPress } from '../Services/Services';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
+import theme from '../../../CustomProps/Theme';
 
 export function UserAccount(props) {
   // useEffect(() => {
@@ -16,14 +25,31 @@ export function UserAccount(props) {
   // }, [props.navigation]);
   // console.log('PROPS USER OUT OF USE', props.user);
   return (
-    <SafeAreaView>
-      <View>
-        <Title>{`${props.user.fullName}'s Profile`}</Title>
-        <Text>User</Text>
-        <Button title="Logout" onPress={() => onLogoutPress(props)} />
+    <SafeAreaView style={styles.container}>
+      <View styles={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Image
+          style={styles.logo}
+          source={require('../../../assets/trashPandaNoWords.png')}
+        />
+        <View style={styles.logo}>
+          <Title>{`${props.user.fullName}'s Profile`}</Title>
+          <Text>{props.user.email}</Text>
+        </View>
+
+        <TouchableOpacity
+          style={theme.buttonLarge}
+          onPress={() => onLogoutPress(props)}>
+          <Text style={theme.buttonTitleLarge}>Logout</Text>
+        </TouchableOpacity>
       </View>
-      <ScrollView stickyHeaderIndices={[0]}>
-        {<Text style={styles.input}>Treasure You Found</Text>}
+      <ScrollView style={styles.scrollView} stickyHeaderIndices={[0]}>
+        <View style={styles.midScreenHeader}>
+          {
+            <Text style={styles.titleMidScreenHeader}>
+              Treasure You Discovered
+            </Text>
+          }
+        </View>
         {props.user.posts && props.user.posts.length
           ? props.user.posts.map((post, index) => {
               return (
@@ -44,7 +70,10 @@ export function UserAccount(props) {
                     <ListItem.Subtitle>
                       {post.tags.map((tag, index) => {
                         return (
-                          <Chip selectedColor="#3ca897" icon="tag" key={index}>
+                          <Chip
+                            selectedColor={theme.colors.accent}
+                            icon="tag"
+                            key={index}>
                             {tag.name}
                           </Chip>
                         );

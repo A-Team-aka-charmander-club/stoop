@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import theme from '../../../CustomProps/Theme';
 import 'react-native-get-random-values';
-import { Text, ScrollView, SafeAreaView } from 'react-native';
+import {
+  View,
+  Animated,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  StickyHeaderComponent,
+} from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
-import { Chip } from 'react-native-paper';
+import { Chip, Banner } from 'react-native-paper';
 import styles from './styles';
 import { connect } from 'react-redux';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
@@ -39,60 +48,66 @@ export function HomeScreen(props) {
       props.getCoordinates(region, newArray);
     }
   }
+  {
+    return (
+      <SafeAreaView style={styles.container}>
+        <HomeGoogleMapView
+          navigation={props.navigation}
+          region={region}
+          setRegion={setRegion}
+          tags={tags}
+          style={{ margin: 0 }}
+        />
+        <ScrollView style={styles.scrollView} stickyHeaderIndices={[0]}>
+          <View style={styles.midScreenHeader}>
+            {<Text style={styles.titleMidScreenHeader}>Nearby Treasure</Text>}
+          </View>
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <HomeGoogleMapView
-        navigation={props.navigation}
-        region={region}
-        setRegion={setRegion}
-        tags={tags}
-      />
-      <ScrollView style={styles.scrollView} stickyHeaderIndices={[0]}>
-        {<Text style={styles.input}>Nearby Treasure</Text>}
-        {props.coordinates.length > 0 && props.coordinates.map((post, index) => {
-          return (
-            <ListItem
-              key={index}
-              style={styles.itemText}
-              bottomDivider
-              onPress={() => {
-                props.getPost(post);
-                props.getPhoto(post.photos[0]);
-                props.navigation.navigate('PostNav', {
-                  screen: 'SinglePost',
-                });
-              }}>
-              <Avatar source={{ url: post.photos[0].firebaseUrl }} />
-              <ListItem.Content>
-                <ListItem.Title>{post.title}</ListItem.Title>
-                <ListItem.Subtitle>
-                  {post.tags.map((tag, index) => {
-                    const tagId = tag.id;
-                    let selected = false;
-                    if (tags.includes(tagId)) {
-                      selected = true;
-                    }
-                    return (
-                      <Chip
-                        selectedColor="#3ca897"
-                        selected={selected}
-                        icon="tag"
-                        key={index}
-                        onPress={() => onTagPress(tagId)}>
-                        {tag.name}
-                      </Chip>
-                    );
-                  })}{' '}
-                </ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-          );
-        })}
-      </ScrollView>
-    </SafeAreaView>
-  );
+          {props.coordinates.map((post, index) => {
+            return (
+              <ListItem
+                key={index}
+                // style={styles.itemText}
+                bottomDivider
+                onPress={() => {
+                  props.getPost(post);
+                  props.getPhoto(post.photos[0]);
+                  props.navigation.navigate('PostNav', {
+                    screen: 'SinglePost',
+                  });
+                }}>
+                <Avatar source={{ url: post.photos[0].firebaseUrl }} />
+                <ListItem.Content>
+                  <ListItem.Title>{post.title}</ListItem.Title>
+                  <ListItem.Subtitle>
+                    {post.tags.map((tag, index) => {
+                      const tagId = tag.id;
+                      let selected = false;
+                      if (tags.includes(tagId)) {
+                        selected = true;
+                      }
+                      return (
+                        <Chip
+                          selectedColor={theme.colors.accent}
+                          selected={selected}
+                          icon="tag"
+                          key={index}
+                          onPress={() => onTagPress(tagId)}>
+                          {tag.name}
+                        </Chip>
+                      );
+                    })}
+                  </ListItem.Subtitle>
+                </ListItem.Content>
+              </ListItem>
+            );
+          })}
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 }
+
 const mapStateToProps = (state) => {
   return {
     coordinates: state.coordinates,

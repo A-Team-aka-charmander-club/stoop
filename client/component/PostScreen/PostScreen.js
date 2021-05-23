@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
+import theme from '../../../CustomProps/Theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Text,
