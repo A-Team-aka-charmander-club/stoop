@@ -50,7 +50,7 @@ router.get('/:postId', verifySite, async (req, res, next) => {
   }
 });
 
-router.delete('/:commentId', async (req, res, next) => {
+router.delete('/:userId/:commentId', verifyUser, async (req, res, next) => {
   try {
     const comment = await Comment.findByPk(req.params.commentId);
     if (comment) {

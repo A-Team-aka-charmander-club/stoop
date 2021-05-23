@@ -12,9 +12,9 @@ import '@firebase/auth';
 import '@firebase/firestore';
 import '@firebase/storage';
 
-console.log('API KEY: ', REACT_APP_API_KEY);
+console.log('API KEY: ');
 const firebaseConfig = {
-  apiKey: 'AIzaSyAhEDxr9yJuACh4bkvzV2N5Ev-IbvVhKqw',
+  apiKey: REACT_APP_API_KEY,
   authDomain: REACT_APP_AUTH_DOMAIN,
   databaseURL: REACT_APP_DATABASEURL,
   projectId: REACT_APP_PROJECT_ID,

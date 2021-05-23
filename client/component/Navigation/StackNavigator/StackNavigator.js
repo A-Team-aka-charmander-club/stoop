@@ -6,6 +6,7 @@ import GoogleMapView from '../../MapView/GoogleMapView';
 import SinglePost from '../../SinglePost/SinglePost';
 import CommentView from '../../Comments/Comments';
 import EditPostScreen from '../../PostScreen/EditPostScreen/EditPostScreen';
+import theme from '../../../../CustomProps/Theme';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,17 @@ const HomeStackNavigator = (props) => {
   const navigation = props.navigation
   
   return (
-    <Stack.Navigator initialRouteName='Home'>
+    <Stack.Navigator
+      initialRouteName='Home'
+      screenOptions={{
+        mode: 'card',
+        headerMode: 'float',
+        cardStyle: {
+          backgroundColor: theme.backgroundColor,
+          footerView: theme.footerView,
+        },
+      }}
+    >
       <Stack.Screen
         name='Home'
         component={HomeScreen}
@@ -25,7 +36,12 @@ const HomeStackNavigator = (props) => {
 
 const PostStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName='Post'>
+    <Stack.Navigator
+      initialRouteName='Post'
+      screenOptions={{
+        backgroundColor: theme.backgroundColor,
+      }}
+    >
       <Stack.Screen
         name='Post'
         component={PostScreen}

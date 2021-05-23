@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './styles';
+import styles, { BadgedIcon } from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import { ListItem, Icon, Badge, withBadge } from 'react-native-elements';
@@ -92,7 +92,9 @@ export const SinglePost = (props) => {
                 }}
               >
                 {CommentIcon}{' '}
-                <Text style={{ flex: 1, fontSize: 22 }}>Comments</Text>
+                <Text style={{ flex: 1, fontSize: 22, marginBottom: 10 }}>
+                  Comments
+                </Text>
               </Title>
             </ListItem>
             {/* <TouchableOpacity

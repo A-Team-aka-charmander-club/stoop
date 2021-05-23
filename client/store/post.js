@@ -66,6 +66,7 @@ export const destroyPost = (postId, navigation, userId) => {
 
       const { data } = await axios.delete(
         `http://localhost:8080/api/posts/${postId}/${userId}`,
+
         {
           headers: { authorization: user.uid },
         }
@@ -88,6 +89,7 @@ export const updatePost = (post, userId, postId) => {
       const user = firebase.auth().currentUser;
       const { data } = await axios.put(
         `http://localhost:8080/api/posts/${postId}/${userId}`,
+
         post,
         {
           headers: { authorization: user.uid },

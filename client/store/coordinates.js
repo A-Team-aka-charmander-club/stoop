@@ -23,6 +23,7 @@ export const getCoordinatesThunk = (region, tags) => {
   return async (dispatch) => {
     console.log(tags);
     try {
+      console.log('SECRET', SECRET);
       const { data } = await axios.get(
         // `https://trashpandapirates.herokuapp.com/api/photos/photo`,
         // 'http://localhost:8080/api/photos/photo',

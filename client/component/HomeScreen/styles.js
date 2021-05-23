@@ -1,32 +1,39 @@
 import { StyleSheet } from 'react-native';
+import theme from '../../../CustomProps/Theme';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: theme.backgroundColor,
   },
-  input: {
+  midScreenHeader: {
+    // width: 100,
     height: 48,
-    borderRadius: 5,
+    backgroundColor: theme.colors.accent,
+  },
+  titleMidScreenHeader: {
+    height: 48,
     overflow: 'hidden',
-    backgroundColor: '#3ca897',
+    paddingLeft: 0,
+    alignSelf: 'center',
     marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    paddingLeft: 16,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: theme.backgroundColor,
+    fontFamily: 'Bangers',
   },
   scrollView: {
     display: 'flex',
   },
   title: {
     fontSize: 24,
-    color: '#A5A5A5',
+    color: theme.colors.iconColor,
+    fontWeight: 'bold',
   },
   subtitle: {
     color: '#A5A5A5',
   },
   itemText: {
-    backgroundColor: '#A5A5A5'
-  }
+    backgroundColor: theme.backgroundColor,
+  },
 });
