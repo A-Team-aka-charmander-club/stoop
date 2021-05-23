@@ -24,7 +24,6 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     color: theme.backgroundColor,
-    fontFamily: 'Bangers',
   },
   scrollView: {
     display: 'flex',

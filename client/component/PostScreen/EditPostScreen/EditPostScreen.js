@@ -77,11 +77,11 @@ export const EditPostScreen = (props) => {
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <KeyboardAwareScrollView
-          style={{ flex: 1, width: '100%' }}
-          keyboardShouldPersistTaps="always">
+    <View style={styles.container}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: '100%' }}
+        keyboardShouldPersistTaps="always">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Text>Update Post</Text>
           <Image
             source={{
@@ -136,9 +136,9 @@ export const EditPostScreen = (props) => {
               <Button color="blue" title="Update!" onPress={changePost} />
             )}
           </View>
-        </KeyboardAwareScrollView>
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
 const mapStateToProps = (state) => {
