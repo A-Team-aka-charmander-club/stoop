@@ -50,7 +50,7 @@ export function getUserPostsThunk(userId) {
     const user = firebase.auth().currentUser;
     try {
       const { data } = await axios.get(
-        `http://192.168.1.6:8080/api/users/user/${userId}`,
+        `http://10.0.0.153:8080/api/users/user/${userId}`,
         {
           headers: { authorization: user.uid },
         }

@@ -43,12 +43,7 @@ const styles = StyleSheet.create({
   },
   inner: {
     padding: 24,
-<<<<<<< HEAD
-    flex: 1,
     justifyContent: 'space-around',
-=======
-    justifyContent: "space-around"
->>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
   },
   header: {
     fontSize: 36,
