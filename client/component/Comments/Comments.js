@@ -6,6 +6,7 @@ import {
   TextInput,
   SafeAreaView,
   FlatList,
+  SectionList,
   Text,
   LogBox
 } from 'react-native';
@@ -32,9 +33,13 @@ export function CommentView(props) {
   const onDismissSnackBar = () => setVisible(false);
 
   useEffect(() => {
-    setComment('')
     props.getComment(props.post.id);
+    setVisible(false);
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log()
+    });
+    unsubscribe()
   }, [props.comments.length])
 
   const handleSubmit = () => {
@@ -47,13 +52,8 @@ export function CommentView(props) {
   };
 
   const handleDelete = (comment) => {
-    props.deleteComment(comment.id);
+    props.deleteComment(props.user.id, comment.id);
   };
-
-  useEffect(() => {
-    props.getComment(props.post.id);
-    setVisible(false);
-  }, [props.comments.length]);
 
   const getHeader = () => {
     return <Text>{props.post.Title}</Text>;
@@ -76,25 +76,37 @@ export function CommentView(props) {
   };
 
   return (
-    <SafeAreaView >
       <KeyboardAwareScrollView>
-        <SafeAreaView style={styles.inner}>
-            <FlatList horizontal={false}
+        <View style={styles.inner}>
+            <FlatList
               style={{
                 padding: 20,
-                automaticallyAdjustContentInsets: true,
+                automaticallyAdjustContentInsets: false,
               }}
-              data={props.comments}
+              inverted={false}
+              data={props.comments.sort((c1, c2) => {
+                let order;
+                if(c1.updatedAt > c2.updatedAt) {
+                  order = 1;
+                } else if(c1.updatedAt < c2.updatedAt) {
+                  order = -1;
+                } else {
+                  if(c1.id < c2.id){
+                    order = 1
+                  } else {
+                    order = -1
+                  }
+                }
+                return order;
+              })}
               renderItem={renderItem}
               keyExtractor={(item) => item.id.toString()}
               ListHeaderComponent={getHeader}
             />
 
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
-              <TextInput placeholder="Add a comment..." style={styles.textInput} value={comment} onChangeText={(text) => setComment(text)} />
+              <TextInput placeholder="Add a comment..." style={styles.input} value={comment} onChangeText={(text) => setComment(text)} />
             </View>
-          </TouchableWithoutFeedback>
           <View>
             <Snackbar
               style={styles.snackbar}
@@ -113,9 +125,8 @@ export function CommentView(props) {
               </Button>
             )}
           </View>
-        </SafeAreaView>
+        </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
   );
 }
 
@@ -132,7 +143,7 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
-    deleteComment: (commentId) => dispatch(destroyComment(commentId)),
+    deleteComment: (userId, commentId) => dispatch(destroyComment(userId, commentId)),
   };
 };
 

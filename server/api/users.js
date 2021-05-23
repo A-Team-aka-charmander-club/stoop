@@ -35,7 +35,7 @@ router.post('/user', verifySite, async (req, res, next) => {
 
 router.get('/user/:userId', verifyUser, async (req, res, next) => {
   try {
-    let userPosts = await User.findAll({
+    let userPosts = await User.findOne({
       where: { id: req.params.userId },
       include: [
         {

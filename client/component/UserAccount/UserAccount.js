@@ -19,11 +19,18 @@ import { takePhoto } from '../../store/photo';
 import theme from '../../../CustomProps/Theme';
 
 export function UserAccount(props) {
-  // useEffect(() => {
-  //   console.log('propsUSER', props.user);
-  //   props.getPosts(props.user.id);
-  // }, [props.navigation]);
-  // console.log('PROPS USER OUT OF USE', props.user);
+
+  useEffect(() => {
+    props.getPosts(props.user.id);
+    console.log(props.user, 'user')
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log('hi')
+      props.getPosts(props.user.id);
+      console.log(props.user, 'user')
+    });
+    unsubscribe()
+  }, [props.navigation]);
+  
   return (
     <SafeAreaView style={styles.container}>
       <View styles={{ justifyContent: 'center', alignItems: 'center' }}>

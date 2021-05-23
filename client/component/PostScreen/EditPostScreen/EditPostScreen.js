@@ -7,8 +7,10 @@ import {
   Image,
   Button,
   TouchableWithoutFeedback,
-  Keyboard,
+  Keyboard, 
+  TouchableOpacity
 } from 'react-native';
+import theme from '../../../../CustomProps/Theme';
 import { connect } from 'react-redux';
 import EditMapView from '../../MapView/EditMapView';
 import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
@@ -54,7 +56,7 @@ export const EditPostScreen = (props) => {
       }),
       props.addTags(props.post.tags.map((tag) => tag.name),);
 
-      setErrMessage(''),
+    setErrMessage(''),
       setVisible(false);
   }, [props.navigation]);
 
@@ -77,7 +79,7 @@ export const EditPostScreen = (props) => {
       }
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
-      
+
       await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
       props.clearPhoto();
       props.removeTags();
@@ -142,7 +144,11 @@ export const EditPostScreen = (props) => {
                 <Text>{errMessage} is required</Text>
               </Snackbar>
               {!visible && (
-                <Button color="blue" title="Update!" onPress={changePost} />
+                <TouchableOpacity
+                  style={theme.buttonLarge}
+                  onPress={() => changePost()}>
+                  <Text style={theme.buttonTitleLarge}>Update!</Text>
+                </TouchableOpacity>
               )}
             </View>
           </View>
