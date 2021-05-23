@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import theme from '../../../CustomProps/Theme';
 import {
   View,
-  TouchableWithoutFeedback,
-  Keyboard,
   TextInput,
-  SafeAreaView,
   FlatList,
-  SectionList,
   Text,
-  LogBox
+  LogBox,
+  TouchableOpacity
 } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -36,6 +34,7 @@ export function CommentView(props) {
     props.getComment(props.post.id);
     setVisible(false);
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
     const unsubscribe = props.navigation.addListener('didFocus', () => {
       console.log()
     });
@@ -76,57 +75,58 @@ export function CommentView(props) {
   };
 
   return (
-      <KeyboardAwareScrollView>
-        <View style={styles.inner}>
-            <FlatList
-              style={{
-                padding: 20,
-                automaticallyAdjustContentInsets: false,
-              }}
-              inverted={false}
-              data={props.comments.sort((c1, c2) => {
-                let order;
-                if(c1.updatedAt > c2.updatedAt) {
-                  order = 1;
-                } else if(c1.updatedAt < c2.updatedAt) {
-                  order = -1;
-                } else {
-                  if(c1.id < c2.id){
-                    order = 1
-                  } else {
-                    order = -1
-                  }
-                }
-                return order;
-              })}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id.toString()}
-              ListHeaderComponent={getHeader}
-            />
+    <KeyboardAwareScrollView>
+      <View style={styles.inner}>
+        <FlatList
+          style={{
+            padding: 20,
+            automaticallyAdjustContentInsets: false,
+          }}
+          inverted={false}
+          data={props.comments.sort((c1, c2) => {
+            let order;
+            if (c1.updatedAt > c2.updatedAt) {
+              order = 1;
+            } else if (c1.updatedAt < c2.updatedAt) {
+              order = -1;
+            } else {
+              if (c1.id < c2.id) {
+                order = 1
+              } else {
+                order = -1
+              }
+            }
+            return order;
+          })}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          ListHeaderComponent={getHeader}
+        />
 
-            <View style={styles.inner}>
-              <TextInput placeholder="Add a comment..." style={styles.input} value={comment} onChangeText={(text) => setComment(text)} />
-            </View>
-          <View>
-            <Snackbar
-              style={styles.snackbar}
-              visible={visible}
-              onDismiss={onDismissSnackBar}
-              action={{
-                color: '#f8f5f2',
-                label: 'Dismiss',
-                onPress: onDismissSnackBar,
-              }}>
-              <Text>{`Message can't be blank!`}</Text>
-            </Snackbar>
-            {!visible && (
-              <Button>
-                <Text onPress={handleSubmit}>Submit</Text>
-              </Button>
-            )}
-          </View>
+        <View style={styles.inner}>
+          <TextInput placeholder="Add a comment..." style={styles.input} value={comment} onChangeText={(text) => setComment(text)} />
         </View>
-      </KeyboardAwareScrollView>
+        <View>
+          <Snackbar
+            style={styles.snackbar}
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            action={{
+              color: '#f8f5f2',
+              label: 'Dismiss',
+              onPress: onDismissSnackBar,
+            }}>
+            <Text>{`Message can't be blank!`}</Text>
+          </Snackbar>
+          {!visible && (
+            <TouchableOpacity
+              style={theme.buttonLarge}>
+              <Text onPress={handleSubmit}>Submit</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 

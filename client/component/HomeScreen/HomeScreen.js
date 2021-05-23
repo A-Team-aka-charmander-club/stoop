@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   SafeAreaView,
+  LogBox
 } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import { Chip } from 'react-native-paper';
@@ -33,6 +34,7 @@ export function HomeScreen(props) {
       latitudeDelta: 0.0075,
       longitudeDelta: 0.0075,
     });
+    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
   }, [props.navigation]);
 
   function onTagPress(tagId) {

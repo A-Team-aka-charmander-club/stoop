@@ -7,8 +7,9 @@ import {
   Image,
   Button,
   TouchableWithoutFeedback,
-  Keyboard, 
-  TouchableOpacity
+  Keyboard,
+  TouchableOpacity,
+  LogBox
 } from 'react-native';
 import theme from '../../../../CustomProps/Theme';
 import { connect } from 'react-redux';
@@ -46,18 +47,25 @@ export const EditPostScreen = (props) => {
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025,
     }),
-      setDescription(props.post.description),
-      setLatitude(props.post.latitude),
-      setLongitude(props.post.longitude),
 
-      setTags({
-        tag: '',
-        tagsArray: props.post.tags.map((tag) => tag.name),
-      }),
-      props.addTags(props.post.tags.map((tag) => tag.name),);
+    setDescription(props.post.description),
+    setLatitude(props.post.latitude),
+    setLongitude(props.post.longitude),
+
+    setTags({
+      tag: '',
+      tagsArray: props.post.tags.map((tag) => tag.name),
+    }),
+    props.addTags(props.post.tags.map((tag) => tag.name),);
 
     setErrMessage(''),
-      setVisible(false);
+    setVisible(false);
+    props.clearPhoto();
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log('focussed');
+    });
+    unsubscribe()
+    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
   }, [props.navigation]);
 
   const onDismissSnackBar = () => setVisible(false);
