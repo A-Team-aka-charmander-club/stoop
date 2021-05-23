@@ -15,8 +15,9 @@ import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
 import { takePhoto, clearPhoto } from '../../../store/photo';
 import { updatePost } from '../../../store/post';
 import { Snackbar, TextInput } from 'react-native-paper';
-import { removeTags } from '../../../store/tag';
+import { removeTags, addTags } from '../../../store/tag';
 import Tags from '../Tags/Tags';
+
 export const EditPostScreen = (props) => {
   const [title, setTitle] = useState(props.post.title);
   const [description, setDescription] = useState(props.post.description);
@@ -34,6 +35,7 @@ export const EditPostScreen = (props) => {
   });
   const [errMessage, setErrMessage] = useState('');
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     setTitle(props.post.title);
     setRegion({
@@ -45,14 +47,19 @@ export const EditPostScreen = (props) => {
       setDescription(props.post.description),
       setLatitude(props.post.latitude),
       setLongitude(props.post.longitude),
+
       setTags({
         tag: '',
         tagsArray: props.post.tags.map((tag) => tag.name),
       }),
+      props.addTags(props.post.tags.map((tag) => tag.name),);
+
       setErrMessage(''),
       setVisible(false);
   }, [props.navigation]);
+
   const onDismissSnackBar = () => setVisible(false);
+
   const changePost = async () => {
     if (!title.length) {
       setErrMessage('Title');
@@ -70,6 +77,7 @@ export const EditPostScreen = (props) => {
       }
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
+      
       await props.editPost({ post, photo, tags }, props.user.id, props.post.id);
       props.clearPhoto();
       props.removeTags();
@@ -159,6 +167,7 @@ const mapDispatchToProps = (dispatch) => {
     editPost: (post, userId, postId) =>
       dispatch(updatePost(post, userId, postId)),
     removeTags: () => dispatch(removeTags()),
+    addTags: (tags) => dispatch(addTags(tags)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditPostScreen);
