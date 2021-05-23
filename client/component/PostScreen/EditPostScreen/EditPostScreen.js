@@ -82,59 +82,61 @@ export const EditPostScreen = (props) => {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Text>Update Post</Text>
-          <Image
-            source={{
-              url: props.photo.firebaseUrl,
-            }}
-            style={styles.thumbnail}
-          />
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.buttonStyle}>
-              <Button
-                title="Open Camera"
-                onPress={async () => await openCameraAsync(props)}
-              />
-            </View>
-            <View style={styles.buttonStyle}>
-              <Button
-                title="Upload Photo"
-                onPress={async () => await openImagePickerAsync(props)}
-              />
-            </View>
-          </View>
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Description"
-            value={description}
-            onChangeText={(text) => setDescription(text)}
-          />
-          <Tags setTags={setTags} tags={tags} />
-          <EditMapView
-            region={region}
-            setRegion={setRegion}
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-          />
           <View>
-            <Snackbar
-              visible={visible}
-              onDismiss={onDismissSnackBar}
-              action={{
-                label: 'Dismiss',
-                onPress: onDismissSnackBar,
-              }}>
-              <Text>{errMessage} is required</Text>
-            </Snackbar>
-            {!visible && (
-              <Button color="blue" title="Update!" onPress={changePost} />
-            )}
+            <Text>Update Post</Text>
+            <Image
+              source={{
+                url: props.photo.firebaseUrl,
+              }}
+              style={styles.thumbnail}
+            />
+            <View style={{ flexDirection: 'row' }}>
+              <View style={styles.buttonStyle}>
+                <Button
+                  title="Open Camera"
+                  onPress={async () => await openCameraAsync(props)}
+                />
+              </View>
+              <View style={styles.buttonStyle}>
+                <Button
+                  title="Upload Photo"
+                  onPress={async () => await openImagePickerAsync(props)}
+                />
+              </View>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Title"
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Description"
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+            <Tags setTags={setTags} tags={tags} />
+            <EditMapView
+              region={region}
+              setRegion={setRegion}
+              setLatitude={setLatitude}
+              setLongitude={setLongitude}
+            />
+            <View>
+              <Snackbar
+                visible={visible}
+                onDismiss={onDismissSnackBar}
+                action={{
+                  label: 'Dismiss',
+                  onPress: onDismissSnackBar,
+                }}>
+                <Text>{errMessage} is required</Text>
+              </Snackbar>
+              {!visible && (
+                <Button color="blue" title="Update!" onPress={changePost} />
+              )}
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>

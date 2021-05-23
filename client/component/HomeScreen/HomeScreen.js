@@ -19,7 +19,6 @@ import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
 import { getCoordinatesThunk } from '../../store/coordinates';
-import { useFonts, Bangers_400Regular } from '@expo-google-fonts/bangers';
 
 export function HomeScreen(props) {
   const [tags, setTags] = useState([]);
@@ -65,60 +64,6 @@ export function HomeScreen(props) {
             {<Text style={styles.titleMidScreenHeader}>Nearby Treasure</Text>}
           </View>
 
-<<<<<<< HEAD
-  return (
-    <SafeAreaView style={styles.container}>
-      <HomeGoogleMapView
-        navigation={props.navigation}
-        region={region}
-        setRegion={setRegion}
-        tags={tags}
-      />
-      <ScrollView style={styles.scrollView} stickyHeaderIndices={[0]}>
-        {<Text style={styles.input}>Nearby Treasure</Text>}
-        {props.coordinates.length > 0 && props.coordinates.map((post, index) => {
-          return (
-            <ListItem
-              key={index}
-              style={styles.itemText}
-              bottomDivider
-              onPress={() => {
-                props.getPost(post);
-                props.getPhoto(post.photos[0]);
-                props.navigation.navigate('PostNav', {
-                  screen: 'SinglePost',
-                });
-              }}>
-              <Avatar source={{ url: post.photos[0].firebaseUrl }} />
-              <ListItem.Content>
-                <ListItem.Title>{post.title}</ListItem.Title>
-                <ListItem.Subtitle>
-                  {post.tags.map((tag, index) => {
-                    const tagId = tag.id;
-                    let selected = false;
-                    if (tags.includes(tagId)) {
-                      selected = true;
-                    }
-                    return (
-                      <Chip
-                        selectedColor="#3ca897"
-                        selected={selected}
-                        icon="tag"
-                        key={index}
-                        onPress={() => onTagPress(tagId)}>
-                        {tag.name}
-                      </Chip>
-                    );
-                  })}{' '}
-                </ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-          );
-        })}
-      </ScrollView>
-    </SafeAreaView>
-  );
-=======
           {props.coordinates.map((post, index) => {
             return (
               <ListItem
@@ -164,7 +109,6 @@ export function HomeScreen(props) {
       </SafeAreaView>
     );
   }
->>>>>>> main
 }
 
 const mapStateToProps = (state) => {

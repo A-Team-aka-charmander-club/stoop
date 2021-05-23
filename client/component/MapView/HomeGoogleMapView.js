@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { getCoordinatesThunk } from '../../store/coordinates';
 import { getPost } from '../../store/post';
 import { takePhoto } from '../../store/photo';
-//import Image from 'react-native-scalable-image';
 
 export function HomeGoogleMapView(props) {
   installWebGeolocationPolyfill();
@@ -59,12 +58,8 @@ export function HomeGoogleMapView(props) {
         {props.coordinates.map((post, index) => {
           return (
             <Marker
-<<<<<<< HEAD
               image={require('../../../assets/x.png')}
               key={index + ":" + post.latitude + ":" + post.longitude}
-=======
-              key={index + ':' + post.latitude + ':' + post.longitude}
->>>>>>> main
               coordinate={{
                 latitude: post.latitude,
                 longitude: post.longitude,
