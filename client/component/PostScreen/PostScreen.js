@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
-import theme from '../../../CustomProps/Theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   Text,
@@ -66,13 +65,6 @@ export const PostScreen = (props) => {
       let tags = props.tags;
       let photo = props.photo;
       await props.submitPost({ post, photo, tags });
-      //props.clearPhoto();
-      //setTitle('');
-      //setDescription('');
-      //setClearMap(true);
-      //setTags({ tag: '', tagsArray: [] });
-      //props.clearPhoto()
-      //props.removeTags();
       props.navigation.navigate('SinglePost');
     }
   };
