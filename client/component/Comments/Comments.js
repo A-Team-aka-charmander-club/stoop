@@ -115,10 +115,12 @@ export function CommentView(props) {
                 label: 'Dismiss',
                 onPress: onDismissSnackBar,
               }}>
-              <Text>Message can't be blank!</Text>
+              <Text>{`Message can't be blank!`}</Text>
             </Snackbar>
             {!visible && (
-              <Button color="blue" title="Post!" onPress={handleSubmit} />
+              <Button>
+                <Text onPress={handleSubmit}>Submit</Text>
+              </Button>
             )}
           </View>
         </KeyboardAvoidingView>

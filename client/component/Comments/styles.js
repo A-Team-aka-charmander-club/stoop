@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
   commentCard: {
     margin: 5,
   },
+  snackbar: {
+    backgroundColor: '#f03a47',
+    color: '#f8f5f2',
+  },
   // left: {
   //   padding: 50,
   // },
