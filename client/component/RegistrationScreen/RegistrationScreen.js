@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
 import theme from '../../../CustomProps/Theme';
-
 import { firebase } from '../../../src/firebase/config';
 import { connect } from 'react-redux';
 import { createOrFindUserThunk } from '../../store/user';
@@ -20,16 +19,14 @@ export function RegistrationScreen({ navigation, createUser }) {
 
   useEffect(() => {
     setFullName('');
-    setEmail(''),
-    setPassword(''),
-    setConfirmPassword('')
-  }, [props.navigation])
+    setEmail(''), setPassword(''), setConfirmPassword('');
+  }, [navigation]);
 
   const onRegisterPress = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match.");
       return;
-  }
+    }
 
     firebase
       .auth()
@@ -62,54 +59,52 @@ export function RegistrationScreen({ navigation, createUser }) {
     <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-      >
+        keyboardShouldPersistTaps="always">
         <Image
           style={theme.logoLarge}
           source={require('../../../assets/trashPanda.png')}
         />
         <TextInput
           style={theme.input}
-          placeholder='Full Name'
-          placeholderTextColor='#aaaaaa'
+          placeholder="Full Name"
+          placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setFullName(text)}
           value={fullName}
-          underlineColorAndroid='transparent'
-          autoCapitalize='none'
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
         />
         <TextInput
           style={theme.input}
-          placeholder='E-mail'
-          placeholderTextColor='#aaaaaa'
+          placeholder="E-mail"
+          placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setEmail(text)}
           value={email}
-          underlineColorAndroid='transparent'
-          autoCapitalize='none'
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
         />
         <TextInput
           style={theme.input}
-          placeholderTextColor='#aaaaaa'
+          placeholderTextColor="#aaaaaa"
           secureTextEntry
-          placeholder='Password'
+          placeholder="Password"
           onChangeText={(text) => setPassword(text)}
           value={password}
-          underlineColorAndroid='transparent'
-          autoCapitalize='none'
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
         />
         <TextInput
           style={theme.input}
-          placeholderTextColor='#aaaaaa'
+          placeholderTextColor="#aaaaaa"
           secureTextEntry
-          placeholder='Confirm Password'
+          placeholder="Confirm Password"
           onChangeText={(text) => setConfirmPassword(text)}
           value={confirmPassword}
-          underlineColorAndroid='transparent'
-          autoCapitalize='none'
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
         />
         <TouchableOpacity
           style={theme.buttonLarge}
-          onPress={() => onRegisterPress()}
-        >
+          onPress={() => onRegisterPress()}>
           <Text style={theme.buttonTitleLarge}>Create account</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
