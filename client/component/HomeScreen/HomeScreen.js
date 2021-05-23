@@ -111,7 +111,7 @@ export function HomeScreen(props) {
         //   automaticallyAdjustContentInsets: true,
         // }}
         data={props.coordinates}
-        renderItme={renderItem}
+        renderItem={renderItem}
         // keyExtractor={(post) => post.id.toString()}
         // stickyHeaderIndices={[0]}
         // contentContainerStyle={styles.contenContainer}

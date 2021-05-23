@@ -9,6 +9,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
@@ -77,34 +78,46 @@ export const PostScreen = (props) => {
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container} style={styles.horizontal}>
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+      style={styles.container}
+    >
+      <View style={styles.horizontal}>
         <KeyboardAwareScrollView
-          style={{ flex: 1, width: '100%' }}
+          style={{
+            flex: 1,
+            width: '100%',
+            backgroundColor: styles.backgroundColor,
+          }}
           keyboardShouldPersistTaps='always'
         >
-          <Text>Create Post</Text>
+          <Text style={{ alignSelf: 'center' }}>Create Post</Text>
           {props.photo.firebaseUrl && (
             <Image
               source={{ url: props.photo.firebaseUrl }}
               style={styles.thumbnail}
             />
           )}
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.buttonStyle}>
-              <Button
-                color='#fff'
-                title='Open Camera'
-                onPress={async () => await openCameraAsync(props)}
-              />
-            </View>
-            <View style={styles.buttonStyle}>
-              <Button
-                color='#fff'
-                title='Upload Photo'
-                onPress={async () => await openImagePickerAsync(props)}
-              />
-            </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              backgroundColor: styles.backgroundColor,
+              marginBottom: 20,
+            }}
+          >
+            <TouchableOpacity
+              onPress={async () => await openCameraAsync(props)}
+              style={styles.buttonLarge}
+            >
+              <Text style={styles.buttonTitleLarge}>Open Camera</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonLarge}
+              onPress={async () => await openImagePickerAsync(props)}
+            >
+              <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
+            </TouchableOpacity>
           </View>
           <TextInput
             style={styles.input}
@@ -143,7 +156,9 @@ export const PostScreen = (props) => {
               <Text>{errMessage} is required</Text>
             </Snackbar>
             {!visible && (
-              <Button color='blue' title='Post!' onPress={createPost} />
+              <TouchableOpacity onPress={createPost} sytle={styles.buttonLarge}>
+                <Text style={styles.buttonTitleLarge}>Post!</Text>
+              </TouchableOpacity>
             )}
           </View>
         </KeyboardAwareScrollView>

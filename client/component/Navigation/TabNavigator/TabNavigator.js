@@ -53,6 +53,12 @@ const BottomTabNavigator = (props) => {
         options={{
           unmountOnBlur: true,
           tabBarLabel: 'Add Treasure',
+
+          title: 'Post',
+          headerStyle: {
+            backgroundColor: theme.colors.favorite,
+          },
+
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name='treasure-chest'
