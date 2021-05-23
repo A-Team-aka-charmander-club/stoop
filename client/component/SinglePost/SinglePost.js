@@ -1,18 +1,7 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import styles, { BadgedIcon } from './styles';
-=======
 import React, { useState, useEffect } from 'react';
-import styles from './styles';
->>>>>>> main
+import styles, { BadgedIcon } from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {
-  Text,
-  View,
-  Image,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, Image, Button, TouchableOpacity } from 'react-native';
 import { ListItem, Icon, Badge, withBadge } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Card, Title, Paragraph, Chip } from 'react-native-paper';
@@ -22,7 +11,6 @@ import { destroyPost } from '../../store/post';
 import { takePhoto, clearPhoto } from '../../store/photo';
 
 export const SinglePost = (props) => {
-
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
