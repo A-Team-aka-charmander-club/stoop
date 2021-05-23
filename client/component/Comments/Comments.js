@@ -6,10 +6,16 @@ import {
   TextInput,
   SafeAreaView,
   FlatList,
+  SectionList,
   Text,
   LogBox,
 } from 'react-native';
+<<<<<<< HEAD
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+=======
+import { Snackbar } from 'react-native-paper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+>>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
 import { connect } from 'react-redux';
 import TimeAgo from 'react-native-timeago';
 import styles from './styles';
@@ -22,20 +28,39 @@ import { Divider, Card, Button } from 'react-native-paper';
 
 export function CommentView(props) {
   const [comment, setComment] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const onDismissSnackBar = () => setVisible(false);
 
   useEffect(() => {
+<<<<<<< HEAD
     setComment('');
+=======
+>>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
     props.getComment(props.post.id);
+    setVisible(false);
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+<<<<<<< HEAD
   }, [props.comments.length]);
+=======
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log()
+    });
+    unsubscribe()
+  }, [props.comments.length])
+>>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
 
   const handleSubmit = () => {
-    props.addComment(comment, props.post.id, props.user.id);
-    setComment('');
+    if (!comment.length) {
+      setVisible(true);
+    } else {
+      props.addComment(comment, props.post.id, props.user.id);
+      setComment('');
+    }
   };
 
   const handleDelete = (comment) => {
-    props.deleteComment(comment.id);
+    props.deleteComment(props.user.id, comment.id);
   };
 
   const getHeader = () => {
@@ -59,6 +84,7 @@ export function CommentView(props) {
   };
 
   return (
+<<<<<<< HEAD
     <SafeAreaView>
       <KeyboardAwareScrollView>
         <SafeAreaView style={styles.inner}>
@@ -74,23 +100,68 @@ export function CommentView(props) {
             keyExtractor={(item) => item.id.toString()}
             ListHeaderComponent={getHeader}
           />
+=======
+      <KeyboardAwareScrollView>
+        <View style={styles.inner}>
+            <FlatList
+              style={{
+                padding: 20,
+                automaticallyAdjustContentInsets: false,
+              }}
+              inverted={false}
+              data={props.comments.sort((c1, c2) => {
+                let order;
+                if(c1.updatedAt > c2.updatedAt) {
+                  order = 1;
+                } else if(c1.updatedAt < c2.updatedAt) {
+                  order = -1;
+                } else {
+                  if(c1.id < c2.id){
+                    order = 1
+                  } else {
+                    order = -1
+                  }
+                }
+                return order;
+              })}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+              ListHeaderComponent={getHeader}
+            />
+>>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
 
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
+<<<<<<< HEAD
               <TextInput
                 placeholder='Add a comment...'
                 style={styles.textInput}
                 value={comment}
                 onChangeText={(text) => setComment(text)}
               />
+=======
+              <TextInput placeholder="Add a comment..." style={styles.input} value={comment} onChangeText={(text) => setComment(text)} />
+>>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
             </View>
-          </TouchableWithoutFeedback>
-          <Button style={styles.button}>
-            <Text onPress={handleSubmit}>Submit</Text>
-          </Button>
-        </SafeAreaView>
+          <View>
+            <Snackbar
+              style={styles.snackbar}
+              visible={visible}
+              onDismiss={onDismissSnackBar}
+              action={{
+                color: '#f8f5f2',
+                label: 'Dismiss',
+                onPress: onDismissSnackBar,
+              }}>
+              <Text>{`Message can't be blank!`}</Text>
+            </Snackbar>
+            {!visible && (
+              <Button>
+                <Text onPress={handleSubmit}>Submit</Text>
+              </Button>
+            )}
+          </View>
+        </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
   );
 }
 
@@ -107,7 +178,7 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
-    deleteComment: (commentId) => dispatch(destroyComment(commentId)),
+    deleteComment: (userId, commentId) => dispatch(destroyComment(userId, commentId)),
   };
 };
 

@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -53,51 +55,51 @@ export function LoginScreen({ navigation, fetchUser }) {
       });
   };
   return (
-    <SafeAreaView style={theme.container}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps='always'
-      >
-        <Image
-          style={theme.logoLarge}
-          source={require('../../../assets/trashPanda.png')}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='E-mail'
-          placeholderTextColor='#aaaaaa'
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          underlineColorAndroid='transparent'
-          autoCapitalize='none'
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor='#aaaaaa'
-          secureTextEntry
-          placeholder='Password'
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          underlineColorAndroid='transparent'
-          autoCapitalize='none'
-        />
-        {/* this is log-in button */}
-        <TouchableOpacity
-          style={theme.buttonLarge}
-          onPress={() => onLoginPress()}
-        >
-          <Text style={theme.buttonTitleLarge}>Log in</Text>
-        </TouchableOpacity>
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Don't have an account?
-            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              Sign up
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={theme.container}>
+        <KeyboardAwareScrollView
+          style={{ flex: 1, width: '100%' }}
+          keyboardShouldPersistTaps="always">
+          <Image
+            style={theme.logoLarge}
+            source={require('../../../assets/trashPanda.png')}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail"
+            placeholderTextColor="#aaaaaa"
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="#aaaaaa"
+            secureTextEntry
+            placeholder="Password"
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+          />
+          {/* this is log-in button */}
+          <TouchableOpacity
+            style={theme.buttonLarge}
+            onPress={() => onLoginPress()}>
+            <Text style={theme.buttonTitleLarge}>Log in</Text>
+          </TouchableOpacity>
+          <View style={styles.footerView}>
+            <Text style={styles.footerText}>
+              Don't have an account?
+              <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+                Sign up
+              </Text>
             </Text>
-          </Text>
-        </View>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+          </View>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

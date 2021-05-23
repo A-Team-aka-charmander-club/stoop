@@ -71,7 +71,9 @@ const BottomTabNavigator = (props) => {
       <Tab.Screen
         name='Account'
         component={UserAccount}
+        unmountOnBlur={true}
         options={{
+          unmountOnBlur: true,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name='skull-crossbones' size={24} color='black' />

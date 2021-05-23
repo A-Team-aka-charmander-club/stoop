@@ -75,7 +75,11 @@ export const destroyComment = (userId, commentId) => {
     try {
       const user = firebase.auth().currentUser;
       const { data } = await axios.delete(
+<<<<<<< HEAD
         `http://10.0.0.153:8080/api/comments/${commentId}`,
+=======
+        `http://192.168.1.6:8080/api/comments/${userId}/${commentId}`,
+>>>>>>> 877117c2fda41af397e7abeb8008233a7f31bf59
         {
           headers: { authorization: user.uid },
         }

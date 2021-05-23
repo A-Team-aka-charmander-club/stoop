@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SECRET } from '@env';
+import { firebase } from '../../src/firebase/config';
 
 // ACTION CONSTANTS
 const CREATE_USER = 'CREATE_USER';
@@ -40,6 +41,23 @@ export function createOrFindUserThunk(user) {
       dispatch(createUser(data));
     } catch (err) {
       console.log(err);
+    }
+  };
+}
+
+export function getUserPostsThunk(userId) {
+  return async (dispatch) => {
+    const user = firebase.auth().currentUser;
+    try {
+      const { data } = await axios.get(
+        `http://192.168.1.6:8080/api/users/user/${userId}`,
+        {
+          headers: { authorization: user.uid },
+        }
+      );
+      dispatch(createUser(data));
+    } catch (error) {
+      console.log(error);
     }
   };
 }
