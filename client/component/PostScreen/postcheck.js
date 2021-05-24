@@ -9,7 +9,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  TextInput,
 } from 'react-native';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
@@ -18,7 +17,7 @@ import { openCameraAsync, openImagePickerAsync } from '../Services/Services';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import { removeTags } from '../../store/tag';
 import Tags from './Tags/Tags';
-import { Snackbar, Title } from 'react-native-paper';
+import { TextInput, Snackbar, Title } from 'react-native-paper';
 import theme from '../../../CustomProps/Theme';
 
 export const PostScreen = (props) => {
@@ -88,25 +87,19 @@ export const PostScreen = (props) => {
       }}
       keyboardShouldPersistTaps='always'
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ backgroundColor: theme.backgroundColor }}>
-          <View style={styles.midScreenHeader}>
-            <Title style={styles.titleMidScreenHeader}>Create Post</Title>
-          </View>
+      <TouchableWithoutFeedback
+        onPress={Keyboard.dismiss}
+        style={styles.container}
+      >
+        <View>
+          <Text style={{ alignSelf: 'center' }}>Create Post</Text>
           {props.photo.firebaseUrl && (
             <Image
               source={{ url: props.photo.firebaseUrl }}
               style={styles.thumbnail}
             />
           )}
-          <View
-            style={{
-              flexDirection: 'column',
-              backgroundColor: styles.backgroundColor,
-              marginBottom: 20,
-              marginTop: 20,
-            }}
-          >
+          <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={async () => await openCameraAsync(props)}
               style={styles.buttonLarge}
@@ -123,7 +116,6 @@ export const PostScreen = (props) => {
           </View>
           <TextInput
             style={styles.input}
-            underlineColor={theme.colors.accent}
             placeholder='Title'
             value={title}
             onChangeText={(text) => setTitle(text)}
@@ -131,8 +123,6 @@ export const PostScreen = (props) => {
           <TextInput
             required
             style={styles.input}
-            underlineColor={theme.colors.accent}
-            selectionColor={theme.colors.accent}
             placeholder='Description'
             value={description}
             onChangeText={(text) => setDescription(text)}

@@ -32,6 +32,7 @@ export default StyleSheet.create({
     fontSize: 24,
     color: theme.colors.iconColor,
     fontWeight: 'bold',
+    alignSelf: 'center',
   },
   subtitle: {
     color: '#A5A5A5',
@@ -44,19 +45,22 @@ export default StyleSheet.create({
   },
   cardLayout: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     flex: 1,
+    borderColor: theme.colors.accent,
+    borderWidth: 0.3,
   },
   avatar: {
     backgroundColor: theme.colors.accent,
   },
   chip: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.lightBackground,
+    margin: 10,
   },
   timeAgo: {
     fontStyle: 'italic',
   },
   tagText: {
-    color: '#F8F5F2',
+    color: theme.colors.accent,
   },
 });

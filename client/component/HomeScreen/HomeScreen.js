@@ -7,9 +7,10 @@ import {
   FlatList,
   SafeAreaView,
   LogBox,
+  TouchableOpacity,
 } from 'react-native';
 import TimeAgo from 'react-native-timeago';
-import { Chip, Card, Avatar, Title} from 'react-native-paper';
+import { Chip, Card, Avatar, Title, Paragraph } from 'react-native-paper';
 import styles from './styles';
 import { connect } from 'react-redux';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
@@ -38,10 +39,8 @@ export function HomeScreen(props) {
     const unsubscribe = props.navigation.addListener('didFocus', () => {
       console.log('focussed');
     });
-    unsubscribe()
+    unsubscribe();
   }, [props.navigation]);
-
-console.log(props.photo)
 
   function onTagPress(tagId) {
     if (!tags.includes(tagId)) {
@@ -54,7 +53,7 @@ console.log(props.photo)
     }
   }
 
-  const renderItem = ({ item, separators }) => {
+  const renderItem = ({ item }) => {
     return (
       <Card
         style={styles.scrollCard}
@@ -71,32 +70,41 @@ console.log(props.photo)
             source={{ url: item.photos[0].firebaseUrl }}
             style={styles.avatar}
           />
-          <View>
-            <Title styles={styles.title}>{item.title}</Title>
-            <TimeAgo time={item.createdAt} style={styles.timeAgo} />
-          </View>
-          <View>
-            {item.tags.map((tag, index) => {
-              const tagId = tag.id;
-              let selected = false;
-              if (tags.includes(tagId)) {
-                selected = true;
-              }
-              return (
-                <Chip
-                  mode='flat'
-                  size={10}
-                  style={{ backgroundColor: theme.colors.accent }}
-                  selected={selected}
-                  icon='tag'
-                  key={index}
-                  textStyle={styles.tagText}
-                  onPress={() => onTagPress(tagId)}
-                >
-                  {tag.name}
-                </Chip>
-              );
-            })}
+          <View style={{ flexDirection: 'column', marginLeft: 10 }}>
+            <View>
+              <Title styles={styles.title}>{item.title}</Title>
+              <TimeAgo time={item.createdAt} style={styles.timeAgo} />
+            </View>
+            <View style={{ flexDirection: 'row', margin: 5 }}>
+              {item.tags.map((tag, index) => {
+                const tagId = tag.id;
+                let selected = false;
+                if (tags.includes(tagId)) {
+                  selected = true;
+                }
+                return (
+                  <Chip
+                    mode='outlined'
+                    size={10}
+                    style={{
+                      backgroundColor: theme.colors.lightBackground,
+                      margin: 4,
+                      borderWidth: 1,
+                      borderColor: theme.colors.accent,
+                      color: theme.colors.accent,
+                    }}
+                    selectedColor={theme.colors.accent}
+                    selected={selected}
+                    icon='tag'
+                    key={index}
+                    textStyle={styles.tagText}
+                    onPress={() => onTagPress(tagId)}
+                  >
+                    {tag.name}
+                  </Chip>
+                );
+              })}
+            </View>
           </View>
         </Card.Content>
       </Card>
