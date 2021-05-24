@@ -32,7 +32,7 @@ export const SinglePost = (props) => {
             <Card.Content>
               <Title>{'Treasure'}</Title>
               <ListItem>
-                <Icon name='treasure-chest' type='material-community' />
+                <Icon name='treasure-chest' type='material-community'/>
                 <ListItem.Content>
                   <ListItem.Title>{props.post.title}</ListItem.Title>
                   <ListItem.Subtitle>

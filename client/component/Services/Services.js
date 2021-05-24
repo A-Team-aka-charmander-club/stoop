@@ -66,6 +66,7 @@ export const openImagePickerAsync = async (props) => {
   }
   const photo = await uploadImage(pickerResult.uri);
   props.takePhoto(photo);
+  
 };
 
 export const openCameraAsync = async (props) => {
