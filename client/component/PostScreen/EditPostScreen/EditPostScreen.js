@@ -101,8 +101,8 @@ export const EditPostScreen = (props) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>
-          <View style={styles.midScreenHeaderEdit}>
-            <Title style={styles.titleMidScreenHeaderEdit}> Update Post</Title>
+          <View style={styles.midScreenHeader}>
+            <Title style={styles.titleMidScreenHeader}> Update Post</Title>
           </View>
           <Image
             source={{

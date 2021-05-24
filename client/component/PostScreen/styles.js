@@ -66,7 +66,7 @@ export default StyleSheet.create({
   },
   midScreenHeader: {
     // width: 100,
-    height: 60,
+    height: 100,
     backgroundColor: theme.colors.cancelButton,
   },
   midScreenHeaderEdit: {
@@ -79,7 +79,7 @@ export default StyleSheet.create({
     overflow: 'hidden',
     paddingLeft: 0,
     alignSelf: 'center',
-    marginTop: 20,
+    marginTop: 50,
     fontWeight: 'bold',
     fontSize: 20,
     color: theme.colors.lightBackground,

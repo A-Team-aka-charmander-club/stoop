@@ -22,7 +22,7 @@ export const BadgedIcon = (length) => {
 
 const badgeStyles = StyleSheet.create({
   container: {
-    marginLeft: -10,
+    marginLeft: 12,
     justifyContent: 'flex-start',
     alignItems: 'center',
     // marginLeft: 10,
@@ -67,8 +67,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flex: 1,
-    borderColor: theme.colors.accent,
-    borderWidth: 0.3,
+
     backgroundColor: theme.backgroundColor,
   },
   title: {
@@ -92,14 +91,14 @@ export default StyleSheet.create({
     overflow: 'hidden',
     paddingLeft: 0,
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 50,
     fontWeight: 'bold',
     fontSize: 20,
     color: theme.colors.lightBackground,
   },
   midScreenHeader: {
     // width: 100,
-    height: 48,
+    height: 100,
     backgroundColor: theme.colors.cancelButton,
   },
   buttonLarge: {

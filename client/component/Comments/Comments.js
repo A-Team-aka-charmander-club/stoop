@@ -73,7 +73,7 @@ export function CommentView(props) {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{ backgroundColor: theme.backgroundColor }}>
       <View style={styles.inner}>
         <FlatList
           style={{

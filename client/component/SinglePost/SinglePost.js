@@ -25,20 +25,20 @@ export const SinglePost = (props) => {
 
   if (props.post.id) {
     return (
-      <View style={styles.container}>
-        <KeyboardAwareScrollView
-          style={{
-            flex: 1,
-            width: '100%',
-            backgroundColor: theme.backgroundColor,
-          }}
-          keyboardShouldPersistTaps='always'
-        >
+      <KeyboardAwareScrollView
+        style={{
+          flex: 1,
+          width: '100%',
+          backgroundColor: theme.backgroundColor,
+        }}
+        keyboardShouldPersistTaps='always'
+      >
+        <View style={{ backgroundColor: theme.backgroundColor }}>
+          <View style={styles.midScreenHeader}>
+            <Title style={styles.titleMidScreenHeader}>Treasure</Title>
+          </View>
           <Card style={styles.cardLayout}>
             <Card.Content style={{ backgroundColor: theme.backgroundColor }}>
-              <View style={styles.midScreenHeader}>
-                <Title style={styles.titleMidScreenHeader}>Treasure</Title>
-              </View>
               <Card.Cover
                 source={{ url: props.post.photos[0].firebaseUrl }}
                 style={styles.thumnbnail}
@@ -51,6 +51,7 @@ export const SinglePost = (props) => {
                   justifyContent: 'flex-start',
                   alignItems: 'baseline',
                   marginTop: 10,
+                  backgroundColor: theme.backgroundColor,
                 }}
               >
                 <Icon name='treasure-chest' type='material-community' />
@@ -144,7 +145,7 @@ export const SinglePost = (props) => {
               flex: 1,
               flexDirection: 'row',
               alignItems: 'flex-start',
-              // justifyContents: 'flex-start',
+              backgroundColor: theme.backgroundColor,
             }}
           >
             <Title
@@ -171,8 +172,8 @@ export const SinglePost = (props) => {
               Comments
             </Text>
           </View>
-        </KeyboardAwareScrollView>
-      </View>
+        </View>
+      </KeyboardAwareScrollView>
     );
   } else {
     {
