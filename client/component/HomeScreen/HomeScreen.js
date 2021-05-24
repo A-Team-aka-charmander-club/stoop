@@ -53,7 +53,7 @@ export function HomeScreen(props) {
     }
   }
 
-  const renderItem = ({ item, separators }) => {
+  const renderItem = ({ item }) => {
     return (
       <Card
         style={styles.scrollCard}
