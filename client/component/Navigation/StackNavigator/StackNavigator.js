@@ -11,8 +11,8 @@ import theme from '../../../../CustomProps/Theme';
 const Stack = createStackNavigator();
 
 const HomeStackNavigator = (props) => {
-  const navigation = props.navigation
-  
+  const navigation = props.navigation;
+
   return (
     <Stack.Navigator
       initialRouteName='Home'
@@ -40,12 +40,25 @@ const PostStackNavigator = () => {
       initialRouteName='Post'
       screenOptions={{
         backgroundColor: theme.backgroundColor,
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
       }}
     >
       <Stack.Screen
         name='Post'
         component={PostScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+
+          title: 'Post',
+          headerStyle: {
+            backgroundColor: theme.colors.favorite,
+          },
+        }}
       />
       <Stack.Screen
         name='SinglePost'
@@ -78,8 +91,4 @@ const MapStackNavigator = () => {
   );
 };
 
-export {
-  HomeStackNavigator,
-  PostStackNavigator,
-  MapStackNavigator,
-};
+export { HomeStackNavigator, PostStackNavigator, MapStackNavigator };

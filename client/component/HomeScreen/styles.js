@@ -9,7 +9,11 @@ export default StyleSheet.create({
   midScreenHeader: {
     // width: 100,
     height: 48,
-    backgroundColor: theme.colors.accent,
+    backgroundColor: theme.colors.cancelButton,
+  },
+  contenContainer: {
+    backgroundColor: theme.colors.primary,
+    borderColor: theme.colors.iconColor,
   },
   titleMidScreenHeader: {
     height: 48,
@@ -19,7 +23,7 @@ export default StyleSheet.create({
     marginTop: 10,
     fontWeight: 'bold',
     fontSize: 20,
-    color: theme.backgroundColor,
+    color: theme.colors.lightBackground,
   },
   scrollView: {
     display: 'flex',
@@ -34,5 +38,25 @@ export default StyleSheet.create({
   },
   itemText: {
     backgroundColor: theme.backgroundColor,
+  },
+  scrollCard: {
+    backgroundColor: theme.backgroundColor,
+  },
+  cardLayout: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  avatar: {
+    backgroundColor: theme.colors.accent,
+  },
+  chip: {
+    backgroundColor: theme.colors.primary,
+  },
+  timeAgo: {
+    fontStyle: 'italic',
+  },
+  tagText: {
+    color: '#F8F5F2',
   },
 });

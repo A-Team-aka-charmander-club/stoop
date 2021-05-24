@@ -1,8 +1,15 @@
-
 import React, { useState, useEffect } from 'react';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, Button, TouchableWithoutFeedback, Keyboard, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+  TouchableOpacity,
+} from 'react-native';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -42,12 +49,12 @@ export const PostScreen = (props) => {
       setClearMap(true),
       setTags({ tag: '', tagsArray: [] }),
       setErrMessage(''),
-      setVisible(false)
+      setVisible(false);
     props.clearPhoto();
     const unsubscribe = props.navigation.addListener('didFocus', () => {
       console.log('focussed');
     });
-    unsubscribe()
+    unsubscribe();
   }, [props.navigation]);
 
   const onDismissSnackBar = () => setVisible(false);
@@ -70,82 +77,96 @@ export const PostScreen = (props) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <Text>Create Post</Text>
-            {props.photo.firebaseUrl && (
-              <Image
-                source={{ url: props.photo.firebaseUrl }}
-                style={styles.thumbnail}
-              />
-            )}
-            <View style={{ flexDirection: 'row' }}>
-              <View style={styles.buttonStyle}>
-                <Button
-                  color="#fff"
-                  title="Open Camera"
-                  onPress={async () => await openCameraAsync(props)}
-                />
-              </View>
-              <View style={styles.buttonStyle}>
-                <Button
-                  color="#fff"
-                  title="Upload Photo"
-                  onPress={async () => await openImagePickerAsync(props)}
-                />
-              </View>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Title"
-              value={title}
-              onChangeText={(text) => setTitle(text)}
+    <KeyboardAwareScrollView
+      style={styles.horizontal}
+      style={{
+        flex: 1,
+        marginTop: 30,
+        width: '100%',
+        backgroundColor: styles.backgroundColor,
+      }}
+      keyboardShouldPersistTaps='always'
+    >
+      <TouchableWithoutFeedback
+        onPress={Keyboard.dismiss}
+        style={styles.container}
+      >
+        <View >
+          <Text style={{ alignSelf: 'center' }}>Create Post</Text>
+          {props.photo.firebaseUrl && (
+            <Image
+              source={{ url: props.photo.firebaseUrl }}
+              style={styles.thumbnail}
             />
-            <TextInput
-              required
-              style={styles.input}
-              placeholder="Description"
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-            />
-            <Tags setTags={setTags} tags={tags} />
-            <GoogleMapView
-              region={region}
-              clear={clearMap}
-              setRegion={setRegion}
-              setLatitude={setLatitude}
-              setLongitude={setLongitude}
-              setClearMap={setClearMap}
-              clear={clearMap}
-            />
-            <View>
-              <Snackbar
-                style={styles.snackbar}
-                visible={visible}
-                onDismiss={onDismissSnackBar}
-                action={{
-                  color: '#f8f5f2',
-                  label: 'Dismiss',
-                  onPress: onDismissSnackBar,
-                }}>
-                <Text>{errMessage} is required</Text>
-              </Snackbar>
-              {!visible && (
-                <TouchableOpacity
-                  style={theme.buttonLarge}
-                  onPress={() => createPost()}>
-                  <Text style={theme.buttonTitleLarge}>Post</Text>
-                </TouchableOpacity>
-              )}
-            </View>
+          )}
+          <View
+            style={{
+              flexDirection: 'column',
+              backgroundColor: styles.backgroundColor,
+              marginBottom: 20,
+            }}
+          >
+            <TouchableOpacity
+              onPress={async () => await openCameraAsync(props)}
+              style={styles.buttonLarge}
+            >
+              <Text style={styles.buttonTitleLarge}>Open Camera</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonLarge}
+              onPress={async () => await openImagePickerAsync(props)}
+            >
+              <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
+            </TouchableOpacity>
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAwareScrollView>
-    </View>
+          <TextInput
+            style={styles.input}
+            placeholder='Title'
+            value={title}
+            onChangeText={(text) => setTitle(text)}
+          />
+          <TextInput
+            required
+            style={styles.input}
+            placeholder='Description'
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+          <Tags setTags={setTags} tags={tags} />
+          <GoogleMapView
+            region={region}
+            clear={clearMap}
+            setRegion={setRegion}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+            setClearMap={setClearMap}
+            clear={clearMap}
+          />
+          <View>
+            <Snackbar
+              style={styles.snackbar}
+              visible={visible}
+              onDismiss={onDismissSnackBar}
+              action={{
+                color: '#f8f5f2',
+                label: 'Dismiss',
+                onPress: onDismissSnackBar,
+              }}
+            >
+              <Text>{errMessage} is required</Text>
+            </Snackbar>
+            {!visible && (
+              <TouchableOpacity onPress={createPost} 
+              style={theme.buttonLarge}
+              >
+                <Text style={theme.buttonTitleLarge}>Post!</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -165,11 +186,3 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PostScreen);
-
-
-
-
-//const unsubscribe = props.navigation.addListener('didFocus', () => {
-//   console.log('focussed');
-// });
-// un
