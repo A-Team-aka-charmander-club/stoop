@@ -21,7 +21,12 @@ export const SinglePost = (props) => {
     props.navigation.navigate('Edit');
   }
 
-  const CommentIcon = BadgedIcon(props.post.comments.length);
+  let CommentIcon ;
+  if(props.post.comments.length){
+    CommentIcon = BadgedIcon(props.post.comments.length);
+  } else {
+    CommentIcon = BadgedIcon(0);
+  }
 
   if (props.post.id) {
     return (
