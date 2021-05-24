@@ -82,7 +82,7 @@ export const PostScreen = (props) => {
       style={styles.horizontal}
       style={{
         flex: 1,
-        marginTop: 30,
+        // marginTop: 30,
         width: '100%',
         backgroundColor: styles.backgroundColor,
       }}
@@ -101,7 +101,8 @@ export const PostScreen = (props) => {
           )}
           <View
             style={{
-              flexDirection: 'column',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
               backgroundColor: styles.backgroundColor,
               marginBottom: 20,
               marginTop: 20,

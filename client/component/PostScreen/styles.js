@@ -13,6 +13,7 @@ export default StyleSheet.create({
     width: 300,
     resizeMode: 'contain',
     alignSelf: 'center',
+    margin: 20,
   },
   input: {
     backgroundColor: '#F8F5F2',
@@ -31,6 +32,7 @@ export default StyleSheet.create({
     marginRight: 120,
     marginTop: 20,
     height: 30,
+    width: 150,
     borderRadius: 70,
     alignItems: 'center',
     justifyContent: 'center',
@@ -64,7 +66,12 @@ export default StyleSheet.create({
   },
   midScreenHeader: {
     // width: 100,
-    height: 60,
+    height: 100,
+    backgroundColor: theme.colors.cancelButton,
+  },
+  midScreenHeaderEdit: {
+    // width: 100,
+    height: 100,
     backgroundColor: theme.colors.cancelButton,
   },
   titleMidScreenHeader: {
@@ -72,7 +79,17 @@ export default StyleSheet.create({
     overflow: 'hidden',
     paddingLeft: 0,
     alignSelf: 'center',
-    marginTop: 20,
+    marginTop: 50,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: theme.colors.lightBackground,
+  },
+  titleMidScreenHeaderEdit: {
+    height: 48,
+    overflow: 'hidden',
+    paddingLeft: 0,
+    alignSelf: 'center',
+    marginTop: 50,
     fontWeight: 'bold',
     fontSize: 20,
     color: theme.colors.lightBackground,
