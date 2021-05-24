@@ -12,19 +12,29 @@ export default StyleSheet.create({
     height: 300,
     width: 300,
     resizeMode: 'contain',
+    alignSelf: 'center',
   },
   input: {
+    backgroundColor: '#F8F5F2',
     height: 48,
     borderRadius: 5,
     overflow: 'hidden',
-    backgroundColor: 'white',
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
   },
-  buttonLarge: theme.buttonLarge,
+  buttonLarge: {
+    backgroundColor: theme.colors.accent,
+    marginLeft: 120,
+    marginRight: 120,
+    marginTop: 20,
+    height: 30,
+    borderRadius: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   buttonTitleLarge: theme.buttonTitleLarge,
 
   buttonStyle: {
@@ -51,5 +61,20 @@ export default StyleSheet.create({
   snackbar: {
     backgroundColor: '#f03a47',
     color: '#f8f5f2',
+  },
+  midScreenHeader: {
+    // width: 100,
+    height: 60,
+    backgroundColor: theme.colors.cancelButton,
+  },
+  titleMidScreenHeader: {
+    height: 48,
+    overflow: 'hidden',
+    paddingLeft: 0,
+    alignSelf: 'center',
+    marginTop: 20,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: theme.colors.lightBackground,
   },
 });
