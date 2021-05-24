@@ -6,10 +6,10 @@ import {
   FlatList,
   Text,
   LogBox,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { Snackbar } from 'react-native-paper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import TimeAgo from 'react-native-timeago';
 import styles from './styles';
@@ -18,11 +18,7 @@ import {
   grabComment,
   destroyComment,
 } from '../../store/comments';
-import {
-  Divider,
-  Card,
-  Button
-} from 'react-native-paper';
+import { Divider, Card, Button } from 'react-native-paper';
 
 export function CommentView(props) {
   const [comment, setComment] = useState('');
@@ -34,12 +30,14 @@ export function CommentView(props) {
     props.getComment(props.post.id);
     setVisible(false);
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
+    LogBox.ignoreLogs([
+      "Can't perform a React state update on an unmounted component",
+    ]);
     const unsubscribe = props.navigation.addListener('didFocus', () => {
-      console.log()
+      console.log();
     });
-    unsubscribe()
-  }, [props.comments.length])
+    unsubscribe();
+  }, [props.comments.length]);
 
   const handleSubmit = () => {
     if (!comment.length) {
@@ -60,7 +58,7 @@ export function CommentView(props) {
 
   const renderItem = ({ item }) => {
     return (
-      <Card style={styles.commentCard}>
+      <Card style={styles.cardLayout}>
         <Card.Content>
           <Text>{item.content}</Text>
           <Divider />
@@ -75,7 +73,7 @@ export function CommentView(props) {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{ backgroundColor: theme.backgroundColor }}>
       <View style={styles.inner}>
         <FlatList
           style={{
@@ -91,9 +89,9 @@ export function CommentView(props) {
               order = -1;
             } else {
               if (c1.id < c2.id) {
-                order = 1
+                order = 1;
               } else {
-                order = -1
+                order = -1;
               }
             }
             return order;
@@ -103,7 +101,12 @@ export function CommentView(props) {
           ListHeaderComponent={getHeader}
         />
         <View style={styles.inner}>
-          <TextInput placeholder="Add a comment..." style={styles.input} value={comment} onChangeText={(text) => setComment(text)} />
+          <TextInput
+            placeholder='Add a comment...'
+            style={styles.input}
+            value={comment}
+            onChangeText={(text) => setComment(text)}
+          />
         </View>
         <View>
           <Snackbar
@@ -111,16 +114,18 @@ export function CommentView(props) {
             visible={visible}
             onDismiss={onDismissSnackBar}
             action={{
-              color: '#f8f5f2',
+              color: theme.colors.cancelButton,
               label: 'Dismiss',
               onPress: onDismissSnackBar,
-            }}>
+            }}
+          >
             <Text>{`Message can't be blank!`}</Text>
           </Snackbar>
           {!visible && (
-            <TouchableOpacity
-              style={theme.buttonLarge}>
-              <Text style={theme.buttonTitleLarge} onPress={handleSubmit}>Submit</Text>
+            <TouchableOpacity style={theme.buttonLarge}>
+              <Text style={theme.buttonTitleLarge} onPress={handleSubmit}>
+                Submit
+              </Text>
             </TouchableOpacity>
           )}
         </View>
@@ -142,7 +147,8 @@ const mapDispatchToProps = (dispatch) => {
     addComment: (comment, postId, userId) =>
       dispatch(createComment(comment, postId, userId)),
     getComment: (postId) => dispatch(grabComment(postId)),
-    deleteComment: (userId, commentId) => dispatch(destroyComment(userId, commentId)),
+    deleteComment: (userId, commentId) =>
+      dispatch(destroyComment(userId, commentId)),
   };
 };
 

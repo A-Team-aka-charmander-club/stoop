@@ -6,8 +6,6 @@ import {
   Text,
   FlatList,
   SafeAreaView,
-  LogBox,
-  TouchableOpacity,
 } from 'react-native';
 import TimeAgo from 'react-native-timeago';
 import { Chip, Card, Avatar, Title, Paragraph } from 'react-native-paper';
@@ -82,17 +80,11 @@ export function HomeScreen(props) {
                 if (tags.includes(tagId)) {
                   selected = true;
                 }
+
                 return (
                   <Chip
                     mode='outlined'
                     size={10}
-                    style={{
-                      backgroundColor: theme.colors.lightBackground,
-                      margin: 4,
-                      borderWidth: 1,
-                      borderColor: theme.colors.accent,
-                      color: theme.colors.accent,
-                    }}
                     selectedColor={theme.colors.accent}
                     selected={selected}
                     icon='tag'
@@ -101,7 +93,7 @@ export function HomeScreen(props) {
                     onPress={() => onTagPress(tagId)}
                   >
                     {tag.name}
-                  </Chip>
+                  </Chip> 
                 );
               })}
             </View>

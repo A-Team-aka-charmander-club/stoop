@@ -41,7 +41,7 @@ const PostStackNavigator = () => {
       screenOptions={{
         backgroundColor: theme.backgroundColor,
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: theme.colors.cancelButton,
         },
         headerTitleStyle: {
           fontWeight: 'bold',
@@ -63,12 +63,16 @@ const PostStackNavigator = () => {
       <Stack.Screen
         name='SinglePost'
         component={SinglePost}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          title: 'Treasure',
+          color: theme.colors.iconColor,
+        }}
       />
       <Stack.Screen
         name='CommentView'
         component={CommentView}
-        options={{ headerShown: true }}
+        options={{ headerShown: true, title: 'Comments' }}
       />
       <Stack.Screen
         name='Edit'
