@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import { Badge, Icon } from 'react-native-elements';
+import theme from '../../../CustomProps/Theme';
 
 export const BadgedIcon = (length) => {
   return (
@@ -8,10 +9,10 @@ export const BadgedIcon = (length) => {
       <View>
         {/* <View style={badgeStyles.row}> */}
         <Icon
-          name="comment"
-          type="material-community"
+          name='comment'
+          type='material-community'
           size={30}
-          color="#813059"
+          color={theme.colors.accent}
         />
         <Badge value={length} containerStyle={badgeStyles.badgeStyle} />
       </View>
@@ -44,8 +45,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   thumbnail: {
-    height: 350,
-    width: Dimensions.get('window').width,
+    height: 300,
+    width: 300,
   },
   input: {
     height: 48,
@@ -62,4 +63,55 @@ export default StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height / 5,
   },
+  cardLayout: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flex: 1,
+    borderColor: theme.colors.accent,
+    borderWidth: 0.3,
+    backgroundColor: theme.backgroundColor,
+  },
+  title: {
+    fontSize: 24,
+    color: theme.colors.accent,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  timeAgo: {
+    fontStyle: 'italic',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  tagText: {
+    color: theme.colors.accent,
+  },
+  titleMidScreenHeader: {
+    height: 48,
+    overflow: 'hidden',
+    paddingLeft: 0,
+    alignSelf: 'center',
+    marginTop: 10,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: theme.colors.lightBackground,
+  },
+  midScreenHeader: {
+    // width: 100,
+    height: 48,
+    backgroundColor: theme.colors.cancelButton,
+  },
+  buttonLarge: {
+    backgroundColor: theme.colors.accent,
+    marginLeft: 30,
+    marginRight: 10,
+    marginTop: 20,
+    height: 30,
+    width: 110,
+    borderRadius: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonTitleLarge: theme.buttonTitleLarge,
 });

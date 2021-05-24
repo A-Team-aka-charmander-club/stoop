@@ -1,13 +1,15 @@
 import React from 'react';
 import styles, { BadgedIcon } from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, View, Image, Button } from 'react-native';
-import { ListItem, Icon} from 'react-native-elements';
-import { Card, Title, Chip } from 'react-native-paper';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { ListItem, Icon } from 'react-native-elements';
+import { Card, Title, Chip, Paragraph } from 'react-native-paper';
 import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { destroyPost } from '../../store/post';
 import { takePhoto, clearPhoto } from '../../store/photo';
+import theme from '../../../CustomProps/Theme';
+import TimeAgo from 'react-native-timeago';
 
 export const SinglePost = (props) => {
   function handleDelete() {
@@ -25,80 +27,142 @@ export const SinglePost = (props) => {
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView
-          style={{ flex: 1, width: '100%' }}
+          style={{
+            flex: 1,
+            width: '100%',
+            backgroundColor: theme.backgroundColor,
+          }}
           keyboardShouldPersistTaps='always'
         >
-          <Card>
-            <Card.Content>
-              <Title>{'Treasure'}</Title>
-              <ListItem>
+          <Card style={styles.cardLayout}>
+            <Card.Content style={{ backgroundColor: theme.backgroundColor }}>
+              <View style={styles.midScreenHeader}>
+                <Title style={styles.titleMidScreenHeader}>Treasure</Title>
+              </View>
+              <Card.Cover
+                source={{ url: props.post.photos[0].firebaseUrl }}
+                style={styles.thumnbnail}
+              />
+
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'baseline',
+                  marginTop: 10,
+                }}
+              >
                 <Icon name='treasure-chest' type='material-community' />
-                <ListItem.Content>
-                  <ListItem.Title>{props.post.title}</ListItem.Title>
-                  <ListItem.Subtitle>
-                    {props.post.description}
-                  </ListItem.Subtitle>
-                  <ListItem.Subtitle>
+                <View style={{ marginLeft: 10, flexDirection: 'column' }}>
+                  <View>
+                    <Title>{props.post.title}</Title>
+                    <Paragraph>{props.post.description}</Paragraph>
+                    <TimeAgo
+                      time={props.post.createdAt}
+                      style={styles.timeAgo}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      marginBottom: 10,
+                    }}
+                  >
                     {props.post.tags.map((tag, index) => {
                       return (
-                        <Chip icon='tag' key={index}>
+                        <Chip
+                          icon='tag'
+                          key={index}
+                          mode='outlined'
+                          size={10}
+                          style={{
+                            backgroundColor: theme.colors.lightBackground,
+                            margin: 4,
+                            borderWidth: 1,
+                            borderColor: theme.colors.accent,
+                            color: theme.colors.accent,
+                          }}
+                          textStyle={styles.tagText}
+                          selectedColor={theme.colors.accent}
+                          tagStyle={styles.tagText}
+                        >
                           {tag.name}
                         </Chip>
                       );
-                    })}{' '}
-                  </ListItem.Subtitle>
-                </ListItem.Content>
-              </ListItem>
+                    })}
+                  </View>
+                </View>
+              </View>
             </Card.Content>
-            <MapView
-              style={styles.map}
-              provider={PROVIDER_GOOGLE}
-              region={{
-                latitude: props.post.latitude,
-                longitude: props.post.longitude,
-                latitudeDelta: 0.0025,
-                longitudeDelta: 0.0025,
-              }}
-            >
-              <Marker
-                image={require('../../../assets/x.png')}
-                key={`marker${Date.now()}`}
-                coordinate={{
-                  latitude: props.post.latitude,
-                  longitude: props.post.longitude,
-                }}
-              />
-            </MapView>
-            <Image
-              source={{ url: props.post.photos[0].firebaseUrl }}
-              style={styles.thumbnail}
-            />
 
             {props.post.users[0].id === props.user.id ? (
-              <View>
-                <Button title='Delete Post' onPress={handleDelete} />
-                <Button title='Edit Post' onPress={handleEdit} />
-              </View>
-            ) : null}
-            <ListItem
-              navigation={props.navigation}
-              onPress={() => props.navigation.navigate('CommentView')}
-            >
-              <Title
+              <View
                 style={{
-                  flex: 1,
-                  justifyContent: 'space-between',
                   flexDirection: 'row',
-                  flexWrap: 'wrap',
+                  justifyContent: 'flex-start',
+                  marginBottom: 20,
                 }}
               >
-                {CommentIcon}{' '}
-                <Text style={{ flex: 1, fontSize: 22, marginBottom: 10 }}>
-                  Comments
-                </Text>
-              </Title>
-            </ListItem>
+                <TouchableOpacity
+                  onPress={handleDelete}
+                  style={styles.buttonLarge}
+                >
+                  <Text style={styles.buttonTitleLarge}>Delete Post</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={handleEdit}
+                  style={styles.buttonLarge}
+                >
+                  <Text style={styles.buttonTitleLarge}>Edit Post</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </Card>
+          <MapView
+            style={styles.map}
+            provider={PROVIDER_GOOGLE}
+            region={{
+              latitude: props.post.latitude,
+              longitude: props.post.longitude,
+              latitudeDelta: 0.0025,
+              longitudeDelta: 0.0025,
+            }}
+          >
+            <Marker
+              image={require('../../../assets/x.png')}
+              key={`marker${Date.now()}`}
+              coordinate={{
+                latitude: props.post.latitude,
+                longitude: props.post.longitude,
+              }}
+            />
+          </MapView>
+
+          <Title
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              backgroundColor: theme.backgroundColor,
+            }}
+            navigation={props.navigation}
+            onPress={() => props.navigation.navigate('CommentView')}
+          >
+            {CommentIcon}
+            <Text
+              style={{
+                flex: 1,
+                fontSize: 22,
+                marginBottom: 10,
+              }}
+            >
+              Comments
+            </Text>
+          </Title>
         </KeyboardAwareScrollView>
       </View>
     );
