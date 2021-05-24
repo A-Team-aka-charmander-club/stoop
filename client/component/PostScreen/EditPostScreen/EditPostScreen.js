@@ -108,20 +108,28 @@ export const EditPostScreen = (props) => {
               }}
               style={styles.thumbnail}
             />
-            <View style={{ flexDirection: 'row' }}>
-              <View style={styles.buttonStyle}>
-                <Button
-                  title="Open Camera"
-                  onPress={async () => await openCameraAsync(props)}
-                />
-              </View>
-              <View style={styles.buttonStyle}>
-                <Button
-                  title="Upload Photo"
-                  onPress={async () => await openImagePickerAsync(props)}
-                />
-              </View>
-            </View>
+            <View
+            style={{
+              flexDirection: 'column',
+              backgroundColor: styles.backgroundColor,
+              marginBottom: 20,
+              marginTop: 20,
+            }}
+          >
+            <TouchableOpacity
+              onPress={async () => await openCameraAsync(props)}
+              style={styles.buttonLarge}
+            >
+              <Text style={styles.buttonTitleLarge}>Open Camera</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonLarge}
+              onPress={async () => await openImagePickerAsync(props)}
+            >
+              <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
+            </TouchableOpacity>
+          </View>
             <TextInput
               style={styles.input}
               placeholder="Title"
