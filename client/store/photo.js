@@ -7,6 +7,7 @@ const TAKE_PHOTO = 'TAKE_PHOTO';
 const CLEAR_PHOTO = 'CLEAR_PHOTO';
 
 export const takePhoto = (photo) => {
+  console.log(photo, 'photo')
   return {
     type: TAKE_PHOTO,
     photo,

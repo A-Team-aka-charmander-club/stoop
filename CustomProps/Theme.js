@@ -11,6 +11,7 @@ const theme = {
     favorite: '#1282A2',
     cancelButton: '#F03A47',
     iconColor: '#070707',
+    lightBackground: '#F8F5F2',
   },
   backgroundColor: '#F1EBE4',
 

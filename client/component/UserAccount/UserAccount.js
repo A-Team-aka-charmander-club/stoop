@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styles from './styles';
 import {
   View,
-  Button,
   Text,
   ScrollView,
   SafeAreaView,
@@ -22,11 +21,8 @@ export function UserAccount(props) {
 
   useEffect(() => {
     props.getPosts(props.user.id);
-    console.log(props.user, 'user')
     const unsubscribe = props.navigation.addListener('didFocus', () => {
-      console.log('hi')
       props.getPosts(props.user.id);
-      console.log(props.user, 'user')
     });
     unsubscribe()
   }, [props.navigation]);

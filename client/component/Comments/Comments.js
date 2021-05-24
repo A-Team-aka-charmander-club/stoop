@@ -102,7 +102,6 @@ export function CommentView(props) {
           keyExtractor={(item) => item.id.toString()}
           ListHeaderComponent={getHeader}
         />
-
         <View style={styles.inner}>
           <TextInput placeholder="Add a comment..." style={styles.input} value={comment} onChangeText={(text) => setComment(text)} />
         </View>
@@ -121,7 +120,7 @@ export function CommentView(props) {
           {!visible && (
             <TouchableOpacity
               style={theme.buttonLarge}>
-              <Text onPress={handleSubmit}>Submit</Text>
+              <Text style={theme.buttonTitleLarge} onPress={handleSubmit}>Submit</Text>
             </TouchableOpacity>
           )}
         </View>

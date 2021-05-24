@@ -24,15 +24,9 @@ export default StyleSheet.create({
     marginRight: 30,
     paddingLeft: 16,
   },
-  button: {
-    backgroundColor: '#788eec',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  buttonLarge: theme.buttonLarge,
+  buttonTitleLarge: theme.buttonTitleLarge,
+
   buttonStyle: {
     backgroundColor: '#788eec',
     marginLeft: 15,

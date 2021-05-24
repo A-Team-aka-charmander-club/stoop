@@ -60,7 +60,7 @@ export const EditPostScreen = (props) => {
 
     setErrMessage(''),
     setVisible(false);
-    props.clearPhoto();
+
     const unsubscribe = props.navigation.addListener('didFocus', () => {
       console.log('focussed');
     });
