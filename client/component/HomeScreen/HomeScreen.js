@@ -7,9 +7,10 @@ import {
   FlatList,
   SafeAreaView,
   LogBox,
+  TouchableOpacity,
 } from 'react-native';
-import TimeAgo from 'react-native-timeago';
-import { Chip, Card, Avatar, Title} from 'react-native-paper';
+// import TimeAgo from 'react-native-timeago';
+import { Chip, Card, Avatar, Title, Paragraph } from 'react-native-paper';
 import styles from './styles';
 import { connect } from 'react-redux';
 import HomeGoogleMapView from '../MapView/HomeGoogleMapView';
@@ -38,10 +39,8 @@ export function HomeScreen(props) {
     const unsubscribe = props.navigation.addListener('didFocus', () => {
       console.log('focussed');
     });
-    unsubscribe()
+    unsubscribe();
   }, [props.navigation]);
-
-console.log(props.photo)
 
   function onTagPress(tagId) {
     if (!tags.includes(tagId)) {
@@ -73,7 +72,7 @@ console.log(props.photo)
           />
           <View>
             <Title styles={styles.title}>{item.title}</Title>
-            <TimeAgo time={item.createdAt} style={styles.timeAgo} />
+            {/* <TimeAgo time={item.createdAt} style={styles.timeAgo} /> */}
           </View>
           <View>
             {item.tags.map((tag, index) => {
@@ -87,6 +86,7 @@ console.log(props.photo)
                   mode='flat'
                   size={10}
                   style={{ backgroundColor: theme.colors.accent }}
+                  selectedColor='#4169E1'
                   selected={selected}
                   icon='tag'
                   key={index}
