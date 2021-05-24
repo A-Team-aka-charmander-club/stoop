@@ -6,13 +6,13 @@ import theme from '../../../CustomProps/Theme';
 export const BadgedIcon = (length) => {
   return (
     <View style={badgeStyles.container}>
-      <View>
+      <View style={{ marginTop: 5, alignSelf: 'flex-end' }}>
         {/* <View style={badgeStyles.row}> */}
         <Icon
           name='comment'
           type='material-community'
           size={30}
-          color={theme.colors.accent}
+          color={theme.colors.cancelButton}
         />
         <Badge value={length} containerStyle={badgeStyles.badgeStyle} />
       </View>
@@ -22,16 +22,16 @@ export const BadgedIcon = (length) => {
 
 const badgeStyles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: -10,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    // marginLeft: 10,
   },
   row: {
     flexDirection: 'row',
   },
   badgeStyle: {
+    marginTop: 5,
     position: 'absolute',
     top: -4,
     right: -4,

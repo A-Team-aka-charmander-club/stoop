@@ -48,7 +48,7 @@ export const SinglePost = (props) => {
                 style={{
                   flex: 1,
                   flexDirection: 'row',
-                  justifyContent: 'center',
+                  justifyContent: 'flex-start',
                   alignItems: 'baseline',
                   marginTop: 10,
                 }}
@@ -139,30 +139,38 @@ export const SinglePost = (props) => {
               }}
             />
           </MapView>
-
-          <Title
+          <View
             style={{
               flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
               flexDirection: 'row',
-              flexWrap: 'wrap',
-              backgroundColor: theme.backgroundColor,
+              alignItems: 'flex-start',
+              // justifyContents: 'flex-start',
             }}
-            navigation={props.navigation}
-            onPress={() => props.navigation.navigate('CommentView')}
           >
-            {CommentIcon}
+            <Title
+              style={{
+                // flexDirection: 'row',
+                // flexWrap: 'wrap',
+                backgroundColor: theme.backgroundColor,
+              }}
+              navigation={props.navigation}
+              onPress={() => props.navigation.navigate('CommentView')}
+            >
+              {CommentIcon}
+            </Title>
             <Text
               style={{
                 flex: 1,
                 fontSize: 22,
                 marginBottom: 10,
+                marginLeft: 20,
               }}
+              navigation={props.navigation}
+              onPress={() => props.navigation.navigate('CommentView')}
             >
               Comments
             </Text>
-          </Title>
+          </View>
         </KeyboardAwareScrollView>
       </View>
     );
