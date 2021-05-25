@@ -30,7 +30,7 @@ export function HomeScreen(props) {
     });
 
     const unsubscribe = props.navigation.addListener('didFocus', () => {
-      console.log('focussed');
+      console.log('focused');
     });
     unsubscribe();
   }, [props.navigation]);
