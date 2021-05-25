@@ -107,7 +107,6 @@ export const PostScreen = (props) => {
             />
           )}
           <View>
-            <PanGestureHandler enabled={true}>
               <View>
                 <View
                   style={{
@@ -149,6 +148,8 @@ export const PostScreen = (props) => {
                   onChangeText={(text) => setDescription(text)}
                 />
                 <Tags setTags={setTags} tags={tags} />
+                <PanGestureHandler enabled={true}>
+                  <View>
                 <GoogleMapView
                   region={region}
                   clear={clearMap}
@@ -157,6 +158,8 @@ export const PostScreen = (props) => {
                   setLongitude={setLongitude}
                   setClearMap={setClearMap}
                 />
+                </View>
+                </PanGestureHandler>
                 <View>
                   <Snackbar
                     style={styles.snackbar}
@@ -177,7 +180,6 @@ export const PostScreen = (props) => {
                   )}
                 </View>
               </View>
-            </PanGestureHandler>
           </View>
         </View>
       </TouchableWithoutFeedback>
