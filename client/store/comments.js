@@ -53,12 +53,12 @@ export const createComment = (comment, postId, userId) => {
     }
   };
 };
-
+s;
 export const grabComment = (postId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://https://trashpandapirates.herokuapp.com/api/comments/${postId}`,
+        `https://trashpandapirates.herokuapp.com/api/comments/${postId}`,
         {
           headers: { authorization: SECRET },
         }

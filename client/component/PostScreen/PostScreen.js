@@ -56,7 +56,7 @@ export const PostScreen = (props) => {
       setVisible(false);
     props.clearPhoto();
     const unsubscribe = props.navigation.addListener('didFocus', () => {
-      console.log('focussed');
+      console.log('focused');
     });
     unsubscribe();
   }, [props.navigation]);
@@ -64,27 +64,20 @@ export const PostScreen = (props) => {
   const onDismissSnackBar = () => setVisible(false);
   const createPost = async () => {
     if (!title.length) {
-      console.log(111);
       setErrMessage('Title');
       setVisible(true);
     } else if (!description.length) {
-      console.log(222);
       setErrMessage('Description');
       setVisible(true);
     } else if (!props.photo) {
-      console.log(333);
       setErrMessage('Photo');
       setVisible(true);
     } else {
-      console.log(444);
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
       let photo = props.photo;
-      console.log(555);
       await props.submitPost({ post, photo, tags });
-      console.log(666);
       props.navigation.navigate('SinglePost');
-      console.log(777);
     }
   };
   return (

@@ -63,7 +63,7 @@ export const EditPostScreen = (props) => {
     setErrMessage(''), setVisible(false);
 
     const unsubscribe = props.navigation.addListener('didFocus', () => {
-      console.log('focussed');
+      console.log('focused');
     });
     unsubscribe();
     LogBox.ignoreLogs([
@@ -75,15 +75,12 @@ export const EditPostScreen = (props) => {
 
   const changePost = async () => {
     if (!title.length) {
-      console.log(1);
       setErrMessage('Title');
       setVisible(true);
     } else if (!description.length) {
-      console.log(2);
       setErrMessage('Description');
       setVisible(true);
     } else {
-      console.log(3);
       setVisible(false);
       let photo;
       if (props.photo.firebaseUrl !== props.post.photos[0].firebaseUrl) {
@@ -103,7 +100,8 @@ export const EditPostScreen = (props) => {
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1, width: '100%' }}
-      keyboardShouldPersistTaps="always">
+      keyboardShouldPersistTaps='always'
+    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
@@ -121,28 +119,31 @@ export const EditPostScreen = (props) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-around',
-                }}>
+                }}
+              >
                 <TouchableOpacity
                   onPress={async () => await openCameraAsync(props)}
-                  style={styles.buttonLarge}>
+                  style={styles.buttonLarge}
+                >
                   <Text style={styles.buttonTitleLarge}>Open Camera</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={async () => await openImagePickerAsync(props)}
-                  style={styles.buttonLarge}>
+                  style={styles.buttonLarge}
+                >
                   <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
                 </TouchableOpacity>
               </View>
               <TextInput
                 style={styles.input}
-                placeholder="Title"
+                placeholder='Title'
                 value={title}
                 onChangeText={(text) => setTitle(text)}
               />
               <TextInput
                 style={styles.input}
-                placeholder="Description"
+                placeholder='Description'
                 value={description}
                 onChangeText={(text) => setDescription(text)}
               />
@@ -164,13 +165,15 @@ export const EditPostScreen = (props) => {
                   action={{
                     label: 'Dismiss',
                     onPress: onDismissSnackBar,
-                  }}>
+                  }}
+                >
                   <Text>{errMessage} is required</Text>
                 </Snackbar>
                 {!visible && (
                   <TouchableOpacity
                     style={theme.buttonLarge}
-                    onPress={() => changePost()}>
+                    onPress={() => changePost()}
+                  >
                     <Text style={theme.buttonTitleLarge}>Update!</Text>
                   </TouchableOpacity>
                 )}
