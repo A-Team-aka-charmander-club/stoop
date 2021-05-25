@@ -3,7 +3,7 @@ import theme from '../../../CustomProps/Theme';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EFE6DD',
+    backgroundColor: theme.backgroundColor,
   },
   logo: {
     alignItems: 'center',
@@ -37,19 +37,37 @@ export default StyleSheet.create({
     marginTop: 10,
     fontWeight: 'bold',
     fontSize: 20,
-    color: theme.backgroundColor,
+    color: theme.colors.lightBackground,
   },
   scrollView: {
     display: 'flex',
   },
   title: {
     fontSize: 24,
-    color: '#A5A5A5',
+    color: theme.colors.iconColor,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+  },
+  scrollCard: {
+    backgroundColor: theme.backgroundColor,
   },
   subtitle: {
     color: '#A5A5A5',
   },
   itemText: {
-    backgroundColor: '#A5A5A5',
+    backgroundColor: theme.backgroundColor,
+  },
+  cardLayout: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flex: 1,
+    borderColor: theme.colors.accent,
+    borderWidth: 0.3,
+  },
+  avatar: {
+    backgroundColor: theme.colors.accent,
+  },
+  tagText: {
+    color: theme.colors.accent,
   },
 });

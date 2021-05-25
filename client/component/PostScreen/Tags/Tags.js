@@ -5,9 +5,9 @@ import TagInput from 'react-native-tags-input';
 import styles from './styles';
 import { addTags, removeTags } from '../../../store/tag';
 import { connect } from 'react-redux';
+import theme from '../../../../CustomProps/Theme';
 
 export function Tags(props) {
-
   const updateTagState = (state) => {
     props.setTags(state);
     if (state.tagsArray !== props.reduxTags) {
@@ -22,7 +22,7 @@ export function Tags(props) {
         tags={props.tags}
         placeholder='Tags...'
         label='Press space to add a tag'
-        labelStyle={{ color: '#fff' }}
+        labelStyle={{ color: theme.colors.accent }}
         leftElement={<MaterialCommunityIcons name='tag-multiple' />}
         leftElementContainerStyle={{ marginLeft: 3 }}
         containerStyle={{ width: Dimensions.get('window').width - 40 }}

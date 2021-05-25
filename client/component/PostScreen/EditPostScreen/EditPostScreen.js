@@ -7,8 +7,10 @@ import {
   Image,
   Button,
   TouchableWithoutFeedback,
-  Keyboard, 
-  TouchableOpacity
+  Keyboard,
+  TouchableOpacity,
+  LogBox,
+  TextInput,
 } from 'react-native';
 import theme from '../../../../CustomProps/Theme';
 import { connect } from 'react-redux';
@@ -16,7 +18,7 @@ import EditMapView from '../../MapView/EditMapView';
 import { openCameraAsync, openImagePickerAsync } from '../../Services/Services';
 import { takePhoto, clearPhoto } from '../../../store/photo';
 import { updatePost } from '../../../store/post';
-import { Snackbar, TextInput } from 'react-native-paper';
+import { Snackbar, Title } from 'react-native-paper';
 import { removeTags, addTags } from '../../../store/tag';
 import Tags from '../Tags/Tags';
 
@@ -49,15 +51,21 @@ export const EditPostScreen = (props) => {
       setDescription(props.post.description),
       setLatitude(props.post.latitude),
       setLongitude(props.post.longitude),
-
       setTags({
         tag: '',
         tagsArray: props.post.tags.map((tag) => tag.name),
       }),
-      props.addTags(props.post.tags.map((tag) => tag.name),);
+      props.addTags(props.post.tags.map((tag) => tag.name));
 
-    setErrMessage(''),
-      setVisible(false);
+    setErrMessage(''), setVisible(false);
+
+    const unsubscribe = props.navigation.addListener('didFocus', () => {
+      console.log('focussed');
+    });
+    unsubscribe();
+    LogBox.ignoreLogs([
+      "Can't perform a React state update on an unmounted component",
+    ]);
   }, [props.navigation]);
 
   const onDismissSnackBar = () => setVisible(false);
@@ -87,74 +95,80 @@ export const EditPostScreen = (props) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: '100%' }}
-        keyboardShouldPersistTaps="always">
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <Text>Update Post</Text>
-            <Image
-              source={{
-                url: props.photo.firebaseUrl,
-              }}
-              style={styles.thumbnail}
-            />
-            <View style={{ flexDirection: 'row' }}>
-              <View style={styles.buttonStyle}>
-                <Button
-                  title="Open Camera"
-                  onPress={async () => await openCameraAsync(props)}
-                />
-              </View>
-              <View style={styles.buttonStyle}>
-                <Button
-                  title="Upload Photo"
-                  onPress={async () => await openImagePickerAsync(props)}
-                />
-              </View>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Title"
-              value={title}
-              onChangeText={(text) => setTitle(text)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Description"
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-            />
-            <Tags setTags={setTags} tags={tags} />
-            <EditMapView
-              region={region}
-              setRegion={setRegion}
-              setLatitude={setLatitude}
-              setLongitude={setLongitude}
-            />
-            <View>
-              <Snackbar
-                visible={visible}
-                onDismiss={onDismissSnackBar}
-                action={{
-                  label: 'Dismiss',
-                  onPress: onDismissSnackBar,
-                }}>
-                <Text>{errMessage} is required</Text>
-              </Snackbar>
-              {!visible && (
-                <TouchableOpacity
-                  style={theme.buttonLarge}
-                  onPress={() => changePost()}>
-                  <Text style={theme.buttonTitleLarge}>Update!</Text>
-                </TouchableOpacity>
-              )}
-            </View>
+    <KeyboardAwareScrollView
+      style={{ flex: 1, width: '100%' }}
+      keyboardShouldPersistTaps='always'
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ backgroundColor: theme.backgroundColor }}>
+          <View style={styles.midScreenHeader}>
+            <Title style={styles.titleMidScreenHeader}> Update Post</Title>
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAwareScrollView>
-    </View>
+          <Image
+            source={{
+              url: props.photo.firebaseUrl,
+            }}
+            style={styles.thumbnail}
+          />
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+          >
+            <TouchableOpacity
+              onPress={async () => await openCameraAsync(props)}
+              style={styles.buttonLarge}
+            >
+              <Text style={styles.buttonTitleLarge}>Open Camera</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={async () => await openImagePickerAsync(props)}
+              style={styles.buttonLarge}
+            >
+              <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
+            </TouchableOpacity>
+          </View>
+          <TextInput
+            style={styles.input}
+            placeholder='Title'
+            value={title}
+            onChangeText={(text) => setTitle(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder='Description'
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+          <Tags setTags={setTags} tags={tags} />
+          <EditMapView
+            region={region}
+            setRegion={setRegion}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+          />
+          <View>
+            <Snackbar
+              visible={visible}
+              onDismiss={onDismissSnackBar}
+              action={{
+                label: 'Dismiss',
+                onPress: onDismissSnackBar,
+              }}
+            >
+              <Text>{errMessage} is required</Text>
+            </Snackbar>
+            {!visible && (
+              <TouchableOpacity
+                style={theme.buttonLarge}
+                onPress={() => changePost()}
+              >
+                <Text style={theme.buttonTitleLarge}>Update!</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 const mapStateToProps = (state) => {

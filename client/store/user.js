@@ -29,8 +29,7 @@ export function createOrFindUserThunk(user) {
       //`https://localhost:8080/api/users/user`
       //`http://192.168.1.152:8080/api/users/user`
       const { data } = await axios.post(
-        // `https://trashpandapirates.herokuapp.com/api/users/user`,
-        `http://10.0.0.153:8080/api/users/user`,
+        `http://localhost:8080/api/users/user`,
         {
           user,
         },
@@ -50,7 +49,7 @@ export function getUserPostsThunk(userId) {
     const user = firebase.auth().currentUser;
     try {
       const { data } = await axios.get(
-        `http://10.0.0.153:8080/api/users/user/${userId}`,
+        `http://localhost:8080/api/users/user/${userId}`,
         {
           headers: { authorization: user.uid },
         }

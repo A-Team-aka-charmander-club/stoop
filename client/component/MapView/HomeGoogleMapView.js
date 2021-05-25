@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
-import { Image, Text, SafeAreaView, Dimensions } from 'react-native';
+import { Image, Text, SafeAreaView, LogBox } from 'react-native';
 import styles from './styles';
 import { installWebGeolocationPolyfill } from 'expo-location';
 import { connect } from 'react-redux';
@@ -29,6 +29,7 @@ export function HomeGoogleMapView(props) {
       props.getCoordinates(props.region, props.tags);
     });
     unsubscribe()
+    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
   }, [props.navigation]);
 
   const setNewRegion = (newRegion) => {

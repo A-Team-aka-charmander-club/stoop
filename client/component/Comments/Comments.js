@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import theme from '../../../CustomProps/Theme';
 import {
   View,
-  TouchableWithoutFeedback,
-  Keyboard,
   TextInput,
-  SafeAreaView,
   FlatList,
-  SectionList,
   Text,
   LogBox,
+  TouchableOpacity,
 } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -32,6 +30,9 @@ export function CommentView(props) {
     props.getComment(props.post.id);
     setVisible(false);
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    LogBox.ignoreLogs([
+      "Can't perform a React state update on an unmounted component",
+    ]);
     const unsubscribe = props.navigation.addListener('didFocus', () => {
       console.log();
     });
@@ -57,7 +58,7 @@ export function CommentView(props) {
 
   const renderItem = ({ item }) => {
     return (
-      <Card style={styles.commentCard}>
+      <Card style={styles.cardLayout}>
         <Card.Content>
           <Text>{item.content}</Text>
           <Divider />
@@ -72,7 +73,7 @@ export function CommentView(props) {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{ backgroundColor: theme.backgroundColor }}>
       <View style={styles.inner}>
         <FlatList
           style={{
@@ -99,7 +100,6 @@ export function CommentView(props) {
           keyExtractor={(item) => item.id.toString()}
           ListHeaderComponent={getHeader}
         />
-
         <View style={styles.inner}>
           <TextInput
             placeholder='Add a comment...'
@@ -114,7 +114,7 @@ export function CommentView(props) {
             visible={visible}
             onDismiss={onDismissSnackBar}
             action={{
-              color: '#f8f5f2',
+              color: theme.colors.cancelButton,
               label: 'Dismiss',
               onPress: onDismissSnackBar,
             }}
@@ -122,9 +122,11 @@ export function CommentView(props) {
             <Text>{`Message can't be blank!`}</Text>
           </Snackbar>
           {!visible && (
-            <Button>
-              <Text onPress={handleSubmit}>Submit</Text>
-            </Button>
+            <TouchableOpacity style={theme.buttonLarge}>
+              <Text style={theme.buttonTitleLarge} onPress={handleSubmit}>
+                Submit
+              </Text>
+            </TouchableOpacity>
           )}
         </View>
       </View>

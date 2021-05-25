@@ -11,8 +11,8 @@ import theme from '../../../../CustomProps/Theme';
 const Stack = createStackNavigator();
 
 const HomeStackNavigator = (props) => {
-  const navigation = props.navigation
-  
+  const navigation = props.navigation;
+
   return (
     <Stack.Navigator
       initialRouteName='Home'
@@ -40,22 +40,39 @@ const PostStackNavigator = () => {
       initialRouteName='Post'
       screenOptions={{
         backgroundColor: theme.backgroundColor,
+        headerStyle: {
+          backgroundColor: theme.colors.cancelButton,
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
       }}
     >
       <Stack.Screen
         name='Post'
         component={PostScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+
+          title: 'Post',
+          headerStyle: {
+            backgroundColor: theme.colors.favorite,
+          },
+        }}
       />
       <Stack.Screen
         name='SinglePost'
         component={SinglePost}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          title: 'Treasure',
+          color: theme.colors.iconColor,
+        }}
       />
       <Stack.Screen
         name='CommentView'
         component={CommentView}
-        options={{ headerShown: true }}
+        options={{ headerShown: true, title: 'Comments' }}
       />
       <Stack.Screen
         name='Edit'
@@ -78,8 +95,4 @@ const MapStackNavigator = () => {
   );
 };
 
-export {
-  HomeStackNavigator,
-  PostStackNavigator,
-  MapStackNavigator,
-};
+export { HomeStackNavigator, PostStackNavigator, MapStackNavigator };

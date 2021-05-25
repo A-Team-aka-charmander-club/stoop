@@ -1,5 +1,5 @@
 import { StyleSheet, PixelRatio } from 'react-native';
-
+import theme from '../../../CustomProps/Theme';
 const styles = StyleSheet.create({
   singleComment: {
     padding: 10,
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   inner: {
     padding: 24,
     justifyContent: 'space-around',
+    backgroundColor: theme.backgroundColor,
   },
   header: {
     fontSize: 36,
@@ -54,10 +55,10 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderBottomWidth: 1,
   },
-  btnContainer: {
-    backgroundColor: 'white',
-    marginTop: 12,
-  },
+  // btnContainer: {
+  //   backgroundColor: 'white',
+  //   marginTop: 12,
+  // },
   button: {
     backgroundColor: '#788eec',
     marginTop: 0,
@@ -69,6 +70,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     textTransform: 'uppercase',
+  },
+  titleMidScreenHeaderEdit: {
+    height: 48,
+    overflow: 'hidden',
+    paddingLeft: 0,
+    alignSelf: 'center',
+    marginTop: 50,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: theme.colors.lightBackground,
+  },
+  titleMidScreenHeader: {
+    height: 48,
+    overflow: 'hidden',
+    paddingLeft: 0,
+    alignSelf: 'center',
+    marginTop: 20,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: theme.colors.lightBackground,
+  },
+  cardLayout: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flex: 1,
+    // borderColor: theme.colors.accent,
+    // borderWidth: 0.3,
+    margin: 5,
+    backgroundColor: theme.colors.lightBackground,
   },
 });
 
