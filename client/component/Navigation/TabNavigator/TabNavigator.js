@@ -49,6 +49,10 @@ const BottomTabNavigator = (props) => {
         unmountOnBlur={true}
         listeners={({ navigation }) => ({
           blur: () => navigation.setParams({ screen: undefined }),
+          tabPress: e => {
+              e.preventDefault();
+              navigation.navigate('PostNav', { screen: 'Post' })
+          },
         })}
         options={{
           unmountOnBlur: true,
@@ -66,12 +70,12 @@ const BottomTabNavigator = (props) => {
               color='black'
             />
           ),
-          tabBarButton: (props) => (
-            <TouchableOpacity
-              {...props}
-              onPress={() => navigation.navigate('PostNav', { screen: 'Post' })}
-            />
-          ),
+          // tabBarButton: (props) => (
+          //   <TouchableOpacity
+          //     {...props}
+          //     onPress={() => navigation.navigate('PostNav', { screen: 'Post' })}
+          //   />
+          // ),
         }}
       />
       <Tab.Screen
