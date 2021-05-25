@@ -62,7 +62,7 @@ export const PostScreen = (props) => {
   }, [props.navigation]);
 
   const onDismissSnackBar = () => setVisible(false);
-  const createPost = () => {
+  const createPost = async () => {
     if (!title.length) {
       console.log(111);
       setErrMessage('Title');
@@ -81,7 +81,7 @@ export const PostScreen = (props) => {
       let tags = props.tags;
       let photo = props.photo;
       console.log(555);
-      props.submitPost({ post, photo, tags });
+      await props.submitPost({ post, photo, tags });
       console.log(666);
       props.navigation.navigate('SinglePost');
       console.log(777);
@@ -98,10 +98,7 @@ export const PostScreen = (props) => {
       }}
       keyboardShouldPersistTaps='always'
     >
-      <TouchableWithoutFeedback
-        onPress={Keyboard.dismiss}
-        style={{ backgroundColor: styles.backgroundColor }}
-      >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
             <Title style={styles.titleMidScreenHeader}>Create Post</Title>
