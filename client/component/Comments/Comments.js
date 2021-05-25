@@ -8,7 +8,6 @@ import {
   LogBox,
   TouchableOpacity,
 } from 'react-native';
-import { Snackbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import TimeAgo from 'react-native-timeago';
@@ -18,7 +17,7 @@ import {
   grabComment,
   destroyComment,
 } from '../../store/comments';
-import { Divider, Card, Button } from 'react-native-paper';
+import { Divider, Card, Button, Snackbar } from 'react-native-paper';
 
 export function CommentView(props) {
   const [comment, setComment] = useState('');
@@ -102,7 +101,7 @@ export function CommentView(props) {
         />
         <View style={styles.inner}>
           <TextInput
-            placeholder='Add a comment...'
+            placeholder="Add a comment..."
             style={styles.input}
             value={comment}
             onChangeText={(text) => setComment(text)}
@@ -117,15 +116,12 @@ export function CommentView(props) {
               color: theme.colors.cancelButton,
               label: 'Dismiss',
               onPress: onDismissSnackBar,
-            }}
-          >
+            }}>
             <Text>{`Message can't be blank!`}</Text>
           </Snackbar>
           {!visible && (
-            <TouchableOpacity style={theme.buttonLarge}>
-              <Text style={theme.buttonTitleLarge} onPress={handleSubmit}>
-                Submit
-              </Text>
+            <TouchableOpacity style={theme.buttonLarge} onPress={handleSubmit}>
+              <Text style={theme.buttonTitleLarge}>Submit</Text>
             </TouchableOpacity>
           )}
         </View>

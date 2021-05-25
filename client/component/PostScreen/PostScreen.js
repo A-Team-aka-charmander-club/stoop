@@ -10,7 +10,10 @@ import {
   Keyboard,
   TextInput,
 } from 'react-native';
-import { PanGestureHandler, TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  PanGestureHandler,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import GoogleMapView from '../MapView/GoogleMapView';
 import { createPostThunk } from '../../store/post';
@@ -59,29 +62,29 @@ export const PostScreen = (props) => {
   }, [props.navigation]);
 
   const onDismissSnackBar = () => setVisible(false);
-  const createPost = () => {
+  const createPost = async () => {
     if (!title.length) {
-      console.log(111)
+      console.log(111);
       setErrMessage('Title');
       setVisible(true);
     } else if (!description.length) {
-      console.log(222)
+      console.log(222);
       setErrMessage('Description');
       setVisible(true);
     } else if (!props.photo) {
-      console.log(333)
+      console.log(333);
       setErrMessage('Photo');
       setVisible(true);
     } else {
-      console.log(444)
+      console.log(444);
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
       let photo = props.photo;
-      console.log(555)
-      props.submitPost({ post, photo, tags });
-      console.log(666)
+      console.log(555);
+      await props.submitPost({ post, photo, tags });
+      console.log(666);
       props.navigation.navigate('SinglePost');
-      console.log(777)
+      console.log(777);
     }
   };
   return (
@@ -93,8 +96,7 @@ export const PostScreen = (props) => {
         width: '100%',
         backgroundColor: styles.backgroundColor,
       }}
-      keyboardShouldPersistTaps='always'
-    >
+      keyboardShouldPersistTaps="always">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
@@ -107,79 +109,77 @@ export const PostScreen = (props) => {
             />
           )}
           <View>
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    backgroundColor: styles.backgroundColor,
-                    marginBottom: 20,
-                    marginTop: 20,
-                  }}
-                >
-                  <TouchableOpacity
-                    onPress={async () => await openCameraAsync(props)}
-                    style={styles.buttonLarge}
-                  >
-                    <Text style={styles.buttonTitleLarge}>Open Camera</Text>
-                  </TouchableOpacity>
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  backgroundColor: styles.backgroundColor,
+                  marginBottom: 20,
+                  marginTop: 20,
+                }}>
+                <TouchableOpacity
+                  onPress={async () => await openCameraAsync(props)}
+                  style={styles.buttonLarge}>
+                  <Text style={styles.buttonTitleLarge}>Open Camera</Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={styles.buttonLarge}
-                    onPress={async () => await openImagePickerAsync(props)}
-                  >
-                    <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
-                  </TouchableOpacity>
-                </View>
-                <TextInput
-                  style={styles.input}
-                  underlineColor={theme.colors.accent}
-                  placeholder='Title'
-                  value={title}
-                  onChangeText={(text) => setTitle(text)}
-                />
-                <TextInput
-                  required
-                  style={styles.input}
-                  underlineColor={theme.colors.accent}
-                  selectionColor={theme.colors.accent}
-                  placeholder='Description'
-                  value={description}
-                  onChangeText={(text) => setDescription(text)}
-                />
-                <Tags setTags={setTags} tags={tags} />
-                <PanGestureHandler enabled={true}>
-                  <View>
-                <GoogleMapView
-                  region={region}
-                  clear={clearMap}
-                  setRegion={setRegion}
-                  setLatitude={setLatitude}
-                  setLongitude={setLongitude}
-                  setClearMap={setClearMap}
-                />
-                </View>
-                </PanGestureHandler>
-                <View>
-                  <Snackbar
-                    style={styles.snackbar}
-                    visible={visible}
-                    onDismiss={onDismissSnackBar}
-                    action={{
-                      color: '#f8f5f2',
-                      label: 'Dismiss',
-                      onPress: onDismissSnackBar,
-                    }}
-                  >
-                    <Text>{errMessage} is required</Text>
-                  </Snackbar>
-                  {!visible && (
-                    <TouchableOpacity onPress={createPost} style={theme.buttonLarge}>
-                      <Text style={theme.buttonTitleLarge}>Post!</Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
+                <TouchableOpacity
+                  style={styles.buttonLarge}
+                  onPress={async () => await openImagePickerAsync(props)}>
+                  <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
+                </TouchableOpacity>
               </View>
+              <TextInput
+                style={styles.input}
+                underlineColor={theme.colors.accent}
+                placeholder="Title"
+                value={title}
+                onChangeText={(text) => setTitle(text)}
+              />
+              <TextInput
+                required
+                style={styles.input}
+                underlineColor={theme.colors.accent}
+                selectionColor={theme.colors.accent}
+                placeholder="Description"
+                value={description}
+                onChangeText={(text) => setDescription(text)}
+              />
+              <Tags setTags={setTags} tags={tags} />
+              <PanGestureHandler enabled={true}>
+                <View>
+                  <GoogleMapView
+                    region={region}
+                    clear={clearMap}
+                    setRegion={setRegion}
+                    setLatitude={setLatitude}
+                    setLongitude={setLongitude}
+                    setClearMap={setClearMap}
+                  />
+                </View>
+              </PanGestureHandler>
+              <View>
+                <Snackbar
+                  style={styles.snackbar}
+                  visible={visible}
+                  onDismiss={onDismissSnackBar}
+                  action={{
+                    color: '#f8f5f2',
+                    label: 'Dismiss',
+                    onPress: onDismissSnackBar,
+                  }}>
+                  <Text>{errMessage} is required</Text>
+                </Snackbar>
+                {!visible && (
+                  <TouchableOpacity
+                    onPress={createPost}
+                    style={theme.buttonLarge}>
+                    <Text style={theme.buttonTitleLarge}>Post!</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
