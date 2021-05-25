@@ -59,22 +59,29 @@ export const PostScreen = (props) => {
   }, [props.navigation]);
 
   const onDismissSnackBar = () => setVisible(false);
-  const createPost = async () => {
+  const createPost = () => {
     if (!title.length) {
+      console.log(111)
       setErrMessage('Title');
       setVisible(true);
     } else if (!description.length) {
+      console.log(222)
       setErrMessage('Description');
       setVisible(true);
     } else if (!props.photo) {
+      console.log(333)
       setErrMessage('Photo');
       setVisible(true);
     } else {
+      console.log(444)
       let post = { title, description, latitude, longitude };
       let tags = props.tags;
       let photo = props.photo;
-      await props.submitPost({ post, photo, tags });
+      console.log(555)
+      props.submitPost({ post, photo, tags });
+      console.log(666)
       props.navigation.navigate('SinglePost');
+      console.log(777)
     }
   };
   return (
@@ -146,7 +153,6 @@ export const PostScreen = (props) => {
             setLatitude={setLatitude}
             setLongitude={setLongitude}
             setClearMap={setClearMap}
-            clear={clearMap}
           />
           <View>
             <Snackbar

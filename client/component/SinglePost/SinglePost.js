@@ -22,7 +22,7 @@ export const SinglePost = (props) => {
   }
 
   let CommentIcon ;
-  if(props.post.comments.length){
+  if(props.post.comments){
     CommentIcon = BadgedIcon(props.post.comments.length);
   } else {
     CommentIcon = BadgedIcon(0);
@@ -181,9 +181,8 @@ export const SinglePost = (props) => {
       </KeyboardAwareScrollView>
     );
   } else {
-    {
-      props.navigation.navigate('Post');
-    }
+    props.navigation.navigate('Post');
+    return null;
   }
 };
 const mapStateToProps = (state) => {

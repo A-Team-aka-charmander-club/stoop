@@ -72,12 +72,15 @@ export const EditPostScreen = (props) => {
 
   const changePost = async () => {
     if (!title.length) {
+      console.log(1)
       setErrMessage('Title');
       setVisible(true);
     } else if (!description.length) {
+      console.log(2)
       setErrMessage('Description');
       setVisible(true);
     } else {
+      console.log(3)
       setVisible(false);
       let photo;
       if (props.photo.firebaseUrl !== props.post.photos[0].firebaseUrl) {
