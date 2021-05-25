@@ -25,7 +25,7 @@ export default function GoogleMapView(props) {
     props.setClearMap(false);
     props.setLatitude(props.region.latitude);
     props.setLongitude(props.region.longitude);
-    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
+    // LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
   }, [props.clearMap]);
 
   const onDragEnd = (e) => {
@@ -38,7 +38,7 @@ export default function GoogleMapView(props) {
 
     props.setLatitude(e.nativeEvent.coordinate.latitude);
     props.setLongitude(e.nativeEvent.coordinate.longitude);
-    LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
+    // LogBox.ignoreLogs(["Can't perform a React state update on an unmounted component"]);
   };
 
   return (

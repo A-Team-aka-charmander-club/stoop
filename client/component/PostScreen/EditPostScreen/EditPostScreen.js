@@ -8,10 +8,13 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity,
   LogBox,
   TextInput,
 } from 'react-native';
+import {
+  PanGestureHandler,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import theme from '../../../../CustomProps/Theme';
 import { connect } from 'react-redux';
 import EditMapView from '../../MapView/EditMapView';
@@ -72,12 +75,15 @@ export const EditPostScreen = (props) => {
 
   const changePost = async () => {
     if (!title.length) {
+      console.log(1);
       setErrMessage('Title');
       setVisible(true);
     } else if (!description.length) {
+      console.log(2);
       setErrMessage('Description');
       setVisible(true);
     } else {
+      console.log(3);
       setVisible(false);
       let photo;
       if (props.photo.firebaseUrl !== props.post.photos[0].firebaseUrl) {
@@ -97,8 +103,7 @@ export const EditPostScreen = (props) => {
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1, width: '100%' }}
-      keyboardShouldPersistTaps='always'
-    >
+      keyboardShouldPersistTaps="always">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
@@ -110,61 +115,67 @@ export const EditPostScreen = (props) => {
             }}
             style={styles.thumbnail}
           />
-          <View
-            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
-          >
-            <TouchableOpacity
-              onPress={async () => await openCameraAsync(props)}
-              style={styles.buttonLarge}
-            >
-              <Text style={styles.buttonTitleLarge}>Open Camera</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={async () => await openImagePickerAsync(props)}
-              style={styles.buttonLarge}
-            >
-              <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
-            </TouchableOpacity>
-          </View>
-          <TextInput
-            style={styles.input}
-            placeholder='Title'
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder='Description'
-            value={description}
-            onChangeText={(text) => setDescription(text)}
-          />
-          <Tags setTags={setTags} tags={tags} />
-          <EditMapView
-            region={region}
-            setRegion={setRegion}
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-          />
           <View>
-            <Snackbar
-              visible={visible}
-              onDismiss={onDismissSnackBar}
-              action={{
-                label: 'Dismiss',
-                onPress: onDismissSnackBar,
-              }}
-            >
-              <Text>{errMessage} is required</Text>
-            </Snackbar>
-            {!visible && (
-              <TouchableOpacity
-                style={theme.buttonLarge}
-                onPress={() => changePost()}
-              >
-                <Text style={theme.buttonTitleLarge}>Update!</Text>
-              </TouchableOpacity>
-            )}
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                }}>
+                <TouchableOpacity
+                  onPress={async () => await openCameraAsync(props)}
+                  style={styles.buttonLarge}>
+                  <Text style={styles.buttonTitleLarge}>Open Camera</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={async () => await openImagePickerAsync(props)}
+                  style={styles.buttonLarge}>
+                  <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
+                </TouchableOpacity>
+              </View>
+              <TextInput
+                style={styles.input}
+                placeholder="Title"
+                value={title}
+                onChangeText={(text) => setTitle(text)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Description"
+                value={description}
+                onChangeText={(text) => setDescription(text)}
+              />
+              <Tags setTags={setTags} tags={tags} />
+              <PanGestureHandler enabled={true}>
+                <View>
+                  <EditMapView
+                    region={region}
+                    setRegion={setRegion}
+                    setLatitude={setLatitude}
+                    setLongitude={setLongitude}
+                  />
+                </View>
+              </PanGestureHandler>
+              <View>
+                <Snackbar
+                  visible={visible}
+                  onDismiss={onDismissSnackBar}
+                  action={{
+                    label: 'Dismiss',
+                    onPress: onDismissSnackBar,
+                  }}>
+                  <Text>{errMessage} is required</Text>
+                </Snackbar>
+                {!visible && (
+                  <TouchableOpacity
+                    style={theme.buttonLarge}
+                    onPress={() => changePost()}>
+                    <Text style={theme.buttonTitleLarge}>Update!</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
