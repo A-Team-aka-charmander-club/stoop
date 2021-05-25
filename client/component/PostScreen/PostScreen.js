@@ -98,7 +98,10 @@ export const PostScreen = (props) => {
       }}
       keyboardShouldPersistTaps='always'
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback
+        onPress={Keyboard.dismiss}
+        style={{ backgroundColor: styles.backgroundColor }}
+      >
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
             <Title style={styles.titleMidScreenHeader}>Create Post</Title>
@@ -152,16 +155,17 @@ export const PostScreen = (props) => {
               />
               <Tags setTags={setTags} tags={tags} />
               <PanGestureHandler enabled={true}>
-                <GoogleMapView
-                  region={region}
-                  clear={clearMap}
-                  setRegion={setRegion}
-                  setLatitude={setLatitude}
-                  setLongitude={setLongitude}
-                  setClearMap={setClearMap}
-                />
+                <View>
+                  <GoogleMapView
+                    region={region}
+                    clear={clearMap}
+                    setRegion={setRegion}
+                    setLatitude={setLatitude}
+                    setLongitude={setLongitude}
+                    setClearMap={setClearMap}
+                  />
+                </View>
               </PanGestureHandler>
-
               <View>
                 <Snackbar
                   style={styles.snackbar}

@@ -65,7 +65,12 @@ export function CommentView(props) {
           <Text>{item.user.fullName}</Text>
           <TimeAgo time={item.createdAt} />
           {item.user.id === props.user.id ? (
-            <Button onPress={() => handleDelete(item)}>Delete</Button>
+            <Button
+              onPress={() => handleDelete(item)}
+              color={theme.colors.cancelButton}
+            >
+              Delete
+            </Button>
           ) : null}
         </Card.Content>
       </Card>
