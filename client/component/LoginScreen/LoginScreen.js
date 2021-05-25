@@ -59,39 +59,41 @@ export function LoginScreen({ navigation, fetchUser }) {
       <SafeAreaView style={theme.container}>
         <KeyboardAwareScrollView
           style={{ flex: 1, width: '100%' }}
-          keyboardShouldPersistTaps="always">
+          keyboardShouldPersistTaps='always'
+        >
           <Image
             style={theme.logoLarge}
             source={require('../../../assets/trashPanda.png')}
           />
           <TextInput
             style={styles.input}
-            placeholder="E-mail"
-            placeholderTextColor="#aaaaaa"
+            placeholder='E-mail'
+            placeholderTextColor='#aaaaaa'
             onChangeText={(text) => setEmail(text)}
             value={email}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
+            underlineColorAndroid='transparent'
+            autoCapitalize='none'
           />
           <TextInput
             style={styles.input}
-            placeholderTextColor="#aaaaaa"
+            placeholderTextColor='#aaaaaa'
             secureTextEntry
-            placeholder="Password"
+            placeholder='Password'
             onChangeText={(text) => setPassword(text)}
             value={password}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
+            underlineColorAndroid='transparent'
+            autoCapitalize='none'
           />
           {/* this is log-in button */}
           <TouchableOpacity
             style={theme.buttonLarge}
-            onPress={() => onLoginPress()}>
+            onPress={() => onLoginPress()}
+          >
             <Text style={theme.buttonTitleLarge}>Log in</Text>
           </TouchableOpacity>
           <View style={styles.footerView}>
             <Text style={styles.footerText}>
-              Don't have an account?
+              Don't have an account?{' '}
               <Text onPress={onFooterLinkPress} style={styles.footerLink}>
                 Sign up
               </Text>

@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import theme from '../../../CustomProps/Theme';
 import 'react-native-get-random-values';
-import {
-  View,
-  Text,
-  FlatList,
-  SafeAreaView,
-} from 'react-native';
+import { View, Text, FlatList, SafeAreaView } from 'react-native';
 import TimeAgo from 'react-native-timeago';
 import { Chip, Card, Avatar, Title, Paragraph } from 'react-native-paper';
 import styles from './styles';
@@ -85,6 +80,7 @@ export function HomeScreen(props) {
                   <Chip
                     mode='outlined'
                     size={10}
+                    margin={3}
                     selectedColor={theme.colors.accent}
                     selected={selected}
                     icon='tag'
@@ -93,7 +89,7 @@ export function HomeScreen(props) {
                     onPress={() => onTagPress(tagId)}
                   >
                     {tag.name}
-                  </Chip> 
+                  </Chip>
                 );
               })}
             </View>
