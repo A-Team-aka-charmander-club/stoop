@@ -66,8 +66,7 @@ export function CommentView(props) {
           {item.user.id === props.user.id ? (
             <Button
               onPress={() => handleDelete(item)}
-              color={theme.colors.cancelButton}
-            >
+              color={theme.colors.cancelButton}>
               Delete
             </Button>
           ) : null}
@@ -118,7 +117,7 @@ export function CommentView(props) {
             visible={visible}
             onDismiss={onDismissSnackBar}
             action={{
-              color: theme.colors.cancelButton,
+              color: '#f8f5f2',
               label: 'Dismiss',
               onPress: onDismissSnackBar,
             }}>
