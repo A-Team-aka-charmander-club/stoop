@@ -53,7 +53,7 @@ export const createComment = (comment, postId, userId) => {
     }
   };
 };
-s;
+
 export const grabComment = (postId) => {
   return async (dispatch) => {
     try {
