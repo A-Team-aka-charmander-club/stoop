@@ -21,8 +21,8 @@ export const SinglePost = (props) => {
     props.navigation.navigate('Edit');
   }
 
-  let CommentIcon ;
-  if(props.post.comments){
+  let CommentIcon;
+  if (props.post.comments) {
     CommentIcon = BadgedIcon(props.post.comments.length);
   } else {
     CommentIcon = BadgedIcon(0);
@@ -36,8 +36,7 @@ export const SinglePost = (props) => {
           width: '100%',
           backgroundColor: theme.backgroundColor,
         }}
-        keyboardShouldPersistTaps='always'
-      >
+        keyboardShouldPersistTaps="always">
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
             <Title style={styles.titleMidScreenHeader}>Treasure</Title>
@@ -57,9 +56,8 @@ export const SinglePost = (props) => {
                   alignItems: 'baseline',
                   marginTop: 10,
                   backgroundColor: theme.backgroundColor,
-                }}
-              >
-                <Icon name='treasure-chest' type='material-community' />
+                }}>
+                <Icon name="treasure-chest" type="material-community" />
                 <View style={{ marginLeft: 10, flexDirection: 'column' }}>
                   <View>
                     <Title>{props.post.title}</Title>
@@ -74,14 +72,13 @@ export const SinglePost = (props) => {
                       flexDirection: 'row',
                       justifyContent: 'flex-start',
                       marginBottom: 10,
-                    }}
-                  >
+                    }}>
                     {props.post.tags.map((tag, index) => {
                       return (
                         <Chip
-                          icon='tag'
+                          icon="tag"
                           key={index}
-                          mode='outlined'
+                          mode="outlined"
                           size={10}
                           style={{
                             backgroundColor: theme.colors.lightBackground,
@@ -92,8 +89,7 @@ export const SinglePost = (props) => {
                           }}
                           textStyle={styles.tagText}
                           selectedColor={theme.colors.accent}
-                          tagStyle={styles.tagText}
-                        >
+                          tagStyle={styles.tagText}>
                           {tag.name}
                         </Chip>
                       );
@@ -109,18 +105,15 @@ export const SinglePost = (props) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   marginBottom: 20,
-                }}
-              >
+                }}>
                 <TouchableOpacity
                   onPress={handleDelete}
-                  style={styles.buttonLarge}
-                >
+                  style={styles.buttonLarge}>
                   <Text style={styles.buttonTitleLarge}>Delete Post</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={handleEdit}
-                  style={styles.buttonLarge}
-                >
+                  style={styles.buttonLarge}>
                   <Text style={styles.buttonTitleLarge}>Edit Post</Text>
                 </TouchableOpacity>
               </View>
@@ -134,8 +127,7 @@ export const SinglePost = (props) => {
               longitude: props.post.longitude,
               latitudeDelta: 0.0025,
               longitudeDelta: 0.0025,
-            }}
-          >
+            }}>
             <Marker
               image={require('../../../assets/x.png')}
               key={`marker${Date.now()}`}
@@ -151,17 +143,13 @@ export const SinglePost = (props) => {
               flexDirection: 'row',
               alignItems: 'flex-start',
               backgroundColor: theme.backgroundColor,
-            }}
-          >
+            }}>
             <Title
               style={{
-                // flexDirection: 'row',
-                // flexWrap: 'wrap',
                 backgroundColor: theme.backgroundColor,
               }}
               navigation={props.navigation}
-              onPress={() => props.navigation.navigate('CommentView')}
-            >
+              onPress={() => props.navigation.navigate('CommentView')}>
               {CommentIcon}
             </Title>
             <Text
@@ -172,8 +160,7 @@ export const SinglePost = (props) => {
                 marginLeft: 20,
               }}
               navigation={props.navigation}
-              onPress={() => props.navigation.navigate('CommentView')}
-            >
+              onPress={() => props.navigation.navigate('CommentView')}>
               Comments
             </Text>
           </View>

@@ -10,8 +10,6 @@ export default StyleSheet.create({
     marginRight: 15,
   },
   map: {
-    // marginLeft: 30,
-    // marginRight: 30,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height / 2,
   },

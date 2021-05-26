@@ -1,5 +1,3 @@
-//this is the access point for all things database related!
-
 const db = require('./db');
 
 const User = require('./models/user');
@@ -7,8 +5,6 @@ const Comment = require('./models/comment');
 const Photo = require('./models/photo');
 const Post = require('./models/post');
 const Tag = require('./models/tag');
-
-//associations could go here!
 
 User.belongsToMany(Post, { through: 'userPost' });
 Post.belongsToMany(User, { through: 'userPost' });

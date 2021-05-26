@@ -1,6 +1,4 @@
 import axios from 'axios';
-import user from './user';
-// import post from './post';
 import { SECRET } from '@env';
 import { firebase } from '../../src/firebase/config';
 

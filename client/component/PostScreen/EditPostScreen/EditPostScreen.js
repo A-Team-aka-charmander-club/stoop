@@ -99,7 +99,7 @@ export const EditPostScreen = (props) => {
   };
   return (
     <KeyboardAwareScrollView
-      style={{ flex: 1, width: '100%' }}
+      style={{ flex: 1, width: '100%', backgroundColor: theme.backgroundColor }}
       keyboardShouldPersistTaps="always">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>

@@ -86,9 +86,8 @@ export const PostScreen = (props) => {
       style={styles.horizontal}
       style={{
         flex: 1,
-        // marginTop: 30,
         width: '100%',
-        backgroundColor: styles.backgroundColor,
+        backgroundColor: theme.backgroundColor,
       }}
       keyboardShouldPersistTaps="always">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
