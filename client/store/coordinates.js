@@ -4,7 +4,6 @@ const GET_COORDINATES = 'GET_COORDINATES';
 
 const REMOVE_COORDINATE = 'REMOVE_COORDINATE';
 
-//getCoordinates returns an array of posts
 const getCoordinates = (coordinates) => {
   return {
     type: GET_COORDINATES,

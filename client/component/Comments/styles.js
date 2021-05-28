@@ -55,10 +55,7 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderBottomWidth: 1,
   },
-  // btnContainer: {
-  //   backgroundColor: 'white',
-  //   marginTop: 12,
-  // },
+
   button: {
     backgroundColor: '#788eec',
     marginTop: 0,
@@ -95,8 +92,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flex: 1,
-    // borderColor: theme.colors.accent,
-    // borderWidth: 0.3,
     margin: 5,
     backgroundColor: theme.colors.lightBackground,
   },

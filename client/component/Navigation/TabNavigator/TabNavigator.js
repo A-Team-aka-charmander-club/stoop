@@ -18,7 +18,7 @@ const BottomTabNavigator = (props) => {
 
   return (
     <Tab.Navigator
-      initialRouteName='Home'
+      initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#e91e63',
         showLabel: true,
@@ -30,28 +30,27 @@ const BottomTabNavigator = (props) => {
           backgroundColor: theme.backgroundColor,
           footerView: theme.footerView,
         },
-      }}
-    >
+      }}>
       <Tab.Screen
-        name='Home'
+        name="Home"
         component={HomeStackNavigator}
         options={{
           unmountOnBlur: true,
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <Fontisto name='ship' size={24} color='black' />
+            <Fontisto name="ship" size={24} color="black" />
           ),
         }}
       />
       <Tab.Screen
-        name='PostNav'
+        name="PostNav"
         component={PostStackNavigator}
         unmountOnBlur={true}
         listeners={({ navigation }) => ({
           blur: () => navigation.setParams({ screen: undefined }),
-          tabPress: e => {
-              e.preventDefault();
-              navigation.navigate('PostNav', { screen: 'Post' })
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate('PostNav', { screen: 'Post' });
           },
         })}
         options={{
@@ -65,28 +64,22 @@ const BottomTabNavigator = (props) => {
 
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name='treasure-chest'
+              name="treasure-chest"
               size={24}
-              color='black'
+              color="black"
             />
           ),
-          // tabBarButton: (props) => (
-          //   <TouchableOpacity
-          //     {...props}
-          //     onPress={() => navigation.navigate('PostNav', { screen: 'Post' })}
-          //   />
-          // ),
         }}
       />
       <Tab.Screen
-        name='Account'
+        name="Account"
         component={UserAccount}
         unmountOnBlur={true}
         options={{
           unmountOnBlur: true,
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name='skull-crossbones' size={24} color='black' />
+            <FontAwesome5 name="skull-crossbones" size={24} color="black" />
           ),
         }}
       />

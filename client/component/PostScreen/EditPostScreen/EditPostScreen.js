@@ -99,9 +99,8 @@ export const EditPostScreen = (props) => {
   };
   return (
     <KeyboardAwareScrollView
-      style={{ flex: 1, width: '100%' }}
-      keyboardShouldPersistTaps='always'
-    >
+      style={{ flex: 1, width: '100%', backgroundColor: theme.backgroundColor }}
+      keyboardShouldPersistTaps="always">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
@@ -119,31 +118,28 @@ export const EditPostScreen = (props) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-around',
-                }}
-              >
+                }}>
                 <TouchableOpacity
                   onPress={async () => await openCameraAsync(props)}
-                  style={styles.buttonLarge}
-                >
+                  style={styles.buttonLarge}>
                   <Text style={styles.buttonTitleLarge}>Open Camera</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={async () => await openImagePickerAsync(props)}
-                  style={styles.buttonLarge}
-                >
+                  style={styles.buttonLarge}>
                   <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
                 </TouchableOpacity>
               </View>
               <TextInput
                 style={styles.input}
-                placeholder='Title'
+                placeholder="Title"
                 value={title}
                 onChangeText={(text) => setTitle(text)}
               />
               <TextInput
                 style={styles.input}
-                placeholder='Description'
+                placeholder="Description"
                 value={description}
                 onChangeText={(text) => setDescription(text)}
               />
@@ -160,20 +156,20 @@ export const EditPostScreen = (props) => {
               </PanGestureHandler>
               <View>
                 <Snackbar
+                  style={styles.snackbar}
                   visible={visible}
                   onDismiss={onDismissSnackBar}
                   action={{
+                    color: '#f8f5f2',
                     label: 'Dismiss',
                     onPress: onDismissSnackBar,
-                  }}
-                >
+                  }}>
                   <Text>{errMessage} is required</Text>
                 </Snackbar>
                 {!visible && (
                   <TouchableOpacity
                     style={theme.buttonLarge}
-                    onPress={() => changePost()}
-                  >
+                    onPress={() => changePost()}>
                     <Text style={theme.buttonTitleLarge}>Update!</Text>
                   </TouchableOpacity>
                 )}

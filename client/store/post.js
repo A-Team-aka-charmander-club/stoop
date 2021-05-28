@@ -39,8 +39,6 @@ export const getPost = (singlePost) => {
   };
 };
 
-//thunk
-
 export const createPostThunk = (post) => {
   return async (dispatch) => {
     try {

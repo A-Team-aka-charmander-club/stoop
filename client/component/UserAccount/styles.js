@@ -24,7 +24,6 @@ export default StyleSheet.create({
     paddingLeft: 16,
   },
   midScreenHeader: {
-    // width: 100,
     marginTop: 20,
     height: 48,
     backgroundColor: theme.colors.accent,

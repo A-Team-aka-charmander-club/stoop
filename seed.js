@@ -2,10 +2,6 @@
 
 const { db, models } = require('./server/db/');
 const Sequelize = require('sequelize');
-// const posts = require('./seedData/Post');
-// const comments = require('./seedData/Comment');
-// const tags = require('./seedData/Tag');
-
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -273,46 +269,9 @@ const tag = [
     name: 'wine',
   },
 ];
-// const PostSchema = {
-//   title: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     validate: {
-//       notEmpty: true,
-//     },
-//   },
-//   description: {
-//     type: Sequelize.TEXT,
-//     allowNull: false,
-//     validate: {
-//       notEmpty: true,
-//     },
-//   },
-//   latitude: {
-//     type: Sequelize.FLOAT,
-//     allowNull: false,
-//     validate: {
-//       notEmpty: true,
-//     },
-//   },
-//   longitude: {
-//     type: Sequelize.FLOAT,
-//     allowNull: false,
-//     validate: {
-//       notEmpty: true,
-//     },
-//   },
-//   primaryUrl: {
-//     type: Sequelize.TEXT,
-//     allowNull: false,
-//     validate: {
-//       notEmpty: true,
-//     },
-//   },
-// };
 
 async function seed() {
-  await db.sync({ force: true }); // clears db and matches models to tables
+  await db.sync({ force: true });
   await models.User.bulkCreate(users);
   await models.Photo.bulkCreate(photo);
   await models.Post.bulkCreate(post);
