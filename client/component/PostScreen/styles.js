@@ -28,8 +28,8 @@ export default StyleSheet.create({
   },
   buttonLarge: {
     backgroundColor: theme.colors.accent,
-    marginLeft: 120,
-    marginRight: 120,
+    marginLeft: 60,
+    marginRight: 60,
     marginTop: 20,
     height: 30,
     width: 150,
