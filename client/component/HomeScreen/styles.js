@@ -7,7 +7,6 @@ export default StyleSheet.create({
     backgroundColor: theme.backgroundColor,
   },
   midScreenHeader: {
-    // width: 100,
     height: 48,
     backgroundColor: theme.colors.cancelButton,
   },

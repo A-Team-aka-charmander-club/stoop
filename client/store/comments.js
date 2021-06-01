@@ -1,6 +1,4 @@
 import axios from 'axios';
-import user from './user';
-// import post from './post';
 import { SECRET } from '@env';
 import { firebase } from '../../src/firebase/config';
 
@@ -53,7 +51,7 @@ export const createComment = (comment, postId, userId) => {
     }
   };
 };
-s;
+
 export const grabComment = (postId) => {
   return async (dispatch) => {
     try {

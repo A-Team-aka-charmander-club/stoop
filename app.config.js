@@ -5,7 +5,7 @@ export default {
     slug: 'stoop-test',
     version: '1.0.0',
     orientation: 'portrait',
-    icon: './assets/icon.png',
+    icon: './assets/trashPanda.png',
     splash: {
       image: './assets/trashPanda.png',
       resizeMode: 'contain',
@@ -23,7 +23,7 @@ export default {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
+        foregroundImage: './assets/trashPanda.png',
         backgroundColor: '#FFFFFF',
       },
     },

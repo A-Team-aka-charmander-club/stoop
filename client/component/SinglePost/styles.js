@@ -7,10 +7,9 @@ export const BadgedIcon = (length) => {
   return (
     <View style={badgeStyles.container}>
       <View style={{ marginTop: 5, alignSelf: 'flex-end' }}>
-        {/* <View style={badgeStyles.row}> */}
         <Icon
-          name='comment'
-          type='material-community'
+          name="comment"
+          type="material-community"
           size={30}
           color={theme.colors.cancelButton}
         />
@@ -25,7 +24,6 @@ const badgeStyles = StyleSheet.create({
     marginLeft: 12,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    // marginLeft: 10,
   },
   row: {
     flexDirection: 'row',
@@ -97,7 +95,6 @@ export default StyleSheet.create({
     color: theme.colors.lightBackground,
   },
   midScreenHeader: {
-    // width: 100,
     height: 100,
     backgroundColor: theme.colors.cancelButton,
   },

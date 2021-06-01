@@ -65,12 +65,10 @@ export default StyleSheet.create({
     color: '#f8f5f2',
   },
   midScreenHeader: {
-    // width: 100,
     height: 100,
     backgroundColor: theme.colors.cancelButton,
   },
   midScreenHeaderEdit: {
-    // width: 100,
     height: 100,
     backgroundColor: theme.colors.cancelButton,
   },

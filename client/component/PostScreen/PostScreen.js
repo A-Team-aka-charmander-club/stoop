@@ -63,13 +63,14 @@ export const PostScreen = (props) => {
 
   const onDismissSnackBar = () => setVisible(false);
   const createPost = async () => {
+    console.log(props, 'props');
     if (!title.length) {
       setErrMessage('Title');
       setVisible(true);
     } else if (!description.length) {
       setErrMessage('Description');
       setVisible(true);
-    } else if (!props.photo) {
+    } else if (!props.photo.firebaseUrl) {
       setErrMessage('Photo');
       setVisible(true);
     } else {
@@ -85,12 +86,10 @@ export const PostScreen = (props) => {
       style={styles.horizontal}
       style={{
         flex: 1,
-        // marginTop: 30,
         width: '100%',
-        backgroundColor: styles.backgroundColor,
+        backgroundColor: theme.backgroundColor,
       }}
-      keyboardShouldPersistTaps='always'
-    >
+      keyboardShouldPersistTaps="always">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ backgroundColor: theme.backgroundColor }}>
           <View style={styles.midScreenHeader}>
@@ -111,26 +110,23 @@ export const PostScreen = (props) => {
                   backgroundColor: styles.backgroundColor,
                   marginBottom: 20,
                   marginTop: 20,
-                }}
-              >
+                }}>
                 <TouchableOpacity
                   onPress={async () => await openCameraAsync(props)}
-                  style={styles.buttonLarge}
-                >
+                  style={styles.buttonLarge}>
                   <Text style={styles.buttonTitleLarge}>Open Camera</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.buttonLarge}
-                  onPress={async () => await openImagePickerAsync(props)}
-                >
+                  onPress={async () => await openImagePickerAsync(props)}>
                   <Text style={styles.buttonTitleLarge}>Upload Photo</Text>
                 </TouchableOpacity>
               </View>
               <TextInput
                 style={styles.input}
                 underlineColor={theme.colors.accent}
-                placeholder='Title'
+                placeholder="Title"
                 value={title}
                 onChangeText={(text) => setTitle(text)}
               />
@@ -139,7 +135,7 @@ export const PostScreen = (props) => {
                 style={styles.input}
                 underlineColor={theme.colors.accent}
                 selectionColor={theme.colors.accent}
-                placeholder='Description'
+                placeholder="Description"
                 value={description}
                 onChangeText={(text) => setDescription(text)}
               />
@@ -165,15 +161,13 @@ export const PostScreen = (props) => {
                     color: '#f8f5f2',
                     label: 'Dismiss',
                     onPress: onDismissSnackBar,
-                  }}
-                >
+                  }}>
                   <Text>{errMessage} is required</Text>
                 </Snackbar>
                 {!visible && (
                   <TouchableOpacity
                     onPress={createPost}
-                    style={theme.buttonLarge}
-                  >
+                    style={theme.buttonLarge}>
                     <Text style={theme.buttonTitleLarge}>Post!</Text>
                   </TouchableOpacity>
                 )}
