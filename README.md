@@ -45,7 +45,7 @@ Note: testing this app requires downloading 'expo client' on an iOS product.
 
 ![Login Image](assets/appImages/tplogincut.png)
 ![Signup Image](assets/appImages/tpsignup.png)
-![Home Page Image](assets/appImages/tphome.png)
+![Home Page Image](assets/appImages/hometest.png)
 ![Callout Image](assets/appImages/tpcallout.png)
 ![Home Tags Image](assets/appImages/tphomewtags.png)
 ![Single Post Image](assets/appImages/tpsinglepost.png)
