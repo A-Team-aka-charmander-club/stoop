@@ -1,8 +1,8 @@
 export default {
   expo: {
     owner: 'a-team',
-    name: 'react-naitiv-practice',
-    slug: 'stoop-test',
+    name: 'Trash Panda',
+    slug: 'trash-panda',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/trashPanda.png',
