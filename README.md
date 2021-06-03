@@ -43,8 +43,20 @@ Note: testing this app requires downloading 'expo client' on an iOS product.
 
 <!-- ## View Published App
 
-1. On your iOS device, download [expo client](https://apps.apple.com/us/app/expo-client/id982107779) from the app store.
-2.  -->
+## Viewing Published App
+Note: testing this app requires downloading 'Expo Go'.
+
+1. On your device, download Expo Go from the [app store](https://apps.apple.com/us/app/expo-go/id982107779) or [play store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
+2. Open the expo app and click on profile.
+3. Sign in with the following credentials:
+
+    • Username: **trashpanda21**
+
+    • Password: **trashpanda21**
+
+4. On the profile page under published projects, click on Trash Panda
+5. Sign up for a Trash Panda account or log in. You can now add pictures of items you see on the street or see items discarded near you!
+-->
 
 ## The App
 
