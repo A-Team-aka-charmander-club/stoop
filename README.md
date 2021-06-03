@@ -41,6 +41,11 @@ Note: testing this app requires downloading 'expo client' on an iOS product.
 
 [Allie Humphrey](https://github.com/allieh45 "Allie's Github") | [Anastasiia Kolendo](https://github.com/AnastasiaKolendo "Anastasiia's Github") | [Abi Scholz](https://github.com/abischolz "Abi's Github") | [Anna Strasser](https://github.com/albastrasser "Anna's Github")
 
+<!-- ## View Published App
+
+1. On your iOS device, download [expo client](https://apps.apple.com/us/app/expo-client/id982107779) from the app store.
+2.  -->
+
 ## The App
 
 ![Login Image](assets/appImages/trashpandalogin.png)

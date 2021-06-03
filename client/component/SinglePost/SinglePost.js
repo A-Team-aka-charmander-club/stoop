@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles, { BadgedIcon } from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
@@ -10,8 +10,16 @@ import { destroyPost } from '../../store/post';
 import { takePhoto, clearPhoto } from '../../store/photo';
 import theme from '../../../CustomProps/Theme';
 import TimeAgo from 'react-native-timeago';
+import {
+  grabComment
+} from '../../store/comments';
 
 export const SinglePost = (props) => {
+
+  useEffect(() => {
+    props.getComment(props.post.id);
+  }, [props.comments.length]);
+
   function handleDelete() {
     props.deletePost(props.post.id, props.user.id);
   }
@@ -22,8 +30,8 @@ export const SinglePost = (props) => {
   }
 
   let CommentIcon;
-  if (props.post.comments) {
-    CommentIcon = BadgedIcon(props.post.comments.length);
+  if (props.comments || 0) {
+    CommentIcon = BadgedIcon(props.comments.length);
   } else {
     CommentIcon = BadgedIcon(0);
   }
@@ -176,6 +184,7 @@ const mapStateToProps = (state) => {
   return {
     post: state.post,
     user: state.user,
+    comments: state.comments
   };
 };
 const mapDispatchToProps = (dispatch, { navigation }) => {
@@ -184,6 +193,7 @@ const mapDispatchToProps = (dispatch, { navigation }) => {
       dispatch(destroyPost(postId, navigation, userId)),
     takePhoto: (photo) => dispatch(takePhoto(photo)),
     clearPhoto: () => dispatch(clearPhoto()),
+    getComment: (postId) => dispatch(grabComment(postId)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);

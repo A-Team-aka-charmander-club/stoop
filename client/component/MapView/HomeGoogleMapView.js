@@ -25,6 +25,7 @@ export function HomeGoogleMapView(props) {
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
 
+    props.getCoordinates(props.region, props.tags);
     const unsubscribe = props.navigation.addListener('didFocus', () => {
       props.getCoordinates(props.region, props.tags);
     });
