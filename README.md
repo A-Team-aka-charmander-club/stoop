@@ -50,7 +50,7 @@ Note: testing this app requires downloading 'expo client' on an iOS product.
 
 ![Login Image](assets/appImages/trashpandalogin.png)
 ![Signup Image](assets/appImages/trashpandasignup2.png)
-![Home Page Image](assets/appImages/trashpandahome2.png)
+![Home Page Image](assets/appImages/trashpandahome3.png)
 ![Callout Image](assets/appImages/trashpandacallout2.png)
 ![Home Tags Image](assets/appImages/trashpandahometag2.png)
 ![Single Post Image](assets/appImages/trashpandasinglepost2.png)
