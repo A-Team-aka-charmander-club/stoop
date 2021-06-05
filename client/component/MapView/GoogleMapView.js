@@ -16,14 +16,14 @@ export default function GoogleMapView(props) {
           latitudeDelta: 0.0025,
           longitudeDelta: 0.0025,
         });
+        props.setLatitude(position.coords.latitude);
+        props.setLongitude(position.coords.longitude);
       },
       (error) => alert(error.message),
       { enableHighAccuracy: true, maximumAge: 1000 }
     );
 
     props.setClearMap(false);
-    props.setLatitude(props.region.latitude);
-    props.setLongitude(props.region.longitude);
   }, [props.clearMap]);
 
   const onDragEnd = (e) => {
